@@ -16,11 +16,6 @@
 .phpunit.result.cache
 ###< phpunit/phpunit ###
 
-###> symfony/phpunit-bridge ###
-.phpunit.result.cache
-/phpunit.xml
-###< symfony/phpunit-bridge ###
-
 ###> symfony/asset-mapper ###
 /public/assets/
 /assets/vendor/
@@ -29,3 +24,7 @@
 # Ignore local config for PhpStorm
 .idea/
 
+
+###> league/oauth2-server-bundle ###
+/config/jwt/*.pem
+###< league/oauth2-server-bundle ###
