@@ -9,11 +9,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ApiController
 {
     #[Route('/api/data', name: 'api_data', methods: ['POST'])]
-    public function saveData(Request $request, EntityManagerInterface $entityManager): JsonResponse
+    public function saveData(Request $request, EntityManagerInterface $entityManager, ValidatorInterface $validator): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
         if (!isset($data['temperature'], $data['humidity'], $data['pressure'], $data['co2'], $data['created'])) {
@@ -27,6 +28,11 @@ class ApiController
         $environmentalData->setCo2((float) $data['co2']);
         $environmentalData->setMeasuredAt(new DateTime($data['created']));
         $environmentalData->setCreatedAt(new DateTime());
+
+        $errors = $validator->validate($environmentalData);
+        if (count($errors) > 0) {
+            return new JsonResponse(['error' => $errors[0]->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
 
         $entityManager->persist($environmentalData);
         $entityManager->flush();
