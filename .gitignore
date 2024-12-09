@@ -24,7 +24,6 @@
 # Ignore local config for PhpStorm
 .idea/
 
-
-###> league/oauth2-server-bundle ###
+###> lexik/jwt-authentication-bundle ###
 /config/jwt/*.pem
-###< league/oauth2-server-bundle ###
+###< lexik/jwt-authentication-bundle ###
