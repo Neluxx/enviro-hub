@@ -17,6 +17,3 @@
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
-
-# Ignore local config for PhpStorm
-.idea/
