@@ -49,7 +49,7 @@ class EnvironmentalDataService
         $environmentalData->setHumidity((float)$data['humidity']);
         $environmentalData->setPressure((float)$data['pressure']);
         $environmentalData->setCo2((float)$data['co2']);
-        $environmentalData->setMeasuredAt(new DateTime($data['created']));
+        $environmentalData->setMeasuredAt(DateTime::createFromFormat('Y-m-d H:i:s', $data['created']));
         $environmentalData->setCreatedAt(new DateTime());
 
         return $environmentalData;
