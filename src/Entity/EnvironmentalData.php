@@ -12,7 +12,7 @@ class EnvironmentalData
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer")]
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\Column(type: "float")]
     private float $temperature;
