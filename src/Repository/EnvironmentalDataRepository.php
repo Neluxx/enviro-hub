@@ -19,4 +19,14 @@ class EnvironmentalDataRepository
         $this->entityManager->persist($environmentalData);
         $this->entityManager->flush();
     }
+
+    /**
+     * Get the last EnvironmentalData entry
+     *
+     * @return EnvironmentalData|null
+     */
+    public function getLastEntry(): ?EnvironmentalData
+    {
+        return $this->entityManager->getRepository(EnvironmentalData::class)->findOneBy([], ['id' => 'DESC']);
+    }
 }

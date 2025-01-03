@@ -42,9 +42,15 @@ class EnvironmentalDataService
 
         $this->repository->save($environmentalData);
 
-        // Check CO2 threshold and send email if necessary
-        if ($environmentalData->getCo2() > self::CO2_THRESHOLD) {
+        $currentCo2Value = $environmentalData->getCo2();
+        $lastCo2Value = $this->repository->getLastEntry()?->getCo2();
+
+        if ($currentCo2Value >= self::CO2_THRESHOLD && $lastCo2Value < self::CO2_THRESHOLD) {
             $this->notifyHighCo2($environmentalData);
+        }
+
+        if ($currentCo2Value < self::CO2_THRESHOLD && $lastCo2Value >= self::CO2_THRESHOLD) {
+            $this->notifyLowCo2($environmentalData);
         }
     }
 
@@ -84,6 +90,31 @@ class EnvironmentalDataService
             ->subject('High CO2 Alert!')
             ->text(sprintf(
                 "The CO2 level has exceeded the threshold of %d ppm.\n\nDetails:\n- CO2 Level: %d ppm\n- Measured At: %s",
+                self::CO2_THRESHOLD,
+                $environmentalData->getCo2(),
+                $environmentalData->getMeasuredAt()->format('Y-m-d H:i:s')
+            ));
+
+        try {
+            $this->mailer->send($email);
+        } catch (TransportExceptionInterface $exception) {
+            error_log('Email sending failed: '.$exception->getMessage());
+        }
+    }
+
+    /**
+     * Sends an email notification when CO2 levels drop below the defined threshold.
+     *
+     * @param EnvironmentalData $environmentalData Contains the CO2 level and measurement details.
+     */
+    private function notifyLowCo2(EnvironmentalData $environmentalData): void
+    {
+        $email = (new Email())
+            ->from('info@fabian-arndt.dev')
+            ->to('fabian.arndt96@proton.me')
+            ->subject('Low CO2 Alert!')
+            ->text(sprintf(
+                "The CO2 level is below the threshold of %d ppm.\n\nDetails:\n- CO2 Level: %d ppm\n- Measured At: %s",
                 self::CO2_THRESHOLD,
                 $environmentalData->getCo2(),
                 $environmentalData->getMeasuredAt()->format('Y-m-d H:i:s')
