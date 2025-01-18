@@ -7,43 +7,32 @@ use App\Repository\EnvironmentalDataRepository;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\Validator\Exception\ValidatorException;
 use DateTime;
 use InvalidArgumentException;
 
 class EnvironmentalDataService
 {
     private const CO2_THRESHOLD = 1000;
-    private const REQUIRED_FIELDS = ['temperature', 'humidity', 'pressure', 'co2', 'created'];
 
-    public function __construct(
-        private readonly EnvironmentalDataRepository $repository,
-        private readonly ValidatorInterface $validator,
-        private readonly MailerInterface $mailer
-    ) {}
+    private EnvironmentalDataRepository $repository;
+
+    private MailerInterface $mailer;
+
+    public function __construct(EnvironmentalDataRepository $repository, MailerInterface $mailer)
+    {
+        $this->repository = $repository;
+        $this->mailer = $mailer;
+    }
 
     public function saveEnvironmentalData(array $data): void
     {
-        if (!$this->hasAllRequiredFields($data)) {
-            throw new InvalidArgumentException('Incomplete data provided.');
-        }
-
-        $environmentalData = $this->createEnvironmentalDataFromArray($data);
-
-        $errors = $this->validator->validate($environmentalData);
-        if (count($errors) > 0) {
-            $errorMessages = [];
-            foreach ($errors as $error) {
-                $errorMessages[] = $error->getMessage();
-            }
-            throw new ValidatorException(implode('; ', $errorMessages));
-        }
+        $this->validate($data);
+        $environmentalData = $this->createEnvironmentalData($data);
 
         $this->repository->save($environmentalData);
 
-        $currentCo2Value = $environmentalData->getCo2();
-        $lastCo2Value = $this->repository->getLastEntry()?->getCo2();
+        $currentCo2Value = $environmentalData->getCarbonDioxide();
+        $lastCo2Value = $this->repository->getLastEntry()?->getCarbonDioxide();
 
         if ($currentCo2Value >= self::CO2_THRESHOLD && $lastCo2Value < self::CO2_THRESHOLD) {
             $this->notifyHighCo2($environmentalData);
@@ -54,27 +43,39 @@ class EnvironmentalDataService
         }
     }
 
-    private function hasAllRequiredFields(array $data): bool
+    private function validate(array $data): void
     {
-        return !array_diff(self::REQUIRED_FIELDS, array_keys($data));
-    }
-
-    private function createEnvironmentalDataFromArray(array $data): EnvironmentalData
-    {
-        $measuredAt = DateTime::createFromFormat('Y-m-d H:i:s', $data['created']);
-        if (!$measuredAt) {
+        if (!DateTime::createFromFormat('Y-m-d H:i:s', $data['created'])) {
             throw new InvalidArgumentException('Invalid date format for "created" field.');
         }
 
-        $environmentalData = new EnvironmentalData();
-        $environmentalData->setTemperature((float)$data['temperature']);
-        $environmentalData->setHumidity((float)$data['humidity']);
-        $environmentalData->setPressure((float)$data['pressure']);
-        $environmentalData->setCo2((float)$data['co2']);
-        $environmentalData->setMeasuredAt($measuredAt);
-        $environmentalData->setCreatedAt(new DateTime('now'));
+        if (!is_numeric($data['temperature'])) {
+            throw new InvalidArgumentException('Invalid type for "temperature". Expected a numeric value.');
+        }
 
-        return $environmentalData;
+        if (!is_numeric($data['humidity'])) {
+            throw new InvalidArgumentException('Invalid type for "humidity". Expected a numeric value.');
+        }
+
+        if (!is_numeric($data['pressure'])) {
+            throw new InvalidArgumentException('Invalid type for "pressure". Expected a numeric value.');
+        }
+
+        if (!is_numeric($data['co2'])) {
+            throw new InvalidArgumentException('Invalid type for "carbon dioxide". Expected a numeric value.');
+        }
+    }
+
+    private function createEnvironmentalData(array $data): EnvironmentalData
+    {
+        return new EnvironmentalData(
+            (float)$data['temperature'],
+            (float)$data['humidity'],
+            (float)$data['pressure'],
+            (float)$data['co2'],
+            DateTime::createFromFormat('Y-m-d H:i:s', $data['created']),
+            new DateTime('now')
+        );
     }
 
     /**
@@ -91,7 +92,7 @@ class EnvironmentalDataService
             ->text(sprintf(
                 "The CO2 level has exceeded the threshold of %d ppm.\n\nDetails:\n- CO2 Level: %d ppm\n- Measured At: %s",
                 self::CO2_THRESHOLD,
-                $environmentalData->getCo2(),
+                $environmentalData->getCarbonDioxide(),
                 $environmentalData->getMeasuredAt()->format('Y-m-d H:i:s')
             ));
 
@@ -116,7 +117,7 @@ class EnvironmentalDataService
             ->text(sprintf(
                 "The CO2 level is below the threshold of %d ppm.\n\nDetails:\n- CO2 Level: %d ppm\n- Measured At: %s",
                 self::CO2_THRESHOLD,
-                $environmentalData->getCo2(),
+                $environmentalData->getCarbonDioxide(),
                 $environmentalData->getMeasuredAt()->format('Y-m-d H:i:s')
             ));
 
