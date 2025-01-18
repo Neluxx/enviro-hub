@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -24,13 +24,29 @@ class EnvironmentalData
     private float $pressure;
 
     #[ORM\Column(type: "float")]
-    private float $co2;
+    private float $carbonDioxide;
 
     #[ORM\Column(type: "datetime")]
-    private DateTime $measuredAt;
+    private DateTimeInterface $measuredAt;
 
     #[ORM\Column(type: "datetime")]
-    private DateTime $createdAt;
+    private DateTimeInterface $createdAt;
+
+    public function __construct(
+        float $temperature,
+        float $humidity,
+        float $pressure,
+        float $carbonDioxide,
+        DateTimeInterface $measuredAt,
+        DateTimeInterface $createdAt
+    ) {
+        $this->temperature = $temperature;
+        $this->humidity = $humidity;
+        $this->pressure = $pressure;
+        $this->carbonDioxide = $carbonDioxide;
+        $this->measuredAt = $measuredAt;
+        $this->createdAt = $createdAt;
+    }
 
     public function getId(): ?int
     {
@@ -42,19 +58,9 @@ class EnvironmentalData
         return $this->temperature;
     }
 
-    public function setTemperature(float $temperature): void
-    {
-        $this->temperature = $temperature;
-    }
-
     public function getHumidity(): float
     {
         return $this->humidity;
-    }
-
-    public function setHumidity(float $humidity): void
-    {
-        $this->humidity = $humidity;
     }
 
     public function getPressure(): float
@@ -62,38 +68,18 @@ class EnvironmentalData
         return $this->pressure;
     }
 
-    public function setPressure(float $pressure): void
+    public function getCarbonDioxide(): float
     {
-        $this->pressure = $pressure;
+        return $this->carbonDioxide;
     }
 
-    public function getCo2(): float
-    {
-        return $this->co2;
-    }
-
-    public function setCo2(float $co2): void
-    {
-        $this->co2 = $co2;
-    }
-
-    public function getMeasuredAt(): DateTime
+    public function getMeasuredAt(): DateTimeInterface
     {
         return $this->measuredAt;
     }
 
-    public function setMeasuredAt(DateTime $measuredAt): void
-    {
-        $this->measuredAt = $measuredAt;
-    }
-
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
-    }
-
-    public function setCreatedAt(DateTime $createdAt): void
-    {
-        $this->createdAt = $createdAt;
     }
 }
