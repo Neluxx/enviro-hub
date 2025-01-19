@@ -7,7 +7,7 @@ use App\Repository\EnvironmentalDataRepository;
 use DateTime;
 use InvalidArgumentException;
 
-class EnvironmentalDataService
+class EnvironmentalDataApiService
 {
     private EnvironmentalDataRepository $repository;
     private EnvironmentalDataNotificationService $notificationService;
