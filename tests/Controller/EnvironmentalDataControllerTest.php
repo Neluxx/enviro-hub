@@ -28,7 +28,9 @@ class EnvironmentalDataControllerTest extends WebTestCase
             'created' => '2025-01-01 12:00:00',
         ];
 
-        $responseContent = $this->makeRequest('POST', $postData);
+        $validToken = 'your-valid-bearer-token';
+
+        $responseContent = $this->makeRequest('POST', $postData, $validToken);
 
         $this->assertArrayHasKey('message', $responseContent);
         self::assertResponseStatusCodeSame(Response::HTTP_CREATED);
@@ -42,7 +44,9 @@ class EnvironmentalDataControllerTest extends WebTestCase
     {
         $postData = 'invalid-json';
 
-        $responseContent = $this->makeRequest('POST', $postData);
+        $validToken = 'your-valid-bearer-token';
+
+        $responseContent = $this->makeRequest('POST', $postData, $validToken);
 
         $this->assertArrayHasKey('error', $responseContent);
         self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
@@ -58,7 +62,9 @@ class EnvironmentalDataControllerTest extends WebTestCase
             'temperature' => 25.5,
         ];
 
-        $responseContent = $this->makeRequest('POST', $postData);
+        $validToken = 'your-valid-bearer-token';
+
+        $responseContent = $this->makeRequest('POST', $postData, $validToken);
 
         $this->assertArrayHasKey('error', $responseContent);
         self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
@@ -78,7 +84,9 @@ class EnvironmentalDataControllerTest extends WebTestCase
             'created' => '2025-01-01 12:00:00',
         ];
 
-        $responseContent = $this->makeRequest('POST', $postData);
+        $validToken = 'your-valid-bearer-token';
+
+        $responseContent = $this->makeRequest('POST', $postData, $validToken);
 
         $this->assertArrayHasKey('error', $responseContent);
         self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -86,22 +94,71 @@ class EnvironmentalDataControllerTest extends WebTestCase
     }
 
     /**
+     * Tests missing Authorization header returns HTTP 401.
+     */
+    public function testRequestWithoutToken(): void
+    {
+        $postData = [
+            'temperature' => 25.5,
+            'humidity' => 60,
+            'pressure' => 1024,
+            'co2' => 450,
+            'created' => '2025-01-01 12:00:00',
+        ];
+
+        $responseContent = $this->makeRequest('POST', $postData);
+
+        $this->assertArrayHasKey('error', $responseContent);
+        self::assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
+        $this->assertStringContainsString('Missing or invalid Authorization header', $responseContent['error']);
+    }
+
+    /**
+     * Tests invalid token returns HTTP 401.
+     */
+    public function testRequestWithInvalidToken(): void
+    {
+        $postData = [
+            'temperature' => 25.5,
+            'humidity' => 60,
+            'pressure' => 1024,
+            'co2' => 450,
+            'created' => '2025-01-01 12:00:00',
+        ];
+
+        $invalidToken = 'invalid-token';
+
+        $responseContent = $this->makeRequest('POST', $postData, $invalidToken);
+
+        $this->assertArrayHasKey('error', $responseContent);
+        self::assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
+        $this->assertStringContainsString('Invalid token', $responseContent['error']);
+    }
+
+    /**
      * Reusable method for making requests and decoding responses.
      *
      * @param string $method HTTP method (e.g., 'POST')
      * @param array|string $data Request payload (JSON or raw string)
+     * @param string|null $token Optional bearer token
      *
      * @return array Decoded JSON response
      */
-    private function makeRequest(string $method, array|string $data): array
+    private function makeRequest(string $method, array|string $data, ?string $token = null): array
     {
         $client = static::createClient();
+
+        $headers = ['CONTENT_TYPE' => 'application/json'];
+        if ($token) {
+            $headers['HTTP_Authorization'] = 'Bearer ' . $token;
+        }
+
         $client->request(
             $method,
             self::API_ENDPOINT,
             [],
             [],
-            ['CONTENT_TYPE' => 'application/json'],
+            $headers,
             json_encode($data)
         );
 
