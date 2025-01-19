@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Service\EnvironmentalDataService;
+use App\Service\EnvironmentalDataApiService;
 use Exception;
 use InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,11 +11,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class EnvironmentalDataController extends AbstractController
+class EnvironmentalDataApiController extends AbstractController
 {
-    private EnvironmentalDataService $service;
+    private EnvironmentalDataApiService $service;
 
-    public function __construct(EnvironmentalDataService $service)
+    public function __construct(EnvironmentalDataApiService $service)
     {
         $this->service = $service;
     }
