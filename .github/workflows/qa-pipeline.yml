@@ -33,7 +33,6 @@ jobs:
       # Step 4: Create the test database schema and run migrations
       - name: Prepare Test Database
         run: |
-          php bin/console doctrine:database:create --env=test
           php bin/console doctrine:migrations:migrate --env=test --no-interaction
 
       # Step 5: Run PHP-CS-Fixer
