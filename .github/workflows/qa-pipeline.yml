@@ -1,0 +1,40 @@
+name: QA Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  qa-pipeline:
+    name: QA Pipeline
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Set up the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up PHP
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          tools: composer
+          extensions: sqlite3
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest --no-interaction
+
+      # Step 4: Run PHP-CS-Fixer
+      - name: Run PHP-CS-Fixer
+        run: vendor/bin/php-cs-fixer fix --dry-run --diff
+
+      # Step 5: Run PHPStan
+      - name: Run PHPStan
+        run: vendor/bin/phpstan analyse
+
+      # Step 6: Run PHPUnit
+      - name: Run Test Suite
+        run: vendor/bin/phpunit1.
