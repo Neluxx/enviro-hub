@@ -10,6 +10,9 @@ jobs:
     name: QA Pipeline
     runs-on: ubuntu-latest
 
+    env: # Global environment variables for this job
+      DATABASE_URL: "sqlite:///:memory:"
+
     steps:
       # Step 1: Set up the repository
       - name: Checkout code
