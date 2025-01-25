@@ -37,4 +37,4 @@ jobs:
 
       # Step 6: Run PHPUnit
       - name: Run Test Suite
-        run: vendor/bin/phpunit1.
+        run: vendor/bin/phpunit
