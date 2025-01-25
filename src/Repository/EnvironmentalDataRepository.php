@@ -21,9 +21,7 @@ class EnvironmentalDataRepository
     }
 
     /**
-     * Get the last EnvironmentalData entry
-     *
-     * @return EnvironmentalData|null
+     * Get the last EnvironmentalData entry.
      */
     public function getLastEntry(): ?EnvironmentalData
     {

@@ -44,12 +44,12 @@ class EnvironmentalDataNotificationService
 
     private function isCrossingHighThreshold(float $currentCo2Value, ?float $lastCo2Value): bool
     {
-        return $currentCo2Value >= self::CO2_THRESHOLD && ($lastCo2Value === null || $lastCo2Value < self::CO2_THRESHOLD);
+        return $currentCo2Value >= self::CO2_THRESHOLD && (null === $lastCo2Value || $lastCo2Value < self::CO2_THRESHOLD);
     }
 
     private function isCrossingLowThreshold(float $currentCo2Value, ?float $lastCo2Value): bool
     {
-        return $currentCo2Value < self::CO2_THRESHOLD && ($lastCo2Value === null || $lastCo2Value >= self::CO2_THRESHOLD);
+        return $currentCo2Value < self::CO2_THRESHOLD && (null === $lastCo2Value || $lastCo2Value >= self::CO2_THRESHOLD);
     }
 
     private function sendNotification(EnvironmentalData $environmentalData, string $subject, string $message): void
@@ -59,7 +59,7 @@ class EnvironmentalDataNotificationService
         try {
             $this->mailer->send($email);
         } catch (TransportExceptionInterface $exception) {
-            error_log('Email sending failed: ' . $exception->getMessage());
+            error_log('Email sending failed: '.$exception->getMessage());
         }
     }
 

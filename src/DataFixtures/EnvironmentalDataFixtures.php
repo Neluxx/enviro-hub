@@ -1,10 +1,10 @@
 <?php
+
 namespace App\DataFixtures;
 
 use App\Entity\EnvironmentalData;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use DateTime;
 
 class EnvironmentalDataFixtures extends Fixture
 {
@@ -49,8 +49,8 @@ class EnvironmentalDataFixtures extends Fixture
             $dataSample['humidity'],
             $dataSample['pressure'],
             $dataSample['carbonDioxide'],
-            new DateTime($dataSample['measuredAt']),
-            new DateTime('now')
+            new \DateTime($dataSample['measuredAt']),
+            new \DateTime('now')
         );
     }
 }

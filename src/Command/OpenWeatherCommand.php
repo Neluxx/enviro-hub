@@ -39,10 +39,12 @@ class OpenWeatherCommand extends Command
 
             $output->writeln(sprintf('Weather data for "%s" saved successfully.', $cityName));
         } catch (\RuntimeException $e) {
-            $output->writeln('<error>Error fetching weather data: ' . $e->getMessage() . '</error>');
+            $output->writeln('<error>Error fetching weather data: '.$e->getMessage().'</error>');
+
             return Command::FAILURE;
         } catch (\Exception $e) {
-            $output->writeln('<error>An unexpected error occurred: ' . $e->getMessage() . '</error>');
+            $output->writeln('<error>An unexpected error occurred: '.$e->getMessage().'</error>');
+
             return Command::FAILURE;
         }
 

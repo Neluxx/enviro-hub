@@ -138,9 +138,9 @@ class EnvironmentalDataControllerTest extends WebTestCase
     /**
      * Reusable method for making requests and decoding responses.
      *
-     * @param string $method HTTP method (e.g., 'POST')
-     * @param array|string $data Request payload (JSON or raw string)
-     * @param string|null $token Optional bearer token
+     * @param string       $method HTTP method (e.g., 'POST')
+     * @param array|string $data   Request payload (JSON or raw string)
+     * @param string|null  $token  Optional bearer token
      *
      * @return array Decoded JSON response
      */
@@ -150,7 +150,7 @@ class EnvironmentalDataControllerTest extends WebTestCase
 
         $headers = ['CONTENT_TYPE' => 'application/json'];
         if ($token) {
-            $headers['HTTP_Authorization'] = 'Bearer ' . $token;
+            $headers['HTTP_Authorization'] = 'Bearer '.$token;
         }
 
         $client->request(

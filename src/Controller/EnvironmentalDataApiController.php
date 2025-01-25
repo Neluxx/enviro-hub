@@ -4,11 +4,9 @@ namespace App\Controller;
 
 use App\Security\TokenAuthenticator;
 use App\Service\EnvironmentalDataApiService;
-use Exception;
-use InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -44,10 +42,11 @@ class EnvironmentalDataApiController extends AbstractController
 
         try {
             $this->service->saveEnvironmentalData($data);
+
             return $this->json(['message' => 'Data saved successfully'], Response::HTTP_CREATED);
-        } catch (InvalidArgumentException $exception) {
+        } catch (\InvalidArgumentException $exception) {
             return $this->json(['error' => $exception->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             return $this->json(['error' => $exception->getMessage()], Response::HTTP_BAD_REQUEST);
         }
     }

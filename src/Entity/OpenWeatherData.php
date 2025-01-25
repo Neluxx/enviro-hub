@@ -2,11 +2,10 @@
 
 namespace App\Entity;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-#[ORM\Table(name: "open_weather_data")]
+#[ORM\Table(name: 'open_weather_data')]
 class OpenWeatherData
 {
     #[ORM\Id]
@@ -60,16 +59,16 @@ class OpenWeatherData
     private ?int $cloudiness = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?DateTime $timestamp = null;
+    private ?\DateTime $timestamp = null;
 
     #[ORM\Column(type: 'string', length: 3, nullable: true)]
     private ?string $country = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?DateTime $sunrise = null;
+    private ?\DateTime $sunrise = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?DateTime $sunset = null;
+    private ?\DateTime $sunset = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $cityName = null;
@@ -77,8 +76,8 @@ class OpenWeatherData
     #[ORM\Column(type: 'integer', nullable: true)]
     private ?int $timezone = null;
 
-    #[ORM\Column(type: "datetime")]
-    private DateTime $createdAt;
+    #[ORM\Column(type: 'datetime')]
+    private \DateTime $createdAt;
 
     public function getId(): int
     {
@@ -235,12 +234,12 @@ class OpenWeatherData
         $this->cloudiness = $cloudiness;
     }
 
-    public function getTimestamp(): ?DateTime
+    public function getTimestamp(): ?\DateTime
     {
         return $this->timestamp;
     }
 
-    public function setTimestamp(?DateTime $timestamp): void
+    public function setTimestamp(?\DateTime $timestamp): void
     {
         $this->timestamp = $timestamp;
     }
@@ -255,22 +254,22 @@ class OpenWeatherData
         $this->country = $country;
     }
 
-    public function getSunrise(): ?DateTime
+    public function getSunrise(): ?\DateTime
     {
         return $this->sunrise;
     }
 
-    public function setSunrise(?DateTime $sunrise): void
+    public function setSunrise(?\DateTime $sunrise): void
     {
         $this->sunrise = $sunrise;
     }
 
-    public function getSunset(): ?DateTime
+    public function getSunset(): ?\DateTime
     {
         return $this->sunset;
     }
 
-    public function setSunset(?DateTime $sunset): void
+    public function setSunset(?\DateTime $sunset): void
     {
         $this->sunset = $sunset;
     }
@@ -295,12 +294,12 @@ class OpenWeatherData
         $this->timezone = $timezone;
     }
 
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTime $createdAt): void
+    public function setCreatedAt(\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
