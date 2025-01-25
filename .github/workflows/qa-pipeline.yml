@@ -27,17 +27,23 @@ jobs:
           extensions: sqlite3
 
       # Step 3: Install dependencies
-      - name: Install dependencies
+      - name: Install Composer Dependencies
         run: composer install --prefer-dist --no-progress --no-suggest --no-interaction
 
-      # Step 4: Run PHP-CS-Fixer
+      # Step 4: Create the test database schema and run migrations
+      - name: Prepare Test Database
+        run: |
+          php bin/console doctrine:database:create --env=test
+          php bin/console doctrine:migrations:migrate --env=test --no-interaction
+
+      # Step 5: Run PHP-CS-Fixer
       - name: Run PHP-CS-Fixer
         run: vendor/bin/php-cs-fixer fix --dry-run --diff
 
-      # Step 5: Run PHPStan
+      # Step 6: Run PHPStan
       - name: Run PHPStan
         run: vendor/bin/phpstan analyse
 
-      # Step 6: Run PHPUnit
+      # Step 7: Run PHPUnit
       - name: Run Test Suite
         run: vendor/bin/phpunit
