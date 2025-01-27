@@ -30,8 +30,11 @@ doctrine:
 when@test:
     doctrine:
         dbal:
-            # "TEST_TOKEN" is typically set by ParaTest
-            dbname_suffix: '_test%env(default::TEST_TOKEN)%'
+            driver: 'pdo_sqlite'
+            path: '%kernel.cache_dir%/test.db'
+        orm:
+            auto_generate_proxy_classes: true
+            auto_mapping: true
 
 when@prod:
     doctrine:
