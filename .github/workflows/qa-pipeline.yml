@@ -30,20 +30,24 @@ jobs:
       - name: Install Composer Dependencies
         run: composer install --prefer-dist --no-progress --no-suggest --no-interaction
 
-      # Step 4: Create the test database schema and validates it
+      # Step 4: Create the test database schema
       - name: Prepare Test Database
         run: |
           php bin/console doctrine:schema:create --env=test --no-interaction
+
+      # Step 5: Validate the test database schema
+      - name: Validate Test Database
+        run: |
           php bin/console doctrine:schema:validate --env=test --no-interaction
 
-      # Step 5: Run PHP-CS-Fixer
+      # Step 6: Run PHP-CS-Fixer
       - name: Run PHP-CS-Fixer
         run: vendor/bin/php-cs-fixer fix --dry-run --diff
 
-      # Step 6: Run PHPStan
+      # Step 7: Run PHPStan
       - name: Run PHPStan
         run: vendor/bin/phpstan analyse
 
-      # Step 7: Run PHPUnit
+      # Step 8: Run PHPUnit
       - name: Run Test Suite
         run: vendor/bin/phpunit
