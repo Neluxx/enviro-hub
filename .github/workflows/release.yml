@@ -1,0 +1,46 @@
+name: Create Release Package
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository Code
+        uses: actions/checkout@v3
+
+      - name: Extract Release Tag
+        id: release_tag
+        run: echo "TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Configure PHP Environment
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          extensions: intl, pdo_sqlite
+          tools: composer
+
+      - name: Install Production Dependencies
+        run: APP_ENV=prod composer install --no-dev --optimize-autoloader
+
+      - name: Package Release Artifact
+        run: zip -r ${{ env.TAG }}.zip . -x ".git*" ".github*" "tests*" "var/cache/*" "var/log/*"
+
+      - name: Publish GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.TAG }}
+          draft: false
+          prerelease: false
+          files: ${{ env.TAG }}.zip
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
