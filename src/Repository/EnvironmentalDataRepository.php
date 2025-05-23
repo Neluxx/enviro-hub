@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * Environmental Data Repository
+ * Environmental Data Repository.
  */
 class EnvironmentalDataRepository
 {

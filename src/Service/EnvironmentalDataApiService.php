@@ -7,7 +7,7 @@ use App\Repository\EnvironmentalDataRepository;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
- * Environmental Data API Service
+ * Environmental Data API Service.
  */
 class EnvironmentalDataApiService
 {
