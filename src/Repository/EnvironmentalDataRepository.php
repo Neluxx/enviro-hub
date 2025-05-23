@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\EnvironmentalData;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Environmental Data Repository
@@ -11,10 +12,12 @@ use Doctrine\ORM\EntityManagerInterface;
 class EnvironmentalDataRepository
 {
     private EntityManagerInterface $entityManager;
+    private EntityRepository $repository;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
+        $this->repository = $this->entityManager->getRepository(EnvironmentalData::class);
     }
 
     /**
@@ -36,7 +39,7 @@ class EnvironmentalDataRepository
      */
     public function getLastEntry(): ?EnvironmentalData
     {
-        return $this->entityManager->getRepository(EnvironmentalData::class)->findOneBy([], ['id' => 'DESC']);
+        return $this->repository->findOneBy([], ['id' => 'DESC']);
     }
 
     /**
@@ -46,6 +49,6 @@ class EnvironmentalDataRepository
      */
     public function getLatestEntries(): array
     {
-        return $this->entityManager->getRepository(EnvironmentalData::class)->findBy([], ['id' => 'DESC'], 1000);
+        return $this->repository->findBy([], ['id' => 'DESC'], 1000);
     }
 }
