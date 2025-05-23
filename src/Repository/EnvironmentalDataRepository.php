@@ -22,9 +22,6 @@ class EnvironmentalDataRepository
 
     /**
      * Save EnvironmentalData entry.
-     *
-     * @param EnvironmentalData $environmentalData
-     * @return void
      */
     public function save(EnvironmentalData $environmentalData): void
     {
@@ -34,8 +31,6 @@ class EnvironmentalDataRepository
 
     /**
      * Get the last EnvironmentalData entry.
-     *
-     * @return EnvironmentalData|null
      */
     public function getLastEntry(): ?EnvironmentalData
     {
