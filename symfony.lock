@@ -35,7 +35,7 @@
         ]
     },
     "doctrine/doctrine-fixtures-bundle": {
-        "version": "3.6",
+        "version": "3.7",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -47,7 +47,7 @@
         ]
     },
     "doctrine/doctrine-migrations-bundle": {
-        "version": "3.3",
+        "version": "3.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -60,7 +60,7 @@
         ]
     },
     "friendsofphp/php-cs-fixer": {
-        "version": "3.66",
+        "version": "3.75",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -93,13 +93,13 @@
         },
         "files": [
             ".env.test",
-            "bin/phpunit",
             "phpunit.dist.xml",
-            "tests/bootstrap.php"
+            "tests/bootstrap.php",
+            "bin/phpunit"
         ]
     },
     "symfony/asset-mapper": {
-        "version": "7.1",
+        "version": "7.3",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -114,7 +114,7 @@
         ]
     },
     "symfony/console": {
-        "version": "7.1",
+        "version": "7.3",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -126,7 +126,7 @@
         ]
     },
     "symfony/debug-bundle": {
-        "version": "7.1",
+        "version": "7.3",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -171,7 +171,6 @@
             "ref": "5a1497d539f691b96afd45ae397ce5fe30beb4b9"
         },
         "files": [
-            ".editorconfig",
             "config/packages/cache.yaml",
             "config/packages/framework.yaml",
             "config/preload.php",
@@ -179,11 +178,12 @@
             "config/services.yaml",
             "public/index.php",
             "src/Controller/.gitignore",
-            "src/Kernel.php"
+            "src/Kernel.php",
+            ".editorconfig"
         ]
     },
     "symfony/mailer": {
-        "version": "7.1",
+        "version": "7.3",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -195,7 +195,7 @@
         ]
     },
     "symfony/maker-bundle": {
-        "version": "1.61",
+        "version": "1.63",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -204,7 +204,7 @@
         }
     },
     "symfony/messenger": {
-        "version": "7.1",
+        "version": "7.3",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -228,7 +228,7 @@
         ]
     },
     "symfony/notifier": {
-        "version": "7.1",
+        "version": "7.3",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -252,7 +252,7 @@
         ]
     },
     "symfony/routing": {
-        "version": "7.1",
+        "version": "7.3",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -265,7 +265,7 @@
         ]
     },
     "symfony/security-bundle": {
-        "version": "7.1",
+        "version": "7.3",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -306,7 +306,7 @@
         ]
     },
     "symfony/twig-bundle": {
-        "version": "7.1",
+        "version": "7.3",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -319,7 +319,7 @@
         ]
     },
     "symfony/ux-chartjs": {
-        "version": "v2.25.2"
+        "version": "v2.26.1"
     },
     "symfony/ux-turbo": {
         "version": "2.26",
@@ -331,7 +331,7 @@
         }
     },
     "symfony/validator": {
-        "version": "7.1",
+        "version": "7.3",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -356,6 +356,6 @@
         ]
     },
     "twig/extra-bundle": {
-        "version": "v3.15.0"
+        "version": "v3.21.0"
     }
 }
