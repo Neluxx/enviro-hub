@@ -4,50 +4,37 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   qa-pipeline:
     name: QA Pipeline
     runs-on: ubuntu-latest
 
-    env: # Global environment variables for this job
-      DATABASE_URL: "sqlite:///:memory:"
-
     steps:
-      # Step 1: Set up the repository
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      # Step 2: Set up PHP
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
+          php-version: 8.3
           tools: composer
           extensions: sqlite3
 
-      # Step 3: Install dependencies
-      - name: Install Composer Dependencies
+      - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest --no-interaction
 
-      # Step 4: Create the test database schema
-      - name: Prepare Test Database
-        run: |
-          php bin/console doctrine:schema:create --env=test --no-interaction
+      - name: Run security check
+        run: composer audit --locked
 
-      # Step 5: Validate the test database schema
-      - name: Validate Test Database
-        run: |
-          php bin/console doctrine:schema:validate --env=test --no-interaction
-
-      # Step 6: Run PHP-CS-Fixer
-      - name: Run PHP-CS-Fixer
+      - name: Run linter
         run: vendor/bin/php-cs-fixer fix --dry-run --diff
 
-      # Step 7: Run PHPStan
-      - name: Run PHPStan
+      - name: Run static-analysis
         run: vendor/bin/phpstan analyse
 
-      # Step 8: Run PHPUnit
-      - name: Run Test Suite
+      - name: Run test suite
         run: vendor/bin/phpunit

@@ -1,4 +1,4 @@
-name: Create Release Package
+name: Create Release
 
 on:
   push:
@@ -8,39 +8,54 @@ on:
 permissions:
   contents: write
 
+env:
+  PHP_VERSION: '8.3'
+  EXCLUDE_PATHS: >
+    -x '.git*' 
+    -x '.github*' 
+    -x 'tests*' 
+    -x 'var/cache/*' 
+    -x 'var/log/*'
+
 jobs:
-  build-release:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository Code
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Extract Release Tag
-        id: release_tag
+      - name: Extract tag
+        id: tag
         run: echo "TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
-      - name: Configure PHP Environment
+      - name: Set release date
+        id: date
+        run: echo "RELEASE_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
+      - name: Configure PHP environment
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
+          php-version: ${{ env.PHP_VERSION }}
           extensions: intl, pdo_sqlite
           tools: composer
 
-      - name: Install Production Dependencies
+      - name: Install dependencies for production
         run: APP_ENV=prod composer install --no-dev --optimize-autoloader
 
-      - name: Package Release Artifact
-        run: zip -r ${{ env.TAG }}.zip . -x ".git*" ".github*" "tests*" "var/cache/*" "var/log/*"
+      - name: Create release artifact
+        run: |
+          ZIP_NAME="${{ env.RELEASE_DATE }}_${{ env.TAG }}.zip"
+          zip -r "$ZIP_NAME" . ${{ env.EXCLUDE_PATHS }}
+          echo "ARTIFACT=$ZIP_NAME" >> $GITHUB_ENV
 
-      - name: Publish GitHub Release
+      - name: Publish GitHub release
         id: create_release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.TAG }}
           draft: false
           prerelease: false
-          files: ${{ env.TAG }}.zip
+          files: ${{ env.ARTIFACT }}
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
