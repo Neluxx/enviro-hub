@@ -1,3 +1,4 @@
+
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
@@ -10,7 +11,7 @@
 
 ###> phpunit/phpunit ###
 /phpunit.xml
-.phpunit.result.cache
+/.phpunit.cache/
 ###< phpunit/phpunit ###
 
 ###> symfony/asset-mapper ###
@@ -18,15 +19,14 @@
 /assets/vendor/
 ###< symfony/asset-mapper ###
 
-###> local config for IDE ###
+### Ignore local config for JetBrains IDE
 .idea/
-###< local config for IDE ###
-
-###> phpstan/phpstan ###
-phpstan.neon
-###< phpstan/phpstan ###
 
 ###> friendsofphp/php-cs-fixer ###
 /.php-cs-fixer.php
 /.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###

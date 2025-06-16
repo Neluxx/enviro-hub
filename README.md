@@ -3,41 +3,35 @@
 
 Symfony-based API for storing, processing, and alerting based on environmental sensor data from distributed nodes.
 
+## Requirements
 
-## Tech Stack
+Ensure these tools are installed on your system:
 
-- PHP 8.2
-- Symfony 7.2
-- PicoCSS
-- HTMX
+- [Git](https://git-scm.com/downloads) (for version control and collaboration)
+- [Make](https://wiki.ubuntuusers.de/Makefile/) (to run setup and dev tasks)
+- [DDEV](https://ddev.readthedocs.io/en/stable/) (for local Symfony dev environment)
 
+## Setup
 
-## Installation
+1. Check out the [repository](https://github.com/Neluxx/enviro-hub-symfony.git): ``git clone git@github.com:Neluxx/enviro-hub-symfony.git``
 
-Clone the project
+2. Navigate to the project directory: ``cd enviro-hub-symfony``
 
-```bash
-  git clone https://github.com/Neluxx/enviro-hub-symfony.git
-```
+3. Run application setup task: ``make app-setup``
 
-Go to the project directory
+4. Start DDEV to run the application: ``ddev start``
 
-```bash
-  cd enviro-hub-symfony
-```
+## Releasing
 
-Install dependencies
+See the [release guide](docs/Releasing.md).
 
-```bash
-  composer install
-```
+## Deployment
 
-Start the server with Symfony CLI
+See the [deployment guide](docs/Deployment.md).
 
-```bash
-  symfony server:start
-```
+## Contributions
 
+Have ideas or found a bug? Contributions are welcome! Feel free to fork the project and submit pull requests.
 
 ## API Reference
 
@@ -55,9 +49,6 @@ Start the server with Symfony CLI
 | `co2` | `float` | **Required**. The CO₂ level in ppm. |
 | `created` | `datetime` | **Required**. The time of the measurement. |
 
-
-
 ## License
 
-[Apache License 2.0](https://github.com/Neluxx/enviro-hub-symfony/blob/main/LICENSE)
-
+This project is licensed under the [Apache License 2.0](LICENSE).
