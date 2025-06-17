@@ -27,6 +27,14 @@ class EnvironmentalDataApiService
 
     public function saveEnvironmentalData(array $data): void
     {
+        $requiredFields = ['temperature', 'humidity', 'pressure', 'co2', 'created'];
+
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field])) {
+                throw new \InvalidArgumentException("Undefined array key \"$field\"");
+            }
+        }
+
         $environmentalData = $this->createEnvironmentalData($data);
 
         $errors = $this->validator->validate($environmentalData);
@@ -44,12 +52,18 @@ class EnvironmentalDataApiService
 
     private function createEnvironmentalData(array $data): EnvironmentalData
     {
+        $created = \DateTime::createFromFormat('Y-m-d H:i:s', $data['created']);
+
+        if (false === $created) {
+            throw new \InvalidArgumentException('Invalid date format for "created". Expected format: Y-m-d H:i:s');
+        }
+
         return new EnvironmentalData(
             (float) $data['temperature'],
             (float) $data['humidity'],
             (float) $data['pressure'],
             (float) $data['co2'],
-            \DateTime::createFromFormat('Y-m-d H:i:s', $data['created']),
+            $created,
             new \DateTime('now')
         );
     }
