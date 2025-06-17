@@ -1,5 +1,5 @@
 
-# enviro-hub-symfony
+# enviro-hub
 
 Symfony-based API for storing, processing, and alerting based on environmental sensor data from distributed nodes.
 
@@ -13,9 +13,9 @@ Ensure these tools are installed on your system:
 
 ## Setup
 
-1. Check out the [repository](https://github.com/Neluxx/enviro-hub-symfony.git): ``git clone git@github.com:Neluxx/enviro-hub-symfony.git``
+1. Check out the [repository](https://github.com/Neluxx/enviro-hub.git): ``git clone git@github.com:Neluxx/enviro-hub.git``
 
-2. Navigate to the project directory: ``cd enviro-hub-symfony``
+2. Navigate to the project directory: ``cd enviro-hub``
 
 3. Run application setup task: ``make app-setup``
 
