@@ -54,7 +54,7 @@ class EnvironmentalDataControllerTest extends WebTestCase
     }
 
     /**
-     * Tests missing required fields returns HTTP 400.
+     * Tests missing required fields returns HTTP 422.
      */
     public function testSavingDataWithMissingFields(): void
     {
@@ -67,7 +67,7 @@ class EnvironmentalDataControllerTest extends WebTestCase
         $responseContent = $this->makeRequest('POST', $postData, $validToken);
 
         $this->assertArrayHasKey('error', $responseContent);
-        self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
+        self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
         $this->assertStringContainsString('Undefined array key "humidity"', $responseContent['error']);
     }
 
