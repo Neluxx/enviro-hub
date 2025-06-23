@@ -29,6 +29,14 @@ class EnvironmentalDataApiService
         $this->notificationService = $notificationService;
     }
 
+    /**
+     * Save environmental data from API response data.
+     *
+     * @param array<string, mixed> $data
+     *
+     * @throws InvalidArgumentException if required fields are missing or data is invalid
+     * @throws InvalidArgumentException if validation fails
+     */
     public function saveEnvironmentalData(array $data): void
     {
         $requiredFields = ['temperature', 'humidity', 'pressure', 'co2', 'created'];
@@ -55,6 +63,11 @@ class EnvironmentalDataApiService
         $this->repository->save($environmentalData);
     }
 
+    /**
+     * Create environmental data object from API response data.
+     *
+     * @param array<string, mixed> $data
+     */
     private function createEnvironmentalData(array $data): EnvironmentalData
     {
         $created = DateTime::createFromFormat('Y-m-d H:i:s', $data['created']);

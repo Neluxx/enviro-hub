@@ -142,10 +142,10 @@ class EnvironmentalDataControllerTest extends WebTestCase
      * Reusable method for making requests and decoding responses.
      *
      * @param string $method HTTP method (e.g., 'POST')
-     * @param array|string $data Request payload (JSON or raw string)
+     * @param array<string, mixed>|string $data Request payload (JSON or raw string)
      * @param string|null $token Optional bearer token
      *
-     * @return array Decoded JSON response
+     * @return array<string, mixed> Decoded JSON response
      */
     private function makeRequest(string $method, array|string $data, ?string $token = null): array
     {

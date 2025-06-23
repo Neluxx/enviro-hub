@@ -14,6 +14,8 @@ use Doctrine\ORM\EntityRepository;
 class EnvironmentalDataRepository
 {
     private EntityManagerInterface $entityManager;
+
+    /** @var EntityRepository<EnvironmentalData> */
     private EntityRepository $repository;
 
     public function __construct(EntityManagerInterface $entityManager)

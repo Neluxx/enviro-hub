@@ -71,7 +71,7 @@ class OpenWeatherDataService
     /**
      * Creates an OpenWeatherData object from an array of weather data.
      *
-     * @param array $data the associative array containing weather data retrieved from the API
+     * @param array<string, mixed> $data the associative array containing weather data retrieved from the API
      *
      * @throws InvalidArgumentException if required keys are missing or data is invalid
      * @throws Exception if there is an issue creating the DateTime object for the `createdAt` property

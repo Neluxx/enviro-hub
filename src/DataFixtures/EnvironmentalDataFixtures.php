@@ -8,6 +8,7 @@ use App\Entity\EnvironmentalData;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Exception;
 
 class EnvironmentalDataFixtures extends Fixture
 {
@@ -45,6 +46,13 @@ class EnvironmentalDataFixtures extends Fixture
         $manager->flush();
     }
 
+    /**
+     * Create environmental data from data sample.
+     *
+     * @param array<string, mixed> $dataSample
+     *
+     * @throws Exception
+     */
     private function createEnvironmentalData(array $dataSample): EnvironmentalData
     {
         return new EnvironmentalData(
