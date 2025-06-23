@@ -86,9 +86,9 @@ class EnvironmentalDataControllerTest extends WebTestCase
         $responseContent = $this->makeRequest('POST', $postData, $validToken);
 
         $this->markTestIncomplete('Validation is missing.');
-        $this->assertArrayHasKey('error', $responseContent);
-        self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
-        $this->assertStringContainsString('Invalid type for "temperature". Expected a numeric value.', $responseContent['error']);
+        // $this->assertArrayHasKey('error', $responseContent);
+        // self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
+        // $this->assertStringContainsString('Invalid type for "temperature". Expected a numeric value.', $responseContent['error']);
     }
 
     /**
