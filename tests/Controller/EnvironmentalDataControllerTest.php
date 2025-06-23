@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Controller;
 
 use App\Kernel;
@@ -9,11 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 class EnvironmentalDataControllerTest extends WebTestCase
 {
     private const API_ENDPOINT = '/api/environmental-data';
-
-    protected static function getKernelClass(): string
-    {
-        return Kernel::class;
-    }
 
     /**
      * Tests valid data is saved successfully, returning HTTP 201.
@@ -136,12 +133,17 @@ class EnvironmentalDataControllerTest extends WebTestCase
         $this->assertStringContainsString('Invalid token', $responseContent['error']);
     }
 
+    protected static function getKernelClass(): string
+    {
+        return Kernel::class;
+    }
+
     /**
      * Reusable method for making requests and decoding responses.
      *
-     * @param string       $method HTTP method (e.g., 'POST')
-     * @param array|string $data   Request payload (JSON or raw string)
-     * @param string|null  $token  Optional bearer token
+     * @param string $method HTTP method (e.g., 'POST')
+     * @param array|string $data Request payload (JSON or raw string)
+     * @param string|null $token Optional bearer token
      *
      * @return array Decoded JSON response
      */
@@ -150,6 +152,7 @@ class EnvironmentalDataControllerTest extends WebTestCase
         $client = static::createClient();
 
         $headers = ['CONTENT_TYPE' => 'application/json'];
+
         if ($token) {
             $headers['HTTP_Authorization'] = 'Bearer '.$token;
         }

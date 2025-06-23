@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Command;
 
 use App\Service\OpenWeatherDataService;
+use Exception;
+use RuntimeException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -37,12 +41,12 @@ class OpenWeatherCommand extends Command
             $weatherData = $this->weatherDataService->fetchWeatherData($cityName);
             $this->weatherDataService->saveWeatherData($weatherData);
 
-            $output->writeln(sprintf('Weather data for "%s" saved successfully.', $cityName));
-        } catch (\RuntimeException $e) {
+            $output->writeln(\sprintf('Weather data for "%s" saved successfully.', $cityName));
+        } catch (RuntimeException $e) {
             $output->writeln('<error>Error fetching weather data: '.$e->getMessage().'</error>');
 
             return Command::FAILURE;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $output->writeln('<error>An unexpected error occurred: '.$e->getMessage().'</error>');
 
             return Command::FAILURE;

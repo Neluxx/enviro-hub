@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use App\Entity\EnvironmentalData;
@@ -26,14 +28,14 @@ class EnvironmentalDataNotificationService
         $lastCo2Value = $previousData?->getCarbonDioxide();
 
         if ($this->isCrossingHighThreshold($currentCo2Value, $lastCo2Value)) {
-            $this->sendNotification($currentData, 'High CO2 Alert!', sprintf(
+            $this->sendNotification($currentData, 'High CO2 Alert!', \sprintf(
                 "The CO2 level has exceeded the threshold of %d ppm.\n\nDetails:\n- CO2 Level: %d ppm\n- Measured At: %s",
                 self::CO2_THRESHOLD,
                 $currentCo2Value,
                 $currentData->getMeasuredAt()->format('Y-m-d H:i:s')
             ));
         } elseif ($this->isCrossingLowThreshold($currentCo2Value, $lastCo2Value)) {
-            $this->sendNotification($currentData, 'Low CO2 Alert!', sprintf(
+            $this->sendNotification($currentData, 'Low CO2 Alert!', \sprintf(
                 "The CO2 level is below the threshold of %d ppm.\n\nDetails:\n- CO2 Level: %d ppm\n- Measured At: %s",
                 self::CO2_THRESHOLD,
                 $currentCo2Value,

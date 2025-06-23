@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -26,18 +29,18 @@ class EnvironmentalData
     private float $carbonDioxide;
 
     #[ORM\Column(type: 'datetime')]
-    private \DateTimeInterface $measuredAt;
+    private DateTimeInterface $measuredAt;
 
     #[ORM\Column(type: 'datetime')]
-    private \DateTimeInterface $createdAt;
+    private DateTimeInterface $createdAt;
 
     public function __construct(
         float $temperature,
         float $humidity,
         float $pressure,
         float $carbonDioxide,
-        \DateTimeInterface $measuredAt,
-        \DateTimeInterface $createdAt,
+        DateTimeInterface $measuredAt,
+        DateTimeInterface $createdAt,
     ) {
         $this->temperature = $temperature;
         $this->humidity = $humidity;
@@ -72,12 +75,12 @@ class EnvironmentalData
         return $this->carbonDioxide;
     }
 
-    public function getMeasuredAt(): \DateTimeInterface
+    public function getMeasuredAt(): DateTimeInterface
     {
         return $this->measuredAt;
     }
 
-    public function getCreatedAt(): \DateTimeInterface
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }
