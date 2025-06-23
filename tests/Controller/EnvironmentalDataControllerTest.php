@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Tests\Controller;
 
 use App\Kernel;
+
+use JsonException;
+use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -145,6 +148,8 @@ class EnvironmentalDataControllerTest extends WebTestCase
      * @param array<string, mixed>|string $data Request payload (JSON or raw string)
      * @param string|null $token Optional bearer token
      *
+     * @throws JsonException
+     *
      * @return array<string, mixed> Decoded JSON response
      */
     private function makeRequest(string $method, array|string $data, ?string $token = null): array
@@ -157,15 +162,23 @@ class EnvironmentalDataControllerTest extends WebTestCase
             $headers['HTTP_Authorization'] = 'Bearer '.$token;
         }
 
+        $jsonPayload = \is_array($data) ? json_encode($data, \JSON_THROW_ON_ERROR) : $data;
+
         $client->request(
             $method,
             self::API_ENDPOINT,
             [],
             [],
             $headers,
-            json_encode($data)
+            $jsonPayload
         );
 
-        return json_decode($client->getResponse()->getContent(), true);
+        $responseContent = $client->getResponse()->getContent();
+
+        if (!\is_string($responseContent)) {
+            throw new RuntimeException('Invalid response content');
+        }
+
+        return json_decode($responseContent, true, 512, \JSON_THROW_ON_ERROR);
     }
 }
