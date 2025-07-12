@@ -46,12 +46,15 @@ jobs:
           APP_ENV=prod composer install ${{ env.COMPOSER_FLAGS }}
 
       # Release preparation
+      - name: Extract repository name
+        run: echo "REPOSITORY_NAME=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
+
       - name: Extract version tag
         run: echo "RELEASE_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
       - name: Create release archive
         run: |
-          ARCHIVE_NAME="${{ env.RELEASE_TAG }}.zip"
+          ARCHIVE_NAME="${{ env.REPOSITORY_NAME }}_${{ env.RELEASE_TAG }}.zip"
           zip -r "$ARCHIVE_NAME" . ${{ env.ARTIFACT_EXCLUDE_PATHS }}
           echo "RELEASE_ARTIFACT=$ARCHIVE_NAME" >> $GITHUB_ENV
 
