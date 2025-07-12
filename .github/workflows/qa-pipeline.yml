@@ -1,50 +1,56 @@
-name: QA Pipeline
-
+name: Quality Assurance
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
+
+env:
+  PHP_VERSION: '8.3'
+  DATABASE_PATH: 'var/data'
+  TEST_ENV: 'test'
 
 jobs:
-  qa-pipeline:
-    name: QA Pipeline
+  quality-checks:
+    name: Quality Checks
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      # Setup Environment
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up PHP
+      - name: Configure PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.3
+          php-version: ${{ env.PHP_VERSION }}
           tools: composer
           extensions: sqlite3
 
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest --no-interaction
+      - name: Install Dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
 
-      - name: Run security check
+      # Security & Code Quality
+      - name: Security Check
         run: composer audit --locked
 
-      - name: Run linter
+      - name: Code Style Check
         run: vendor/bin/php-cs-fixer fix src --dry-run --diff --using-cache=no
 
-      - name: Run static-analysis
+      - name: Static Analysis
         run: vendor/bin/phpstan analyse src
 
-      - name: Prepare database directory
+      # Test Environment Setup
+      - name: Initialize Database Directory
         run: |
-            mkdir -p var/data
-            chmod -R 777 var/
+          mkdir -p ${{ env.DATABASE_PATH }}
+          chmod -R 777 var/
 
-      - name: Prepare test environment
+      - name: Setup Test Database
         run: |
-            php bin/console doctrine:database:create --env=test
-            php bin/console doctrine:schema:create --env=test
+          php bin/console doctrine:database:create --env=${{ env.TEST_ENV }}
+          php bin/console doctrine:schema:create --env=${{ env.TEST_ENV }}
 
-      - name: Run test suite
+      # Testing
+      - name: Execute Test Suite
         run: vendor/bin/phpunit --colors=always
