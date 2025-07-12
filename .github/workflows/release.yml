@@ -2,35 +2,36 @@ name: Create Release
 
 on:
   push:
-    tags:
-      - 'v*'
+    tags: [ 'v*' ]
 
 permissions:
   contents: write
 
 env:
+  # Build configuration
   PHP_VERSION: '8.3'
-  EXCLUDE_PATHS: >
-    -x '.git*' 
-    -x '.github*' 
-    -x 'tests*' 
-    -x 'var/cache/*' 
+  COMPOSER_FLAGS: '--no-dev --optimize-autoloader'
+
+  # Release configuration
+  RELEASE_TYPE: 'stable'
+  RELEASE_DRAFT: false
+  RELEASE_PRERELEASE: false
+
+  # Artifact configuration
+  ARTIFACT_EXCLUDE_PATHS: >-
+    -x '.git*'
+    -x '.github*'
+    -x 'tests*'
+    -x 'var/cache/*'
     -x 'var/log/*'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      # Setup phase
+      - name: Checkout source code
         uses: actions/checkout@v4
-
-      - name: Extract tag
-        id: tag
-        run: echo "TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
-
-      - name: Set release date
-        id: date
-        run: echo "RELEASE_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
 
       - name: Configure PHP environment
         uses: shivammathur/setup-php@v2
@@ -39,23 +40,29 @@ jobs:
           extensions: intl, pdo_sqlite
           tools: composer
 
-      - name: Install dependencies for production
-        run: APP_ENV=prod composer install --no-dev --optimize-autoloader
-
-      - name: Create release artifact
+      # Build phase
+      - name: Install production dependencies
         run: |
-          ZIP_NAME="${{ env.RELEASE_DATE }}_${{ env.TAG }}.zip"
-          zip -r "$ZIP_NAME" . ${{ env.EXCLUDE_PATHS }}
-          echo "ARTIFACT=$ZIP_NAME" >> $GITHUB_ENV
+          APP_ENV=prod composer install ${{ env.COMPOSER_FLAGS }}
 
-      - name: Publish GitHub release
-        id: create_release
+      # Release preparation
+      - name: Extract version tag
+        run: echo "RELEASE_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Create release archive
+        run: |
+          ARCHIVE_NAME="${{ env.RELEASE_TAG }}.zip"
+          zip -r "$ARCHIVE_NAME" . ${{ env.ARTIFACT_EXCLUDE_PATHS }}
+          echo "RELEASE_ARTIFACT=$ARCHIVE_NAME" >> $GITHUB_ENV
+
+      # Release publication
+      - name: Publish release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ env.TAG }}
-          draft: false
-          prerelease: false
-          files: ${{ env.ARTIFACT }}
+          tag_name: ${{ env.RELEASE_TAG }}
+          draft: ${{ env.RELEASE_DRAFT }}
+          prerelease: ${{ env.RELEASE_PRERELEASE }}
+          files: ${{ env.RELEASE_ARTIFACT }}
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
