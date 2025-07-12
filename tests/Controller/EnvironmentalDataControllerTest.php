@@ -32,6 +32,8 @@ class EnvironmentalDataControllerTest extends WebTestCase
 
         $responseContent = $this->makeRequest('POST', $postData, $validToken);
 
+        var_dump($responseContent);
+
         $this->assertArrayHasKey('message', $responseContent);
         self::assertResponseStatusCodeSame(Response::HTTP_CREATED);
         $this->assertStringContainsString('Data saved successfully', $responseContent['message']);
