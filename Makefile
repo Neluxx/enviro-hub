@@ -8,6 +8,23 @@ COMPOSER = ddev composer
 PHPUNIT = vendor/bin/phpunit
 PHPSTAN = vendor/bin/phpstan
 CSFIXER = vendor/bin/php-cs-fixer
+MAKEFLAGS += --no-print-directory
+MAKEFLAGS += --silent
+
+# -------- ANSI Color Codes --------
+RESET   := \033[0m\n
+BLACK   := \033[1;30m
+RED     := \033[1;31m
+GREEN   := \033[1;32m
+YELLOW  := \033[1;33m
+BLUE    := \033[1;34m
+MAGENTA := \033[1;35m
+CYAN    := \033[1;36m
+WHITE   := \033[1;37m
+
+INFO    := $(BLUE)\n[INFO]
+WARNING := $(YELLOW)\n[WARNING]
+ERROR   := $(RED)\n[ERROR]
 
 # -------- Default-Target --------
 .PHONY: help
@@ -15,14 +32,16 @@ help:
 	@echo "Development:"
 	@echo "  app-setup    — Set up application"
 	@echo "  git-update   — Update the git project"
-	@echo "  update-dev   — Update dev environment"
-	@echo "  full-test    — Run tests and linting"
+	@echo "  update       — Update dev environment"
+	@echo "  full-update  — Update with tests"
+	@echo "  reset-update — Update with DB reset"
+	@echo "  build        — Build release artifact"
 	@echo ""
 	@echo "Composer:"
-	@echo "  install      — Install dependencies"
-	@echo "  update       — Update dependencies"
-	@echo "  selfupdate   — Self-update Composer"
-	@echo "  recipes      — Update symfony recipes"
+	@echo "  cp-install      — Install dependencies"
+	@echo "  cp-update       — Update dependencies"
+	@echo "  cp-selfupdate   — Self-update Composer"
+	@echo "  cp-recipes      — Update symfony recipes"
 	@echo ""
 	@echo "Database:"
 	@echo "  db-create    — Create local database"
@@ -46,8 +65,8 @@ help:
 # -------- Development --------
 .PHONY: app-setup
 app-setup:
-	$(MAKE) selfupdate
-	$(MAKE) install
+	$(MAKE) cp-selfupdate
+	$(MAKE) cp-install
 	$(MAKE) db-reset
 	$(MAKE) test
 
@@ -55,45 +74,62 @@ app-setup:
 git-update:
 	git pull
 
-.PHONY: update-dev
-update-dev:
+.PHONY: update
+update:
+	@echo "$(INFO) Update dev environment $(RESET)"
 	$(MAKE) git-update
-	$(MAKE) selfupdate
-	$(MAKE) install
+	$(MAKE) cp-selfupdate
+	$(MAKE) cp-install
 	$(MAKE) migrate
 	$(MAKE) test
 
-.PHONY: full-test
-full-test:
-	$(MAKE) test
+.PHONY: full-update
+full-update:
+	$(MAKE) update
 	$(MAKE) stan
 	$(MAKE) cs-fix
 
+.PHONY: reset-update
+reset-update:
+	$(MAKE) update
+	$(MAKE) db-reset
+
+.PHONY: build
+build:
+	@echo "$(INFO) Build release artifact $(RESET)"
+	@echo "$(ERROR) Not implemented yet! $(RESET)"
+
 # -------- Composer --------
-.PHONY: install
-install:
+.PHONY: cp-install
+cp-install:
+	@echo "$(INFO) Install composer dependencies $(RESET)"
 	$(COMPOSER) -V
 	$(COMPOSER) install --optimize-autoloader
 
-.PHONY: update
-update:
+.PHONY: cp-update
+cp-update:
+	@echo "$(INFO) Update composer dependencies $(RESET)"
 	$(COMPOSER) update
 
-.PHONY: selfupdate
-selfupdate:
-	$(COMPOSER) selfupdate --2
+.PHONY: cp-selfupdate
+cp-selfupdate:
+	@echo "$(INFO) Update composer $(RESET)"
+	$(COMPOSER) self-update --2
 
-.PHONY: recipes
-recipes:
+.PHONY: cp-recipes
+cp-recipes:
+	@echo "$(INFO) Update symfony recipes $(RESET)"
 	$(COMPOSER) recipes:update
 
 # -------- Database --------
 .PHONY: db-create
 db-create:
+	@echo "$(INFO) Create database $(RESET)"
 	$(DDEVPHP) $(SYMFONY) doctrine:database:create --env=dev --if-not-exists
 
 .PHONY: db-drop
 db-drop:
+	@echo "$(WARNING) Drop database $(RESET)"
 	$(DDEVPHP) $(SYMFONY) doctrine:database:drop --env=dev --if-exists --force
 
 .PHONY: db-reset
@@ -105,23 +141,28 @@ db-reset:
 # -------- Migrations --------
 .PHONY: migrate
 migrate:
+	@echo "$(INFO) Execute migrations $(RESET)"
 	$(DDEVPHP) $(SYMFONY) doctrine:migrations:migrate --env=dev --no-interaction
 
 .PHONY: rollback
 rollback:
+	@echo "$(INFO) Rollback migrations $(RESET)"
 	$(DDEVPHP) $(SYMFONY) doctrine:migrations:migrate prev --env=dev --no-interaction
 
 .PHONY: reset
 reset:
+	@echo "$(WARNING) Reset migrations $(RESET)"
 	$(DDEVPHP) $(SYMFONY) doctrine:migrations:migrate 0 --env=dev --no-interaction
 
 .PHONY: diff
 diff:
+	@echo "$(INFO) Create migration from diff $(RESET)"
 	$(DDEVPHP) $(SYMFONY) doctrine:migration:diff
 
 # -------- Testing --------
 .PHONY: test
 test:
+	@echo "$(INFO) Run test suite $(RESET)"
 	$(DDEVPHP) $(SYMFONY) doctrine:schema:drop --env=test --force
 	$(DDEVPHP) $(SYMFONY) doctrine:schema:create --env=test --no-interaction
 	#$(DDEVPHP) $(SYMFONY) doctrine:fixtures:load --env=test --no-interaction
@@ -129,14 +170,17 @@ test:
 
 .PHONY: stan
 stan:
+	@echo "$(INFO) Run static code analysis $(RESET)"
 	$(DDEVPHP) $(PHPSTAN) analyse
 
 .PHONY: cs-fix
 cs-fix:
+	@echo "$(INFO) Run code style fixer $(RESET)"
 	$(DDEVPHP) $(CSFIXER) fix --using-cache=no
 
 # -------- Cache --------
 .PHONY: clear-cache
 clear-cache:
+	@echo "$(INFO) Clear cache $(RESET)"
 	$(DDEVPHP) $(SYMFONY) cache:clear --env=dev
 	$(DDEVPHP) $(SYMFONY) cache:warmup --env=dev
