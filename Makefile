@@ -2,6 +2,12 @@
 # Default shell: bash
 
 # -------- Configuration --------
+SRC := ./
+APP_NAME := my-app
+BUILD_DIR := build
+RELEASE_DIR := build/release
+RELEASE_FILE := $(APP_NAME)-release.zip
+
 SYMFONY = bin/console
 DDEVPHP = ddev exec php
 COMPOSER = ddev composer
@@ -97,7 +103,11 @@ reset-update:
 .PHONY: build
 build:
 	@echo "$(INFO) Build release artifact $(RESET)"
-	@echo "$(ERROR) Not implemented yet! $(RESET)"
+	rm -rf $(BUILD_DIR)
+	mkdir -p $(RELEASE_DIR)
+	rsync -a --exclude=$(BUILD_DIR) --exclude='.git' --exclude='vendor' $(SRC) $(RELEASE_DIR)/
+	cd $(RELEASE_DIR) && APP_ENV=prod composer install --no-dev --optimize-autoloader
+	cd $(BUILD_DIR) && zip -r $(RELEASE_FILE) release
 
 # -------- Composer --------
 .PHONY: cp-install
