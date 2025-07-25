@@ -20,3 +20,11 @@ php bin/console cache:clear --no-warmup --env=prod && \
 php bin/console doctrine:migrations:migrate --no-interaction --env=prod && \
 php bin/console assets:install public --symlink --env=prod
 ````
+
+TODO
+1. all releases into releases/. No project subdirectory
+2. unzipped release file has releases/ as parent
+3. sym link .env.local from etc/enviro-hub to project directory
+4. How to override APP_ENV from .env after deployment?
+   5. Use env.local in etc/enviro-hub which updates APP_ENV=prod and APP_DEBUG=0
+6. Update installation on wiki
