@@ -10,7 +10,7 @@ export APP_NAME=enviro-hub
 export APP_RELEASE=$APP_NAME_v0.1.0
 
 export APP_DEST=/var/www/$APP_NAME/ && \
-export RELEASE_ZIP=/home/releases/$APP_NAME/$APP_RELEASE.zip && \
+export RELEASE_ZIP=/home/releases/$APP_RELEASE.zip && \
 [ -e $RELEASE_ZIP ] && \
 rm -rf $APP_DEST && \
 unzip $RELEASE_ZIP -d $APP_DEST && \
@@ -22,8 +22,6 @@ php bin/console assets:install public --symlink --env=prod
 ````
 
 TODO
-1. all releases into releases/. No project subdirectory
-2. unzipped release file has releases/ as parent
 3. sym link .env.local from etc/enviro-hub to project directory
 4. How to override APP_ENV from .env after deployment?
    5. Use env.local in etc/enviro-hub which updates APP_ENV=prod and APP_DEBUG=0
