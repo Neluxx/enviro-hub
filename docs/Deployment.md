@@ -8,7 +8,7 @@ The application can be installed with the following commands executed in SSH on 
 ```` sh
 export VERSION=v0.1.0
 export APP_NAME=enviro-hub
-export APP_RELEASE=$APP_NAME_$VERSION
+export APP_RELEASE=${APP_NAME}_${VERSION}
 export APP_DEST=/var/www/$APP_NAME/
 export RELEASE_ZIP=/home/releases/$APP_RELEASE.zip
 
@@ -16,7 +16,7 @@ export RELEASE_ZIP=/home/releases/$APP_RELEASE.zip
 rm -rf $APP_DEST && \
 unzip $RELEASE_ZIP -d $APP_DEST && \
 chmod -R 755 $APP_DEST && \
-ln -sf /etc/$APP_NAME/.env.local $APP_DEST/.env.local
+ln -sf /etc/$APP_NAME/.env.local $APP_DEST/.env.local && \
 cd $APP_DEST && \
 php bin/console cache:clear --no-warmup --env=prod && \
 php bin/console doctrine:migrations:migrate --no-interaction --env=prod && \
