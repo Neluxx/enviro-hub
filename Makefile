@@ -3,10 +3,11 @@
 
 # -------- Configuration --------
 SRC := ./
-APP_NAME := my-app
 BUILD_DIR := build
 RELEASE_DIR := build/release
-RELEASE_FILE := $(APP_NAME)-release.zip
+APP_NAME := enviro-hub
+VERSION := $(shell cat VERSION.txt)
+RELEASE_FILE := $(APP_NAME)_$(VERSION).zip
 
 SYMFONY = bin/console
 DDEVPHP = ddev exec php
@@ -107,7 +108,7 @@ build:
 	mkdir -p $(RELEASE_DIR)
 	rsync -a --exclude=$(BUILD_DIR) --exclude='.git' --exclude='vendor' $(SRC) $(RELEASE_DIR)/
 	cd $(RELEASE_DIR) && APP_ENV=prod composer install --no-dev --optimize-autoloader
-	cd $(BUILD_DIR) && zip -r $(RELEASE_FILE) release
+	cd $(RELEASE_DIR) && zip -r ../$(RELEASE_FILE) .
 
 # -------- Composer --------
 .PHONY: cp-install
