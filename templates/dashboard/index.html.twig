@@ -1,6 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
 <h1>My Chart</h1>
 {{ render_chart(chart) }}
 
 {% for entry in data %}
     {{ entry.id }}
 {% endfor %}
+{% endblock %}
