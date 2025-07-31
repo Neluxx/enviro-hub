@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -27,16 +26,26 @@ class DashboardController extends AbstractController
     public function index(ChartBuilderInterface $chartBuilder): Response
     {
         $data = $this->repository->getLatestEntries();
+        $chart = $this->createEnvironmentalDataChart($chartBuilder);
+
+        return $this->render('dashboard/index.html.twig', [
+            'data' => $data,
+            'chart' => $chart,
+        ]);
+    }
+
+    private function createEnvironmentalDataChart(ChartBuilderInterface $chartBuilder): Chart
+    {
         $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
 
         $chart->setData([
             'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
             'datasets' => [
                 [
-                    'label' => 'My First dataset',
-                    'backgroundColor' => 'rgb(255, 99, 132)',
-                    'borderColor' => 'rgb(255, 99, 132)',
-                    'data' => [0, 10, 5, 2, 20, 30, 45],
+                    'label' => 'Environmental Data',
+                    'backgroundColor' => 'rgb(54, 162, 235)',
+                    'borderColor' => 'rgb(54, 162, 235)',
+                    'data' => [0, 10, 5, 2, 20, 30, 45], // Fake data for testing purposes only
                 ],
             ],
         ]);
@@ -50,9 +59,6 @@ class DashboardController extends AbstractController
             ],
         ]);
 
-        return $this->render('dashboard/index.html.twig', [
-            'data' => $data,
-            'chart' => $chart,
-        ]);
+        return $chart;
     }
 }
