@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Repository;
@@ -13,6 +12,9 @@ use Doctrine\ORM\EntityRepository;
  */
 class EnvironmentalDataRepository
 {
+    /** Default limit */
+    private const DEFAULT_LIMIT = 1000;
+
     private EntityManagerInterface $entityManager;
 
     /** @var EntityRepository<EnvironmentalData> */
@@ -38,7 +40,7 @@ class EnvironmentalDataRepository
      */
     public function getLastEntry(): ?EnvironmentalData
     {
-        return $this->repository->findOneBy([], ['id' => 'DESC']);
+        return $this->repository->findOneBy([], $this->getDescendingOrderById());
     }
 
     /**
@@ -46,8 +48,18 @@ class EnvironmentalDataRepository
      *
      * @return EnvironmentalData[]
      */
-    public function getLatestEntries(): array
+    public function getLatestEntries(int $limit = self::DEFAULT_LIMIT): array
     {
-        return $this->repository->findBy([], ['id' => 'DESC'], 1000);
+        return $this->repository->findBy([], $this->getDescendingOrderById(), $limit);
+    }
+
+    /**
+     * Get descending order by ID.
+     *
+     * @return array<string, string>
+     */
+    private function getDescendingOrderById(): array
+    {
+        return ['id' => 'DESC'];
     }
 }
