@@ -57,6 +57,7 @@ return (new Config())
         'binary_operator_spaces' => ['default' => 'single_space'],
         'blank_line_before_statement' => ['statements' => ['return', 'throw', 'try', 'foreach', 'for', 'if']],
         'no_extra_blank_lines' => ['tokens' => ['extra']],
+        'yoda_style' => false,
 
         // PHPDoc
         'phpdoc_order' => true,
