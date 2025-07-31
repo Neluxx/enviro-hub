@@ -107,7 +107,7 @@ build:
 	rm -rf $(BUILD_DIR)
 	mkdir -p $(RELEASE_DIR)
 	rsync -a --exclude=$(BUILD_DIR) --exclude='.git' --exclude='vendor' --exclude='.env.local' $(SRC) $(RELEASE_DIR)/
-	cd $(RELEASE_DIR) && APP_ENV=prod composer install --no-dev --optimize-autoloader
+	$(COMPOSER) install --working-dir=$(RELEASE_DIR) --no-dev --optimize-autoloader --no-scripts
 	cd $(RELEASE_DIR) && zip -r ../$(RELEASE_FILE) .
 
 # -------- Composer --------
