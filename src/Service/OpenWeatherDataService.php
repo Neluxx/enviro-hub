@@ -14,8 +14,12 @@ use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+/**
+ * Open Weather Data Service.
+ */
 class OpenWeatherDataService
 {
+    /** The open weather API URL  */
     private const OPEN_WEATHER_API_URL = 'https://api.openweathermap.org/data/2.5/weather';
 
     public function __construct(
@@ -82,43 +86,76 @@ class OpenWeatherDataService
     {
         $weatherData = new OpenWeatherData();
 
-        // Basic information
+        $this->setBasicInformation($weatherData, $data);
+        $this->setMainWeatherData($weatherData, $data);
+        $this->setWindData($weatherData, $data);
+        $this->setAtmosphericData($weatherData, $data);
+        $this->setWeatherDescription($weatherData, $data);
+        $this->setCoordinates($weatherData, $data);
+        $this->setTimestamps($weatherData, $data);
+
+        return $weatherData;
+    }
+
+    private function setBasicInformation(OpenWeatherData $weatherData, array $data): void
+    {
         $weatherData->setCityName($data['name'] ?? null);
         $weatherData->setCountry($data['sys']['country'] ?? null);
+    }
 
-        // Main weather data
-        $weatherData->setTemperature($data['main']['temp'] ?? null);
-        $weatherData->setFeelsLike($data['main']['feels_like'] ?? null);
-        $weatherData->setTempMin($data['main']['temp_min'] ?? null);
-        $weatherData->setTempMax($data['main']['temp_max'] ?? null);
-        $weatherData->setPressure($data['main']['pressure'] ?? null);
-        $weatherData->setHumidity($data['main']['humidity'] ?? null);
+    private function setMainWeatherData(OpenWeatherData $weatherData, array $data): void
+    {
+        $mainData = $data['main'] ?? [];
 
-        // Wind data
-        $weatherData->setWindSpeed($data['wind']['speed'] ?? null);
-        $weatherData->setWindDirection($data['wind']['deg'] ?? null);
-        // Visibility
+        $weatherData->setTemperature($mainData['temp'] ?? null);
+        $weatherData->setFeelsLike($mainData['feels_like'] ?? null);
+        $weatherData->setTempMin($mainData['temp_min'] ?? null);
+        $weatherData->setTempMax($mainData['temp_max'] ?? null);
+        $weatherData->setPressure($mainData['pressure'] ?? null);
+        $weatherData->setHumidity($mainData['humidity'] ?? null);
+    }
+
+    private function setWindData(OpenWeatherData $weatherData, array $data): void
+    {
+        $windData = $data['wind'] ?? [];
+
+        $weatherData->setWindSpeed($windData['speed'] ?? null);
+        $weatherData->setWindDirection($windData['deg'] ?? null);
+    }
+
+    private function setAtmosphericData(OpenWeatherData $weatherData, array $data): void
+    {
         $weatherData->setVisibility($data['visibility'] ?? null);
-
-        // Cloudiness
         $weatherData->setCloudiness($data['clouds']['all'] ?? null);
+    }
 
-        // Weather description
-        $weatherData->setWeatherDescription($data['weather'][0]['description'] ?? null);
-        $weatherData->setWeatherMain($data['weather'][0]['main'] ?? null);
-        $weatherData->setWeatherIcon($data['weather'][0]['icon'] ?? null);
+    private function setWeatherDescription(OpenWeatherData $weatherData, array $data): void
+    {
+        $weatherInfo = $data['weather'][0] ?? [];
 
-        // Coordinates
-        $weatherData->setLatitude($data['coord']['lat'] ?? null);
-        $weatherData->setLongitude($data['coord']['lon'] ?? null);
+        $weatherData->setWeatherDescription($weatherInfo['description'] ?? null);
+        $weatherData->setWeatherMain($weatherInfo['main'] ?? null);
+        $weatherData->setWeatherIcon($weatherInfo['icon'] ?? null);
+    }
 
-        // Timestamps
+    private function setCoordinates(OpenWeatherData $weatherData, array $data): void
+    {
+        $coordData = $data['coord'] ?? [];
+
+        $weatherData->setLatitude($coordData['lat'] ?? null);
+        $weatherData->setLongitude($coordData['lon'] ?? null);
+    }
+
+    private function setTimestamps(OpenWeatherData $weatherData, array $data): void
+    {
+        $sysData = $data['sys'] ?? [];
+
         $weatherData->setCreatedAt(new DateTime());
         $weatherData->setTimezone($data['timezone'] ?? null);
         $weatherData->setTimestamp(isset($data['dt']) ? (new DateTime())->setTimestamp($data['dt']) : null);
-        $weatherData->setSunrise(isset($data['sys']['sunrise']) ? (new DateTime())->setTimestamp($data['sys']['sunrise']) : null);
-        $weatherData->setSunset(isset($data['sys']['sunset']) ? (new DateTime())->setTimestamp($data['sys']['sunset']) : null);
-
-        return $weatherData;
+        $weatherData->setSunrise(
+            isset($sysData['sunrise']) ? (new DateTime())->setTimestamp($sysData['sunrise']) : null
+        );
+        $weatherData->setSunset(isset($sysData['sunset']) ? (new DateTime())->setTimestamp($sysData['sunset']) : null);
     }
 }

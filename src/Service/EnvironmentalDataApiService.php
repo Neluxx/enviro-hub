@@ -15,8 +15,16 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class EnvironmentalDataApiService
 {
+    /** The required fields */
+    private const REQUIRED_FIELDS = ['temperature', 'humidity', 'pressure', 'co2', 'created'];
+
+    /** The date format */
+    private const DATE_FORMAT = 'Y-m-d H:i:s';
+
     private ValidatorInterface $validator;
+
     private EnvironmentalDataRepository $repository;
+
     private EnvironmentalDataNotificationService $notificationService;
 
     public function __construct(
@@ -39,21 +47,11 @@ class EnvironmentalDataApiService
      */
     public function saveEnvironmentalData(array $data): void
     {
-        $requiredFields = ['temperature', 'humidity', 'pressure', 'co2', 'created'];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($data[$field])) {
-                throw new InvalidArgumentException("Undefined array key \"$field\"");
-            }
-        }
+        $this->validateRequiredFields($data);
 
         $environmentalData = $this->createEnvironmentalData($data);
 
-        $errors = $this->validator->validate($environmentalData);
-
-        if (\count($errors) > 0) {
-            throw new InvalidArgumentException((string) $errors);
-        }
+        $this->validateEnvironmentalData($environmentalData);
 
         $this->notificationService->notifyBasedOnCo2Levels(
             $environmentalData,
@@ -64,16 +62,46 @@ class EnvironmentalDataApiService
     }
 
     /**
+     * Validate that all required fields are present in the data array.
+     *
+     * @param array<string, mixed> $data
+     *
+     * @throws InvalidArgumentException if required fields are missing
+     */
+    private function validateRequiredFields(array $data): void
+    {
+        foreach (self::REQUIRED_FIELDS as $field) {
+            if (!isset($data[$field])) {
+                throw new InvalidArgumentException("Undefined array key \"$field\"");
+            }
+        }
+    }
+
+    /**
+     * Validate environmental data object using Symfony validator.
+     *
+     * @throws InvalidArgumentException if validation fails
+     */
+    private function validateEnvironmentalData(EnvironmentalData $environmentalData): void
+    {
+        $errors = $this->validator->validate($environmentalData);
+
+        if (\count($errors) > 0) {
+            throw new InvalidArgumentException((string) $errors);
+        }
+    }
+
+    /**
      * Create environmental data object from API response data.
      *
      * @param array<string, mixed> $data
      */
     private function createEnvironmentalData(array $data): EnvironmentalData
     {
-        $created = DateTime::createFromFormat('Y-m-d H:i:s', $data['created']);
+        $created = DateTime::createFromFormat(self::DATE_FORMAT, $data['created']);
 
         if (false === $created) {
-            throw new InvalidArgumentException('Invalid date format for "created". Expected format: Y-m-d H:i:s');
+            throw new InvalidArgumentException('Invalid date format for "created". Expected format: '.self::DATE_FORMAT);
         }
 
         return new EnvironmentalData(
