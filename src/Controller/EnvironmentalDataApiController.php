@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -14,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Environmental Data API Controller
+ * Environmental Data API Controller.
  */
 class EnvironmentalDataApiController extends AbstractController
 {
@@ -32,6 +33,7 @@ class EnvironmentalDataApiController extends AbstractController
     public function saveData(Request $request): JsonResponse
     {
         $token = $this->extractBearerToken($request);
+
         if ($token === null) {
             return $this->json(['error' => 'Missing or invalid Authorization header'], Response::HTTP_UNAUTHORIZED);
         }
@@ -41,6 +43,7 @@ class EnvironmentalDataApiController extends AbstractController
         }
 
         $data = $this->parseJsonData($request);
+
         if ($data === null) {
             return $this->json(['error' => 'Invalid JSON data'], Response::HTTP_BAD_REQUEST);
         }

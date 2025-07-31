@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Repository;
@@ -7,7 +8,7 @@ use App\Entity\OpenWeatherData;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
- * Open Weather Data Repository
+ * Open Weather Data Repository.
  */
 class OpenWeatherDataRepository
 {
