@@ -97,12 +97,22 @@ class OpenWeatherDataService
         return $weatherData;
     }
 
+    /**
+     * Set basic information.
+     *
+     * @param array<string, mixed> $data
+     */
     private function setBasicInformation(OpenWeatherData $weatherData, array $data): void
     {
         $weatherData->setCityName($data['name'] ?? null);
         $weatherData->setCountry($data['sys']['country'] ?? null);
     }
 
+    /**
+     * Set main weather data.
+     *
+     * @param array<string, mixed> $data
+     */
     private function setMainWeatherData(OpenWeatherData $weatherData, array $data): void
     {
         $mainData = $data['main'] ?? [];
@@ -115,6 +125,11 @@ class OpenWeatherDataService
         $weatherData->setHumidity($mainData['humidity'] ?? null);
     }
 
+    /**
+     * Set wind data.
+     *
+     * @param array<string, mixed> $data
+     */
     private function setWindData(OpenWeatherData $weatherData, array $data): void
     {
         $windData = $data['wind'] ?? [];
@@ -123,12 +138,22 @@ class OpenWeatherDataService
         $weatherData->setWindDirection($windData['deg'] ?? null);
     }
 
+    /**
+     * Set atmospheric data.
+     *
+     * @param array<string, mixed> $data
+     */
     private function setAtmosphericData(OpenWeatherData $weatherData, array $data): void
     {
         $weatherData->setVisibility($data['visibility'] ?? null);
         $weatherData->setCloudiness($data['clouds']['all'] ?? null);
     }
 
+    /**
+     * Set weather description.
+     *
+     * @param array<string, mixed> $data
+     */
     private function setWeatherDescription(OpenWeatherData $weatherData, array $data): void
     {
         $weatherInfo = $data['weather'][0] ?? [];
@@ -138,6 +163,11 @@ class OpenWeatherDataService
         $weatherData->setWeatherIcon($weatherInfo['icon'] ?? null);
     }
 
+    /**
+     * Set coordinates.
+     *
+     * @param array<string, mixed> $data
+     */
     private function setCoordinates(OpenWeatherData $weatherData, array $data): void
     {
         $coordData = $data['coord'] ?? [];
@@ -146,6 +176,11 @@ class OpenWeatherDataService
         $weatherData->setLongitude($coordData['lon'] ?? null);
     }
 
+    /**
+     * Set timestamps.
+     *
+     * @param array<string, mixed> $data
+     */
     private function setTimestamps(OpenWeatherData $weatherData, array $data): void
     {
         $sysData = $data['sys'] ?? [];
