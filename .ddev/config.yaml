@@ -3,6 +3,7 @@ type: symfony
 docroot: public
 php_version: "8.4"
 webserver_type: apache-fpm
+router_http_port: "33000"
 xdebug_enabled: false
 additional_hostnames: []
 additional_fqdns: []
@@ -297,3 +298,6 @@ corepack_enable: false
 # information on the commands that can be extended and the tasks you can define
 # for them. Example:
 #hooks:
+## Un-comment to consume async message.
+#    post-start:
+#    - exec: symfony run --daemon --watch=config,src,templates,vendor bin/console messenger:consume async -vv
