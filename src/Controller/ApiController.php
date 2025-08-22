@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Security\TokenAuthenticator;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -17,21 +14,15 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
  */
 class ApiController extends AbstractController
 {
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
     public function checkAuthorization(Request $request): void
     {
-        // TODO Extract TokenAuthenticator into ApiController
-        $tokenAuthenticator = $this->container->get(TokenAuthenticator::class);
         $token = $this->extractBearerToken($request);
 
         if ($token === null) {
             throw new UnauthorizedHttpException('Bearer', 'Authorization header missing or malformed');
         }
 
-        if (!$tokenAuthenticator->authenticate($token)) {
+        if ($token !== $this->getParameter('bearer_token')) {
             throw new UnauthorizedHttpException('Bearer', 'Access token is invalid or expired');
         }
     }
