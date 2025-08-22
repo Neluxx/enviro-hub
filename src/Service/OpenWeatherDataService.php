@@ -9,55 +9,17 @@ use App\Repository\OpenWeatherDataRepository;
 use DateTime;
 use Exception;
 use InvalidArgumentException;
-use RuntimeException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Open Weather Data Service.
  */
 class OpenWeatherDataService
 {
-    /** The open weather API URL  */
-    private const OPEN_WEATHER_API_URL = 'https://api.openweathermap.org/data/2.5/weather';
-
     public function __construct(
         private readonly ValidatorInterface $validator,
-        private readonly HttpClientInterface $httpClient,
         private readonly OpenWeatherDataRepository $repository,
-        private readonly string $openWeatherApiKey,
     ) {
-    }
-
-    /**
-     * Fetches weather data from the OpenWeather API for a given city.
-     *
-     * @param string $cityName the name of the city for which to fetch weather data
-     *
-     * @throws RuntimeException if the API request fails or returns an unsuccessful response
-     * @throws TransportExceptionInterface if there is an issue with the HTTP transport layer during the API request
-     * @throws DecodingExceptionInterface if there is an error decoding the JSON response from the API
-     * @throws Exception
-     *
-     * @return array<string, mixed> the weather data array containing temperature, humidity, wind speed, description, and other details
-     */
-    public function fetchWeatherData(string $cityName): array
-    {
-        $response = $this->httpClient->request('GET', self::OPEN_WEATHER_API_URL, [
-            'query' => [
-                'q' => $cityName,
-                'appid' => $this->openWeatherApiKey,
-                'units' => 'metric',
-            ],
-        ]);
-
-        if (200 !== $response->getStatusCode()) {
-            throw new RuntimeException('Failed to fetch weather data from OpenWeather API.');
-        }
-
-        return $response->toArray();
     }
 
     /**
@@ -66,7 +28,6 @@ class OpenWeatherDataService
      * @param array<string, mixed> $data
      *
      * @throws InvalidArgumentException if required fields are missing or data is invalid
-     * @throws InvalidArgumentException if validation fails
      */
     public function saveOpenWeatherData(array $data): void
     {
