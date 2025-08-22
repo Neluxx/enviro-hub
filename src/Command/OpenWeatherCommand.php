@@ -39,7 +39,7 @@ class OpenWeatherCommand extends Command
 
         try {
             $weatherData = $this->weatherDataService->fetchWeatherData($cityName);
-            $this->weatherDataService->saveWeatherData($weatherData);
+            $this->weatherDataService->saveOpenWeatherData($weatherData);
 
             $output->writeln(\sprintf('Weather data for "%s" saved successfully.', $cityName));
         } catch (RuntimeException $e) {

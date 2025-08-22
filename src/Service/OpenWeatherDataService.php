@@ -10,6 +10,7 @@ use DateTime;
 use Exception;
 use InvalidArgumentException;
 use RuntimeException;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -23,6 +24,7 @@ class OpenWeatherDataService
     private const OPEN_WEATHER_API_URL = 'https://api.openweathermap.org/data/2.5/weather';
 
     public function __construct(
+        private readonly ValidatorInterface $validator,
         private readonly HttpClientInterface $httpClient,
         private readonly OpenWeatherDataRepository $repository,
         private readonly string $openWeatherApiKey,
@@ -39,9 +41,9 @@ class OpenWeatherDataService
      * @throws DecodingExceptionInterface if there is an error decoding the JSON response from the API
      * @throws Exception
      *
-     * @return OpenWeatherData the weather data object containing temperature, humidity, wind speed, description, and other details
+     * @return array<string, mixed> the weather data array containing temperature, humidity, wind speed, description, and other details
      */
-    public function fetchWeatherData(string $cityName): OpenWeatherData
+    public function fetchWeatherData(string $cityName): array
     {
         $response = $this->httpClient->request('GET', self::OPEN_WEATHER_API_URL, [
             'query' => [
@@ -55,21 +57,24 @@ class OpenWeatherDataService
             throw new RuntimeException('Failed to fetch weather data from OpenWeather API.');
         }
 
-        $data = $response->toArray();
-
-        return $this->createOpenWeatherDataFromArray($data);
+        return $response->toArray();
     }
 
     /**
-     * Saves the provided weather data into the repository.
+     * Save open weather data from API response data.
      *
-     * @param OpenWeatherData $data the weather data object to be persisted
+     * @param array<string, mixed> $data
      *
-     * @throws Exception if there is an issue while saving the data into the repository
+     * @throws InvalidArgumentException if required fields are missing or data is invalid
+     * @throws InvalidArgumentException if validation fails
      */
-    public function saveWeatherData(OpenWeatherData $data): void
+    public function saveOpenWeatherData(array $data): void
     {
-        $this->repository->save($data);
+        $openWeatherData = $this->createOpenWeatherDataFromArray($data);
+
+        $this->validateOpenWeatherData($openWeatherData);
+
+        $this->repository->save($openWeatherData);
     }
 
     /**
@@ -95,6 +100,20 @@ class OpenWeatherDataService
         $this->setTimestamps($weatherData, $data);
 
         return $weatherData;
+    }
+
+    /**
+     * Validate environmental data object using Symfony validator.
+     *
+     * @throws InvalidArgumentException if validation fails
+     */
+    private function validateOpenWeatherData(OpenWeatherData $environmentalData): void
+    {
+        $errors = $this->validator->validate($environmentalData);
+
+        if (\count($errors) > 0) {
+            throw new InvalidArgumentException((string) $errors);
+        }
     }
 
     /**
