@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use JsonException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -32,13 +33,17 @@ class ApiController extends AbstractController
      */
     public function parseJsonData(Request $request): array
     {
-        $data = json_decode($request->getContent(), true);
+        try {
+            $data = json_decode($request->getContent(), true, 512, \JSON_THROW_ON_ERROR);
 
-        if (!\is_array($data)) {
-            throw new BadRequestHttpException('Invalid JSON data');
+            if (!\is_array($data)) {
+                throw new BadRequestHttpException('Invalid JSON data');
+            }
+
+            return $data;
+        } catch (JsonException $exception) {
+            throw new BadRequestHttpException($exception->getMessage());
         }
-
-        return $data;
     }
 
     private function extractBearerToken(Request $request): ?string

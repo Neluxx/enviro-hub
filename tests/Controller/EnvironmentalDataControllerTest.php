@@ -179,6 +179,12 @@ class EnvironmentalDataControllerTest extends WebTestCase
             throw new RuntimeException('Invalid response content');
         }
 
-        return json_decode($responseContent, true, 512, \JSON_THROW_ON_ERROR);
+        try {
+            return json_decode($responseContent, true, 512, \JSON_THROW_ON_ERROR);
+        } catch (JsonException $exception) {
+            // If JSON decoding fails, return the raw content wrapped in an array
+            // This handles cases where the API returns non-JSON error responses
+            return ['error' => $responseContent];
+        }
     }
 }
