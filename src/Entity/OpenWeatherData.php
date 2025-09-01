@@ -16,68 +16,68 @@ class OpenWeatherData
     #[ORM\Column(type: 'integer')]
     private int $id;
 
-    #[ORM\Column(type: 'float', nullable: true)]
-    private ?float $longitude = null;
+    #[ORM\Column(type: 'float')]
+    private float $longitude;
 
-    #[ORM\Column(type: 'float', nullable: true)]
-    private ?float $latitude = null;
+    #[ORM\Column(type: 'float')]
+    private float $latitude;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $weatherMain = null;
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $weatherMain;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $weatherDescription = null;
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $weatherDescription;
 
-    #[ORM\Column(type: 'string', length: 50, nullable: true)]
-    private ?string $weatherIcon = null;
+    #[ORM\Column(type: 'string', length: 50)]
+    private string $weatherIcon;
 
-    #[ORM\Column(type: 'float', nullable: true)]
-    private ?float $temperature = null;
+    #[ORM\Column(type: 'float')]
+    private float $temperature;
 
-    #[ORM\Column(type: 'float', nullable: true)]
-    private ?float $feelsLike = null;
+    #[ORM\Column(type: 'float')]
+    private float $feelsLike;
 
-    #[ORM\Column(type: 'float', nullable: true)]
-    private ?float $tempMin = null;
+    #[ORM\Column(type: 'float')]
+    private float $tempMin;
 
-    #[ORM\Column(type: 'float', nullable: true)]
-    private ?float $tempMax = null;
+    #[ORM\Column(type: 'float')]
+    private float $tempMax;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private ?int $pressure = null;
+    #[ORM\Column(type: 'integer')]
+    private int $pressure;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private ?int $humidity = null;
+    #[ORM\Column(type: 'integer')]
+    private int $humidity;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private ?int $visibility = null;
+    #[ORM\Column(type: 'integer')]
+    private int $visibility;
 
-    #[ORM\Column(type: 'float', nullable: true)]
-    private ?float $windSpeed = null;
+    #[ORM\Column(type: 'float')]
+    private float $windSpeed;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private ?int $windDirection = null;
+    #[ORM\Column(type: 'integer')]
+    private int $windDirection;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private ?int $cloudiness = null;
+    #[ORM\Column(type: 'integer')]
+    private int $cloudiness;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?DateTime $timestamp = null;
+    #[ORM\Column(type: 'datetime')]
+    private DateTime $timestamp;
 
-    #[ORM\Column(type: 'string', length: 3, nullable: true)]
-    private ?string $country = null;
+    #[ORM\Column(type: 'string', length: 3)]
+    private string $country;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?DateTime $sunrise = null;
+    #[ORM\Column(type: 'datetime')]
+    private DateTime $sunrise;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?DateTime $sunset = null;
+    #[ORM\Column(type: 'datetime')]
+    private DateTime $sunset;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $cityName = null;
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $cityName;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private ?int $timezone = null;
+    #[ORM\Column(type: 'integer')]
+    private int $timezone;
 
     #[ORM\Column(type: 'datetime')]
     private DateTime $createdAt;
@@ -87,212 +87,212 @@ class OpenWeatherData
         return $this->id;
     }
 
-    public function getLongitude(): ?float
+    public function getLongitude(): float
     {
         return $this->longitude;
     }
 
-    public function setLongitude(?float $longitude): void
+    public function setLongitude(float $longitude): void
     {
         $this->longitude = $longitude;
     }
 
-    public function getLatitude(): ?float
+    public function getLatitude(): float
     {
         return $this->latitude;
     }
 
-    public function setLatitude(?float $latitude): void
+    public function setLatitude(float $latitude): void
     {
         $this->latitude = $latitude;
     }
 
-    public function getWeatherMain(): ?string
+    public function getWeatherMain(): string
     {
         return $this->weatherMain;
     }
 
-    public function setWeatherMain(?string $weatherMain): void
+    public function setWeatherMain(string $weatherMain): void
     {
         $this->weatherMain = $weatherMain;
     }
 
-    public function getWeatherDescription(): ?string
+    public function getWeatherDescription(): string
     {
         return $this->weatherDescription;
     }
 
-    public function setWeatherDescription(?string $weatherDescription): void
+    public function setWeatherDescription(string $weatherDescription): void
     {
         $this->weatherDescription = $weatherDescription;
     }
 
-    public function getWeatherIcon(): ?string
+    public function getWeatherIcon(): string
     {
         return $this->weatherIcon;
     }
 
-    public function setWeatherIcon(?string $weatherIcon): void
+    public function setWeatherIcon(string $weatherIcon): void
     {
         $this->weatherIcon = $weatherIcon;
     }
 
-    public function getTemperature(): ?float
+    public function getTemperature(): float
     {
         return $this->temperature;
     }
 
-    public function setTemperature(?float $temperature): void
+    public function setTemperature(float $temperature): void
     {
         $this->temperature = $temperature;
     }
 
-    public function getFeelsLike(): ?float
+    public function getFeelsLike(): float
     {
         return $this->feelsLike;
     }
 
-    public function setFeelsLike(?float $feelsLike): void
+    public function setFeelsLike(float $feelsLike): void
     {
         $this->feelsLike = $feelsLike;
     }
 
-    public function getTempMin(): ?float
+    public function getTempMin(): float
     {
         return $this->tempMin;
     }
 
-    public function setTempMin(?float $tempMin): void
+    public function setTempMin(float $tempMin): void
     {
         $this->tempMin = $tempMin;
     }
 
-    public function getTempMax(): ?float
+    public function getTempMax(): float
     {
         return $this->tempMax;
     }
 
-    public function setTempMax(?float $tempMax): void
+    public function setTempMax(float $tempMax): void
     {
         $this->tempMax = $tempMax;
     }
 
-    public function getPressure(): ?int
+    public function getPressure(): int
     {
         return $this->pressure;
     }
 
-    public function setPressure(?int $pressure): void
+    public function setPressure(int $pressure): void
     {
         $this->pressure = $pressure;
     }
 
-    public function getHumidity(): ?int
+    public function getHumidity(): int
     {
         return $this->humidity;
     }
 
-    public function setHumidity(?int $humidity): void
+    public function setHumidity(int $humidity): void
     {
         $this->humidity = $humidity;
     }
 
-    public function getVisibility(): ?int
+    public function getVisibility(): int
     {
         return $this->visibility;
     }
 
-    public function setVisibility(?int $visibility): void
+    public function setVisibility(int $visibility): void
     {
         $this->visibility = $visibility;
     }
 
-    public function getWindSpeed(): ?float
+    public function getWindSpeed(): float
     {
         return $this->windSpeed;
     }
 
-    public function setWindSpeed(?float $windSpeed): void
+    public function setWindSpeed(float $windSpeed): void
     {
         $this->windSpeed = $windSpeed;
     }
 
-    public function getWindDirection(): ?int
+    public function getWindDirection(): int
     {
         return $this->windDirection;
     }
 
-    public function setWindDirection(?int $windDirection): void
+    public function setWindDirection(int $windDirection): void
     {
         $this->windDirection = $windDirection;
     }
 
-    public function getCloudiness(): ?int
+    public function getCloudiness(): int
     {
         return $this->cloudiness;
     }
 
-    public function setCloudiness(?int $cloudiness): void
+    public function setCloudiness(int $cloudiness): void
     {
         $this->cloudiness = $cloudiness;
     }
 
-    public function getTimestamp(): ?DateTime
+    public function getTimestamp(): DateTime
     {
         return $this->timestamp;
     }
 
-    public function setTimestamp(?DateTime $timestamp): void
+    public function setTimestamp(DateTime $timestamp): void
     {
         $this->timestamp = $timestamp;
     }
 
-    public function getCountry(): ?string
+    public function getCountry(): string
     {
         return $this->country;
     }
 
-    public function setCountry(?string $country): void
+    public function setCountry(string $country): void
     {
         $this->country = $country;
     }
 
-    public function getSunrise(): ?DateTime
+    public function getSunrise(): DateTime
     {
         return $this->sunrise;
     }
 
-    public function setSunrise(?DateTime $sunrise): void
+    public function setSunrise(DateTime $sunrise): void
     {
         $this->sunrise = $sunrise;
     }
 
-    public function getSunset(): ?DateTime
+    public function getSunset(): DateTime
     {
         return $this->sunset;
     }
 
-    public function setSunset(?DateTime $sunset): void
+    public function setSunset(DateTime $sunset): void
     {
         $this->sunset = $sunset;
     }
 
-    public function getCityName(): ?string
+    public function getCityName(): string
     {
         return $this->cityName;
     }
 
-    public function setCityName(?string $cityName): void
+    public function setCityName(string $cityName): void
     {
         $this->cityName = $cityName;
     }
 
-    public function getTimezone(): ?int
+    public function getTimezone(): int
     {
         return $this->timezone;
     }
 
-    public function setTimezone(?int $timezone): void
+    public function setTimezone(int $timezone): void
     {
         $this->timezone = $timezone;
     }
