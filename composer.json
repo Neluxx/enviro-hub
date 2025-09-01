@@ -98,8 +98,6 @@
         }
     },
     "require-dev": {
-        "dama/doctrine-test-bundle": "^8.3",
-        "doctrine/doctrine-fixtures-bundle": "^3.7.1",
         "friendsofphp/php-cs-fixer": "^3.85.1",
         "phpstan/phpstan": "^2.1.21",
         "phpstan/phpstan-doctrine": "^2.0.4",
