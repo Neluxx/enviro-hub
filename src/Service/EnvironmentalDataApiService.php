@@ -21,20 +21,11 @@ class EnvironmentalDataApiService
     /** The date format */
     private const DATE_FORMAT = 'Y-m-d H:i:s';
 
-    private ValidatorInterface $validator;
-
-    private EnvironmentalDataRepository $repository;
-
-    private EnvironmentalDataNotificationService $notificationService;
-
     public function __construct(
-        ValidatorInterface $validator,
-        EnvironmentalDataRepository $repository,
-        EnvironmentalDataNotificationService $notificationService,
+        private readonly ValidatorInterface $validator,
+        private readonly EnvironmentalDataRepository $repository,
+        private readonly EnvironmentalDataNotificationService $notificationService,
     ) {
-        $this->validator = $validator;
-        $this->repository = $repository;
-        $this->notificationService = $notificationService;
     }
 
     /**
