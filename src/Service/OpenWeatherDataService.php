@@ -16,6 +16,31 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class OpenWeatherDataService
 {
+    /** The required fields */
+    private const REQUIRED_FIELDS = [
+        'name',
+        'coord.lat',
+        'coord.lon',
+        'main.temp',
+        'main.feels_like',
+        'main.temp_min',
+        'main.temp_max',
+        'main.pressure',
+        'main.humidity',
+        'wind.speed',
+        'wind.deg',
+        'visibility',
+        'clouds.all',
+        'weather.0.main',
+        'weather.0.description',
+        'weather.0.icon',
+        'sys.country',
+        'sys.sunrise',
+        'sys.sunset',
+        'timezone',
+        'dt',
+    ];
+
     public function __construct(
         private readonly ValidatorInterface $validator,
         private readonly OpenWeatherDataRepository $repository,
@@ -31,6 +56,8 @@ class OpenWeatherDataService
      */
     public function saveOpenWeatherData(array $data): void
     {
+        $this->validateRequiredFields($data);
+
         $openWeatherData = $this->createOpenWeatherDataFromArray($data);
 
         $this->validateOpenWeatherData($openWeatherData);
@@ -61,6 +88,41 @@ class OpenWeatherDataService
         $this->setTimestamps($weatherData, $data);
 
         return $weatherData;
+    }
+
+    /**
+     * Validate that all required fields are present in the data array.
+     *
+     * @param array<string, mixed> $data
+     *
+     * @throws InvalidArgumentException if required fields are missing
+     */
+    private function validateRequiredFields(array $data): void
+    {
+        foreach (self::REQUIRED_FIELDS as $field) {
+            if (!$this->hasNestedKey($data, $field)) {
+                throw new InvalidArgumentException("Undefined array key \"$field\"");
+            }
+        }
+    }
+
+    /**
+     * Check if a nested key exists in an array using dot notation.
+     *
+     * @param array<string, mixed> $data
+     */
+    private function hasNestedKey(array $data, string $path): bool
+    {
+        $keys = explode('.', $path);
+
+        foreach ($keys as $key) {
+            if (!\array_key_exists($key, $data)) {
+                return false;
+            }
+            $data = $data[$key];
+        }
+
+        return true;
     }
 
     /**
@@ -167,10 +229,8 @@ class OpenWeatherDataService
 
         $weatherData->setCreatedAt(new DateTime());
         $weatherData->setTimezone($data['timezone'] ?? null);
-        $weatherData->setTimestamp(isset($data['dt']) ? (new DateTime())->setTimestamp($data['dt']) : null);
-        $weatherData->setSunrise(
-            isset($sysData['sunrise']) ? (new DateTime())->setTimestamp($sysData['sunrise']) : null
-        );
-        $weatherData->setSunset(isset($sysData['sunset']) ? (new DateTime())->setTimestamp($sysData['sunset']) : null);
+        $weatherData->setTimestamp((new DateTime())->setTimestamp($data['dt']));
+        $weatherData->setSunrise((new DateTime())->setTimestamp($sysData['sunrise']));
+        $weatherData->setSunset((new DateTime())->setTimestamp($sysData['sunset']));
     }
 }
