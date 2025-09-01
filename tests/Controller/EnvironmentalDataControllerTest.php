@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Environmental Data Controller Test
+ * Environmental Data Controller Test.
  */
 class EnvironmentalDataControllerTest extends WebTestCase
 {

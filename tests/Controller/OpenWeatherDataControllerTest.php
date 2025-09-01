@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Open Weather Data Controller Test
+ * Open Weather Data Controller Test.
  */
 class OpenWeatherDataControllerTest extends WebTestCase
 {
