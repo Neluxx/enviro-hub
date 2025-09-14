@@ -56,6 +56,9 @@ class OpenWeatherData
     private int $cloudiness;
 
     #[ORM\Column(type: 'datetime')]
+    private DateTime $timestamp;
+
+    #[ORM\Column(type: 'datetime')]
     private DateTime $createdAt;
 
     public function getId(): int
@@ -63,19 +66,9 @@ class OpenWeatherData
         return $this->id;
     }
 
-    public function getWeatherMain(): string
-    {
-        return $this->weatherMain;
-    }
-
     public function setWeatherMain(string $weatherMain): void
     {
         $this->weatherMain = $weatherMain;
-    }
-
-    public function getWeatherDescription(): string
-    {
-        return $this->weatherDescription;
     }
 
     public function setWeatherDescription(string $weatherDescription): void
@@ -83,19 +76,9 @@ class OpenWeatherData
         $this->weatherDescription = $weatherDescription;
     }
 
-    public function getWeatherIcon(): string
-    {
-        return $this->weatherIcon;
-    }
-
     public function setWeatherIcon(string $weatherIcon): void
     {
         $this->weatherIcon = $weatherIcon;
-    }
-
-    public function getTemperature(): float
-    {
-        return $this->temperature;
     }
 
     public function setTemperature(float $temperature): void
@@ -103,19 +86,9 @@ class OpenWeatherData
         $this->temperature = $temperature;
     }
 
-    public function getFeelsLike(): float
-    {
-        return $this->feelsLike;
-    }
-
     public function setFeelsLike(float $feelsLike): void
     {
         $this->feelsLike = $feelsLike;
-    }
-
-    public function getTempMin(): float
-    {
-        return $this->tempMin;
     }
 
     public function setTempMin(float $tempMin): void
@@ -123,19 +96,9 @@ class OpenWeatherData
         $this->tempMin = $tempMin;
     }
 
-    public function getTempMax(): float
-    {
-        return $this->tempMax;
-    }
-
     public function setTempMax(float $tempMax): void
     {
         $this->tempMax = $tempMax;
-    }
-
-    public function getPressure(): int
-    {
-        return $this->pressure;
     }
 
     public function setPressure(int $pressure): void
@@ -143,19 +106,9 @@ class OpenWeatherData
         $this->pressure = $pressure;
     }
 
-    public function getHumidity(): int
-    {
-        return $this->humidity;
-    }
-
     public function setHumidity(int $humidity): void
     {
         $this->humidity = $humidity;
-    }
-
-    public function getVisibility(): int
-    {
-        return $this->visibility;
     }
 
     public function setVisibility(int $visibility): void
@@ -163,19 +116,9 @@ class OpenWeatherData
         $this->visibility = $visibility;
     }
 
-    public function getWindSpeed(): float
-    {
-        return $this->windSpeed;
-    }
-
     public function setWindSpeed(float $windSpeed): void
     {
         $this->windSpeed = $windSpeed;
-    }
-
-    public function getWindDirection(): int
-    {
-        return $this->windDirection;
     }
 
     public function setWindDirection(int $windDirection): void
@@ -183,19 +126,14 @@ class OpenWeatherData
         $this->windDirection = $windDirection;
     }
 
-    public function getCloudiness(): int
-    {
-        return $this->cloudiness;
-    }
-
     public function setCloudiness(int $cloudiness): void
     {
         $this->cloudiness = $cloudiness;
     }
 
-    public function getCreatedAt(): DateTime
+    public function setTimestamp(DateTime $timestamp): void
     {
-        return $this->createdAt;
+        $this->timestamp = $timestamp;
     }
 
     public function setCreatedAt(DateTime $createdAt): void
