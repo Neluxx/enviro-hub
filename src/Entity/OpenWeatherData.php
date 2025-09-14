@@ -16,12 +16,6 @@ class OpenWeatherData
     #[ORM\Column(type: 'integer')]
     private int $id;
 
-    #[ORM\Column(type: 'float')]
-    private float $longitude;
-
-    #[ORM\Column(type: 'float')]
-    private float $latitude;
-
     #[ORM\Column(type: 'string', length: 255)]
     private string $weatherMain;
 
@@ -62,49 +56,11 @@ class OpenWeatherData
     private int $cloudiness;
 
     #[ORM\Column(type: 'datetime')]
-    private DateTime $timestamp;
-
-    #[ORM\Column(type: 'string', length: 3)]
-    private string $country;
-
-    #[ORM\Column(type: 'datetime')]
-    private DateTime $sunrise;
-
-    #[ORM\Column(type: 'datetime')]
-    private DateTime $sunset;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private string $cityName;
-
-    #[ORM\Column(type: 'integer')]
-    private int $timezone;
-
-    #[ORM\Column(type: 'datetime')]
     private DateTime $createdAt;
 
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getLongitude(): float
-    {
-        return $this->longitude;
-    }
-
-    public function setLongitude(float $longitude): void
-    {
-        $this->longitude = $longitude;
-    }
-
-    public function getLatitude(): float
-    {
-        return $this->latitude;
-    }
-
-    public function setLatitude(float $latitude): void
-    {
-        $this->latitude = $latitude;
     }
 
     public function getWeatherMain(): string
@@ -235,66 +191,6 @@ class OpenWeatherData
     public function setCloudiness(int $cloudiness): void
     {
         $this->cloudiness = $cloudiness;
-    }
-
-    public function getTimestamp(): DateTime
-    {
-        return $this->timestamp;
-    }
-
-    public function setTimestamp(DateTime $timestamp): void
-    {
-        $this->timestamp = $timestamp;
-    }
-
-    public function getCountry(): string
-    {
-        return $this->country;
-    }
-
-    public function setCountry(string $country): void
-    {
-        $this->country = $country;
-    }
-
-    public function getSunrise(): DateTime
-    {
-        return $this->sunrise;
-    }
-
-    public function setSunrise(DateTime $sunrise): void
-    {
-        $this->sunrise = $sunrise;
-    }
-
-    public function getSunset(): DateTime
-    {
-        return $this->sunset;
-    }
-
-    public function setSunset(DateTime $sunset): void
-    {
-        $this->sunset = $sunset;
-    }
-
-    public function getCityName(): string
-    {
-        return $this->cityName;
-    }
-
-    public function setCityName(string $cityName): void
-    {
-        $this->cityName = $cityName;
-    }
-
-    public function getTimezone(): int
-    {
-        return $this->timezone;
-    }
-
-    public function setTimezone(int $timezone): void
-    {
-        $this->timezone = $timezone;
     }
 
     public function getCreatedAt(): DateTime
