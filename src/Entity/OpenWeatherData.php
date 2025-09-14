@@ -61,83 +61,116 @@ class OpenWeatherData
     #[ORM\Column(type: 'datetime')]
     private DateTime $createdAt;
 
+    public function __construct(
+        string $weatherMain,
+        string $weatherDescription,
+        string $weatherIcon,
+        float $temperature,
+        float $feelsLike,
+        float $tempMin,
+        float $tempMax,
+        int $pressure,
+        int $humidity,
+        int $visibility,
+        float $windSpeed,
+        int $windDirection,
+        int $cloudiness,
+        DateTime $timestamp,
+    ) {
+        $this->weatherMain = $weatherMain;
+        $this->weatherDescription = $weatherDescription;
+        $this->weatherIcon = $weatherIcon;
+        $this->temperature = $temperature;
+        $this->feelsLike = $feelsLike;
+        $this->tempMin = $tempMin;
+        $this->tempMax = $tempMax;
+        $this->pressure = $pressure;
+        $this->humidity = $humidity;
+        $this->visibility = $visibility;
+        $this->windSpeed = $windSpeed;
+        $this->windDirection = $windDirection;
+        $this->cloudiness = $cloudiness;
+        $this->timestamp = $timestamp;
+        $this->createdAt = new DateTime();
+    }
+
     public function getId(): int
     {
         return $this->id;
     }
 
-    public function setWeatherMain(string $weatherMain): void
+    public function getWeatherMain(): string
     {
-        $this->weatherMain = $weatherMain;
+        return $this->weatherMain;
     }
 
-    public function setWeatherDescription(string $weatherDescription): void
+    public function getWeatherDescription(): string
     {
-        $this->weatherDescription = $weatherDescription;
+        return $this->weatherDescription;
     }
 
-    public function setWeatherIcon(string $weatherIcon): void
+    public function getWeatherIcon(): string
     {
-        $this->weatherIcon = $weatherIcon;
+        return $this->weatherIcon;
     }
 
-    public function setTemperature(float $temperature): void
+    public function getTemperature(): float
     {
-        $this->temperature = $temperature;
+        return $this->temperature;
     }
 
-    public function setFeelsLike(float $feelsLike): void
+    public function getFeelsLike(): float
     {
-        $this->feelsLike = $feelsLike;
+        return $this->feelsLike;
     }
 
-    public function setTempMin(float $tempMin): void
+    public function getTempMin(): float
     {
-        $this->tempMin = $tempMin;
+        return $this->tempMin;
     }
 
-    public function setTempMax(float $tempMax): void
+    public function getTempMax(): float
     {
-        $this->tempMax = $tempMax;
+        return $this->tempMax;
     }
 
-    public function setPressure(int $pressure): void
+    public function getPressure(): int
     {
-        $this->pressure = $pressure;
+        return $this->pressure;
     }
 
-    public function setHumidity(int $humidity): void
+    public function getHumidity(): int
     {
-        $this->humidity = $humidity;
+        return $this->humidity;
     }
 
-    public function setVisibility(int $visibility): void
+    public function getVisibility(): int
     {
-        $this->visibility = $visibility;
+        return $this->visibility;
     }
 
-    public function setWindSpeed(float $windSpeed): void
+    public function getWindSpeed(): float
     {
-        $this->windSpeed = $windSpeed;
+        return $this->windSpeed;
     }
 
-    public function setWindDirection(int $windDirection): void
+    public function getWindDirection(): int
     {
-        $this->windDirection = $windDirection;
+        return $this->windDirection;
     }
 
-    public function setCloudiness(int $cloudiness): void
+    public function getCloudiness(): int
     {
-        $this->cloudiness = $cloudiness;
+        return $this->cloudiness;
     }
 
-    public function setTimestamp(DateTime $timestamp): void
+    public function getTimestamp(): DateTime
     {
-        $this->timestamp = $timestamp;
+        return $this->timestamp;
     }
 
-    public function setCreatedAt(DateTime $createdAt): void
+    public function getCreatedAt(): DateTime
     {
-        $this->createdAt = $createdAt;
+        return $this->createdAt;
     }
 }

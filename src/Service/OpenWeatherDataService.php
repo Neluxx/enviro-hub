@@ -70,25 +70,22 @@ class OpenWeatherDataService
      */
     public function createOpenWeatherDataFromArray(array $data): OpenWeatherData
     {
-        $weatherData = new OpenWeatherData();
-
-        $weatherData->setTemperature($data['temperature']);
-        $weatherData->setFeelsLike($data['feels_like']);
-        $weatherData->setTempMin($data['temp_min']);
-        $weatherData->setTempMax($data['temp_max']);
-        $weatherData->setPressure($data['pressure']);
-        $weatherData->setHumidity($data['humidity']);
-        $weatherData->setWindSpeed($data['wind_speed']);
-        $weatherData->setWindDirection($data['wind_deg']);
-        $weatherData->setVisibility($data['visibility']);
-        $weatherData->setCloudiness($data['clouds']);
-        $weatherData->setWeatherDescription($data['weather_description']);
-        $weatherData->setWeatherMain($data['weather_main']);
-        $weatherData->setWeatherIcon($data['weather_icon']);
-        $weatherData->setTimestamp($data['created_at']);
-        $weatherData->setCreatedAt(new DateTime());
-
-        return $weatherData;
+        return new OpenWeatherData(
+            $data['weather_main'],
+            $data['weather_description'],
+            $data['weather_icon'],
+            $data['temperature'],
+            $data['feels_like'],
+            $data['temp_min'],
+            $data['temp_max'],
+            $data['pressure'],
+            $data['humidity'],
+            $data['visibility'],
+            $data['wind_speed'],
+            $data['wind_deg'],
+            $data['clouds'],
+            new DateTime($data['created_at'])
+        );
     }
 
     /**
