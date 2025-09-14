@@ -28,7 +28,9 @@ class OpenWeatherDataApiController extends ApiController
         $data = $this->parseJsonData($request);
 
         try {
-            $this->service->saveOpenWeatherData($data);
+            foreach ($data as $row) {
+                $this->service->saveOpenWeatherData($row);
+            }
 
             return $this->json(['message' => 'Data saved successfully'], Response::HTTP_CREATED);
         } catch (InvalidArgumentException $exception) {
