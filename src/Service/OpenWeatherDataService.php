@@ -85,7 +85,7 @@ class OpenWeatherDataService
         $weatherData->setWeatherDescription($data['weather_description']);
         $weatherData->setWeatherMain($data['weather_main']);
         $weatherData->setWeatherIcon($data['weather_icon']);
-        $weatherData->setTimestamp($data['created_at']);;
+        $weatherData->setTimestamp($data['created_at']);
         $weatherData->setCreatedAt(new DateTime());
 
         return $weatherData;
