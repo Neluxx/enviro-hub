@@ -28,7 +28,9 @@ class EnvironmentalDataApiController extends ApiController
         $data = $this->parseJsonData($request);
 
         try {
-            $this->service->saveEnvironmentalData($data);
+            foreach ($data as $row) {
+                $this->service->saveEnvironmentalData($row);
+            }
 
             return $this->json(['message' => 'Data saved successfully'], Response::HTTP_CREATED);
         } catch (InvalidArgumentException $exception) {
