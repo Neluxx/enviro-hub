@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class EnvironmentalDataApiService
 {
     /** The required fields */
-    private const REQUIRED_FIELDS = ['temperature', 'humidity', 'pressure', 'co2', 'created'];
+    private const REQUIRED_FIELDS = ['temperature', 'humidity', 'pressure', 'co2', 'created_at'];
 
     /** The date format */
     private const DATE_FORMAT = 'Y-m-d H:i:s';
@@ -89,19 +89,12 @@ class EnvironmentalDataApiService
      */
     private function createEnvironmentalData(array $data): EnvironmentalData
     {
-        $created = DateTime::createFromFormat(self::DATE_FORMAT, $data['created']);
-
-        if (false === $created) {
-            throw new InvalidArgumentException('Invalid date format for "created". Expected format: '.self::DATE_FORMAT);
-        }
-
         return new EnvironmentalData(
-            (float) $data['temperature'],
-            (float) $data['humidity'],
-            (float) $data['pressure'],
-            (float) $data['co2'],
-            $created,
-            new DateTime('now')
+            $data['temperature'],
+            $data['humidity'],
+            $data['pressure'],
+            $data['co2'],
+            new DateTime($data['created_at'])
         );
     }
 }
