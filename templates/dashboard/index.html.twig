@@ -1,10 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h1>My Chart</h1>
-{{ render_chart(chart) }}
+<h1>Raspberry Pi sensor data</h1>
+{#{{ render_chart(chart) }}#}
 
-{% for entry in data %}
-    {{ entry.id }}
-{% endfor %}
+{#{% for entry in data %}#}
+{#    {{ entry.id }}#}
+{#{% endfor %}#}
+
+<p>Temperature: {{ data.temperature }} °C</p>
+<p>Humidity: {{ data.humidity }} %</p>
+<p>Carbon dioxide: {{ data.carbonDioxide }} ppm</p>
+<p>Air pressure: {{ data.pressure }} hPa</p>
+<p>Measured at: {{ data.measuredAt.format('Y-m-d H:i:s') }}</p>
 {% endblock %}

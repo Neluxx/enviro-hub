@@ -26,12 +26,12 @@ class DashboardController extends AbstractController
     #[Route('/')]
     public function index(ChartBuilderInterface $chartBuilder): Response
     {
-        $data = $this->repository->getLatestEntries();
-        $chart = $this->createEnvironmentalDataChart($chartBuilder);
+        $data = $this->repository->getLastEntry();
+        // $chart = $this->createEnvironmentalDataChart($chartBuilder);
 
         return $this->render('dashboard/index.html.twig', [
             'data' => $data,
-            'chart' => $chart,
+            //'chart' => $chart,
         ]);
     }
 
