@@ -31,7 +31,7 @@ class DashboardController extends AbstractController
 
         return $this->render('dashboard/index.html.twig', [
             'data' => $data,
-            //'chart' => $chart,
+            // 'chart' => $chart,
         ]);
     }
 
