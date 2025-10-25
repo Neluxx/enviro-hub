@@ -18,9 +18,6 @@ class EnvironmentalDataApiService
     /** The required fields */
     private const REQUIRED_FIELDS = ['temperature', 'humidity', 'pressure', 'co2', 'created_at'];
 
-    /** The date format */
-    private const DATE_FORMAT = 'Y-m-d H:i:s';
-
     public function __construct(
         private readonly ValidatorInterface $validator,
         private readonly EnvironmentalDataRepository $repository,

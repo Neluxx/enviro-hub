@@ -31,10 +31,13 @@ class DashboardController extends AbstractController
 
         return $this->render('dashboard/index.html.twig', [
             'data' => $data,
-            //'chart' => $chart,
+            // 'chart' => $chart,
         ]);
     }
 
+    /**
+     * @phpstan-ignore-next-line
+     */
     private function createEnvironmentalDataChart(ChartBuilderInterface $chartBuilder): Chart
     {
         $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
