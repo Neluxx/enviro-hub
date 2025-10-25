@@ -49,8 +49,6 @@ class OpenWeatherDataService
      */
     public function saveOpenWeatherData(array $data): void
     {
-        $this->validateRequiredFields($data);
-
         $openWeatherData = $this->createOpenWeatherDataFromArray($data);
 
         $this->validateOpenWeatherData($openWeatherData);
@@ -70,6 +68,8 @@ class OpenWeatherDataService
      */
     public function createOpenWeatherDataFromArray(array $data): OpenWeatherData
     {
+        $this->validateRequiredFields($data);
+
         return new OpenWeatherData(
             $data['weather_main'],
             $data['weather_description'],
