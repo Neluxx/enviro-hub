@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class EnvironmentalDataApiService
 {
     /** The required fields */
-    private const REQUIRED_FIELDS = ['temperature', 'humidity', 'pressure', 'co2', 'created_at'];
+    private const REQUIRED_FIELDS = ['temperature', 'humidity', 'pressure', 'created_at'];
 
     public function __construct(
         private readonly ValidatorInterface $validator,
@@ -90,7 +90,7 @@ class EnvironmentalDataApiService
             $data['temperature'],
             $data['humidity'],
             $data['pressure'],
-            $data['co2'],
+            $data['co2'] ?? null,
             new DateTime($data['created_at'])
         );
     }
