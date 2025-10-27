@@ -18,15 +18,15 @@ class OpenWeatherDataService
 {
     /** The required fields */
     private const REQUIRED_FIELDS = [
+        'weather_main',
+        'weather_description',
+        'weather_icon',
         'temperature',
         'feels_like',
         'temp_min',
         'temp_max',
-        'humidity',
         'pressure',
-        'weather_main',
-        'weather_description',
-        'weather_icon',
+        'humidity',
         'visibility',
         'wind_speed',
         'wind_deg',
