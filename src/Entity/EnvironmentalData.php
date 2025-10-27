@@ -25,8 +25,8 @@ class EnvironmentalData
     #[ORM\Column(type: 'float')]
     private float $pressure;
 
-    #[ORM\Column(type: 'float')]
-    private float $carbonDioxide;
+    #[ORM\Column(type: 'float', nullable: true)]
+    private ?float $carbonDioxide = null;
 
     #[ORM\Column(type: 'datetime')]
     private DateTime $measuredAt;
@@ -38,7 +38,7 @@ class EnvironmentalData
         float $temperature,
         float $humidity,
         float $pressure,
-        float $carbonDioxide,
+        ?float $carbonDioxide,
         DateTime $measuredAt,
     ) {
         $this->temperature = $temperature;
@@ -69,7 +69,7 @@ class EnvironmentalData
         return $this->pressure;
     }
 
-    public function getCarbonDioxide(): float
+    public function getCarbonDioxide(): ?float
     {
         return $this->carbonDioxide;
     }

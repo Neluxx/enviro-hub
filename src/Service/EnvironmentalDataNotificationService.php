@@ -46,6 +46,10 @@ class EnvironmentalDataNotificationService
         $currentCo2Value = $currentData->getCarbonDioxide();
         $lastCo2Value = $previousData?->getCarbonDioxide();
 
+        if ($currentCo2Value === null || $lastCo2Value === null) {
+            return;
+        }
+
         if ($this->isCrossingHighThreshold($currentCo2Value, $lastCo2Value)) {
             $message = $this->formatNotificationMessage('exceeds', $currentCo2Value, $currentData);
             $this->sendNotification('High CO2 Alert!', $message);
