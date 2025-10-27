@@ -9,12 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Integrated OpenWeather API to fetch real-time weather data for environmental monitoring
-- Implemented Environmental data API integration for collecting comprehensive atmospheric metrics
-- Added automated email notification system for CO2 levels exceeding configured thresholds
-  - Configurable alert thresholds
-  - HTML email templates with detailed CO2 level information
-
 ### Changed
 
 ### Deprecated
@@ -26,3 +20,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 
 ### Dependencies
+
+## [v1.0.0](https://github.com/Neluxx/enviro-hub/releases/tag/v1.0.0) - 2025-10-27
+
+### Added
+
+- Integrated OpenWeather API to fetch real-time weather data for environmental monitoring
+- Implemented Environmental data API integration for collecting comprehensive atmospheric metrics
+- Added automated email notification system for CO2 levels exceeding configured thresholds
+  - Configurable alert thresholds
+  - HTML email templates with detailed CO2 level information
