@@ -9,6 +9,7 @@ env:
   PHP_VERSION: '8.3'
   DATABASE_PATH: 'var/data'
   TEST_ENV: 'test'
+  DATABASE_URL: 'sqlite:///%kernel.project_dir%/var/data/data_test.sqlite'
 
 jobs:
   quality-checks:
@@ -47,9 +48,7 @@ jobs:
           chmod -R 777 var/
 
       - name: Setup Test Database
-        run: |
-          php bin/console doctrine:database:create --env=${{ env.TEST_ENV }}
-          php bin/console doctrine:schema:create --env=${{ env.TEST_ENV }}
+        run: php bin/console doctrine:schema:create --env=${{ env.TEST_ENV }}
 
       # Testing
       - name: Execute Test Suite
