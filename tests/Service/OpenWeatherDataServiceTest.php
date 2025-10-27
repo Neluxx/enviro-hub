@@ -441,7 +441,7 @@ class OpenWeatherDataServiceTest extends KernelTestCase
      *
      * @return array<string, mixed>
      */
-    public function getValidOpenWeatherData(): array
+    private function getValidOpenWeatherData(): array
     {
         return [
             'weather_main' => 'Clear',
