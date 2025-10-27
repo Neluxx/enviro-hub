@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 /**
  * Environmental Data API Service.
  */
-class EnvironmentalDataApiService
+class EnvironmentalDataService
 {
     /** The required fields */
     private const REQUIRED_FIELDS = ['temperature', 'humidity', 'pressure', 'created_at'];
