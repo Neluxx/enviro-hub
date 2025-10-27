@@ -10,7 +10,7 @@ permissions:
 env:
   # Build configuration
   PHP_VERSION: '8.3'
-  COMPOSER_FLAGS: '--no-dev --optimize-autoloader'
+  COMPOSER_FLAGS: '--no-dev --optimize-autoloader --no-scripts'
 
   # Release configuration
   RELEASE_TYPE: 'stable'
