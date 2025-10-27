@@ -10,8 +10,9 @@ VERSION := $(shell cat VERSION.txt)
 RELEASE_FILE := $(APP_NAME)_$(VERSION).zip
 
 SYMFONY = bin/console
-DDEVPHP = ddev exec php
-COMPOSER = ddev composer
+DDEV_MYSQL = ddev mysql
+DDEV_PHP = ddev exec php
+DDEV_COMPOSER = ddev composer
 PHPUNIT = vendor/bin/phpunit
 PHPSTAN = vendor/bin/phpstan
 CSFIXER = vendor/bin/php-cs-fixer
@@ -72,6 +73,8 @@ help:
 # -------- Development --------
 .PHONY: app-setup
 app-setup:
+	@echo "$(INFO) Setting up database permissions $(RESET)"
+	$(DDEV_MYSQL) -uroot -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'db'@'%'; FLUSH PRIVILEGES;"
 	$(MAKE) cp-selfupdate
 	$(MAKE) cp-install
 	$(MAKE) db-reset
@@ -107,41 +110,43 @@ build:
 	rm -rf $(BUILD_DIR)
 	mkdir -p $(RELEASE_DIR)
 	rsync -a --exclude=$(BUILD_DIR) --exclude='.git' --exclude='vendor' --exclude='.env.local' --exclude='var' $(SRC) $(RELEASE_DIR)/
-	$(COMPOSER) install --working-dir=$(RELEASE_DIR) --no-dev --optimize-autoloader --no-scripts
+	$(DDEV_COMPOSER) install --working-dir=$(RELEASE_DIR) --no-dev --optimize-autoloader --no-scripts
 	cd $(RELEASE_DIR) && zip -r ../$(RELEASE_FILE) .
 
 # -------- Composer --------
 .PHONY: cp-install
 cp-install:
 	@echo "$(INFO) Install composer dependencies $(RESET)"
-	$(COMPOSER) -V
-	$(COMPOSER) install --optimize-autoloader
+	$(DDEV_COMPOSER) -V
+	$(DDEV_COMPOSER) install --optimize-autoloader
 
 .PHONY: cp-update
 cp-update:
 	@echo "$(INFO) Update composer dependencies $(RESET)"
-	$(COMPOSER) update
+	$(DDEV_COMPOSER) update
 
 .PHONY: cp-selfupdate
 cp-selfupdate:
 	@echo "$(INFO) Update composer $(RESET)"
-	$(COMPOSER) self-update --2
+	$(DDEV_COMPOSER) self-update --2
 
 .PHONY: cp-recipes
 cp-recipes:
 	@echo "$(INFO) Update symfony recipes $(RESET)"
-	$(COMPOSER) recipes:update
+	$(DDEV_COMPOSER) recipes:update
 
 # -------- Database --------
 .PHONY: db-create
 db-create:
 	@echo "$(INFO) Create database $(RESET)"
-	$(DDEVPHP) $(SYMFONY) doctrine:database:create --env=dev --if-not-exists
+	$(DDEV_PHP) $(SYMFONY) doctrine:database:create --env=dev --if-not-exists
+	$(DDEV_PHP) $(SYMFONY) doctrine:database:create --env=test --if-not-exists
 
 .PHONY: db-drop
 db-drop:
 	@echo "$(WARNING) Drop database $(RESET)"
-	$(DDEVPHP) $(SYMFONY) doctrine:database:drop --env=dev --if-exists --force
+	$(DDEV_PHP) $(SYMFONY) doctrine:database:drop --env=dev --if-exists --force
+	$(DDEV_PHP) $(SYMFONY) doctrine:database:drop --env=test --if-exists --force
 
 .PHONY: db-reset
 db-reset:
@@ -153,45 +158,47 @@ db-reset:
 .PHONY: migrate
 migrate:
 	@echo "$(INFO) Execute migrations $(RESET)"
-	$(DDEVPHP) $(SYMFONY) doctrine:migrations:migrate --env=dev --no-interaction
+	$(DDEV_PHP) $(SYMFONY) doctrine:migrations:migrate --env=dev --no-interaction
+	$(DDEV_PHP) $(SYMFONY) doctrine:migrations:migrate --env=test --no-interaction
 
 .PHONY: rollback
 rollback:
 	@echo "$(INFO) Rollback migrations $(RESET)"
-	$(DDEVPHP) $(SYMFONY) doctrine:migrations:migrate prev --env=dev --no-interaction
+	$(DDEV_PHP) $(SYMFONY) doctrine:migrations:migrate prev --env=dev --no-interaction
+	$(DDEV_PHP) $(SYMFONY) doctrine:migrations:migrate prev --env=test --no-interaction
 
 .PHONY: reset
 reset:
 	@echo "$(WARNING) Reset migrations $(RESET)"
-	$(DDEVPHP) $(SYMFONY) doctrine:migrations:migrate 0 --env=dev --no-interaction
+	$(DDEV_PHP) $(SYMFONY) doctrine:migrations:migrate 0 --env=dev --no-interaction
+	$(DDEV_PHP) $(SYMFONY) doctrine:migrations:migrate 0 --env=test --no-interaction
 
 .PHONY: diff
 diff:
 	@echo "$(INFO) Create migration from diff $(RESET)"
-	$(DDEVPHP) $(SYMFONY) doctrine:migration:diff
+	$(DDEV_PHP) $(SYMFONY) doctrine:migration:diff
 
 # -------- Testing --------
 .PHONY: test
 test:
 	@echo "$(INFO) Run test suite $(RESET)"
-	$(DDEVPHP) $(SYMFONY) doctrine:schema:drop --env=test --force
-	$(DDEVPHP) $(SYMFONY) doctrine:schema:create --env=test --no-interaction
-	#$(DDEVPHP) $(SYMFONY) doctrine:fixtures:load --env=test --no-interaction
-	$(DDEVPHP) $(PHPUNIT) --colors=always
+	$(DDEV_PHP) $(PHPUNIT) --colors=always
 
 .PHONY: stan
 stan:
 	@echo "$(INFO) Run static code analysis $(RESET)"
-	$(DDEVPHP) $(PHPSTAN) analyse
+	$(DDEV_PHP) $(PHPSTAN) analyse
 
 .PHONY: cs-fix
 cs-fix:
 	@echo "$(INFO) Run code style fixer $(RESET)"
-	$(DDEVPHP) $(CSFIXER) fix --using-cache=no
+	$(DDEV_PHP) $(CSFIXER) fix --using-cache=no
 
 # -------- Cache --------
 .PHONY: clear-cache
 clear-cache:
 	@echo "$(INFO) Clear cache $(RESET)"
-	$(DDEVPHP) $(SYMFONY) cache:clear --env=dev
-	$(DDEVPHP) $(SYMFONY) cache:warmup --env=dev
+	$(DDEV_PHP) $(SYMFONY) cache:clear --env=dev
+	$(DDEV_PHP) $(SYMFONY) cache:warmup --env=dev
+	$(DDEV_PHP) $(SYMFONY) cache:clear --env=test
+	$(DDEV_PHP) $(SYMFONY) cache:warmup --env=test

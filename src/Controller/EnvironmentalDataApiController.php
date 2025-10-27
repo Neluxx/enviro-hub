@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\EnvironmentalDataApiService;
+use App\Service\EnvironmentalDataService;
 use Exception;
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class EnvironmentalDataApiController extends ApiController
 {
-    public function __construct(private readonly EnvironmentalDataApiService $service)
+    public function __construct(private readonly EnvironmentalDataService $service)
     {
     }
 
