@@ -200,3 +200,5 @@ clear-cache:
 	@echo "$(INFO) Clear cache $(RESET)"
 	$(DDEV_PHP) $(SYMFONY) cache:clear --env=dev
 	$(DDEV_PHP) $(SYMFONY) cache:warmup --env=dev
+	$(DDEV_PHP) $(SYMFONY) cache:clear --env=test
+	$(DDEV_PHP) $(SYMFONY) cache:warmup --env=test
