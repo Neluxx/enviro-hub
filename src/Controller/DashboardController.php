@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\EnvironmentalData;
 use App\Repository\EnvironmentalDataRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,30 +27,35 @@ class DashboardController extends AbstractController
     #[Route('/')]
     public function index(ChartBuilderInterface $chartBuilder): Response
     {
-        $data = $this->repository->getLastEntry();
-        // $chart = $this->createEnvironmentalDataChart($chartBuilder);
+        $lastEntry = $this->repository->getLastEntry();
+        $latestEntries = $this->repository->getLatestEntries();
+        $chart = $this->createEnvironmentalDataChart($chartBuilder, $latestEntries);
 
         return $this->render('dashboard/index.html.twig', [
-            'data' => $data,
-            // 'chart' => $chart,
+            'lastEntry' => $lastEntry,
+            'chart' => $chart,
         ]);
     }
 
     /**
-     * @phpstan-ignore-next-line
+     * Creates a chart for environmental data.
+     *
+     * @param ChartBuilderInterface $chartBuilder The chart builder
+     * @param EnvironmentalData[] $latestEntries The latest environmental data
      */
-    private function createEnvironmentalDataChart(ChartBuilderInterface $chartBuilder): Chart
+    private function createEnvironmentalDataChart(ChartBuilderInterface $chartBuilder, array $latestEntries): Chart
     {
         $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
+        $temperatures = array_map(fn ($data) => $data->getTemperature(), $latestEntries);
 
         $chart->setData([
-            'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
             'datasets' => [
                 [
                     'label' => 'Environmental Data',
                     'backgroundColor' => 'rgb(54, 162, 235)',
                     'borderColor' => 'rgb(54, 162, 235)',
-                    'data' => [0, 10, 5, 2, 20, 30, 45], // Fake data for testing purposes only
+                    'data' => $temperatures,
                 ],
             ],
         ]);
@@ -57,8 +63,8 @@ class DashboardController extends AbstractController
         $chart->setOptions([
             'scales' => [
                 'y' => [
-                    'suggestedMin' => 0,
-                    'suggestedMax' => 100,
+                    'suggestedMin' => 15,
+                    'suggestedMax' => 30,
                 ],
             ],
         ]);
