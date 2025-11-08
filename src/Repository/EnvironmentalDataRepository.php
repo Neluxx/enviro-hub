@@ -47,6 +47,8 @@ class EnvironmentalDataRepository
     /**
      * Get the latest EnvironmentalData entries.
      *
+     * @param int $limit The maximum number of entries to return
+     *
      * @return EnvironmentalData[]
      */
     public function getLatestEntries(int $limit = self::DEFAULT_LIMIT): array
