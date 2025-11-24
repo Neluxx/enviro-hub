@@ -1,0 +1,215 @@
+/**
+ * Dashboard Chart Manager
+ * Handles initialization and updates of environmental data charts
+ */
+class DashboardChartManager {
+    constructor() {
+        this.charts = {
+            temperature: null,
+            humidity: null,
+            co2: null,
+            pressure: null
+        };
+        this.currentRange = 'today';
+        this.chartConfigs = {
+            temperature: {
+                label: 'Temperature (°C)',
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.1)',
+            },
+            humidity: {
+                label: 'Humidity (%)',
+                borderColor: 'rgb(54, 162, 235)',
+                backgroundColor: 'rgba(54, 162, 235, 0.1)',
+            },
+            co2: {
+                label: 'CO₂ (ppm)',
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgba(75, 192, 192, 0.1)',
+            },
+            pressure: {
+                label: 'Air Pressure (hPa)',
+                borderColor: 'rgb(153, 102, 255)',
+                backgroundColor: 'rgba(153, 102, 255, 0.1)',
+            }
+        };
+    }
+
+    /**
+     * Create a chart instance
+     */
+    createChart(canvasId, label, borderColor, backgroundColor) {
+        const ctx = document.getElementById(canvasId).getContext('2d');
+        return new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: label,
+                    data: [],
+                    borderColor: borderColor,
+                    backgroundColor: backgroundColor,
+                    tension: 0.4,
+                    fill: true,
+                    pointRadius: 2,
+                    pointHoverRadius: 4,
+                    borderWidth: 2,
+                    spanGaps: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                    },
+                    decimation: {
+                        enabled: true,
+                        algorithm: 'lttb',
+                        samples: 100
+                    }
+                },
+                scales: {
+                    x: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Time'
+                        },
+                        ticks: {
+                            maxTicksLimit: 10,
+                            autoSkip: true,
+                            maxRotation: 45,
+                            minRotation: 0
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: label
+                        }
+                    }
+                },
+                elements: {
+                    line: {
+                        tension: 0.4
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * Initialize all charts
+     */
+    initCharts() {
+        this.charts.temperature = this.createChart(
+            'temperatureChart',
+            this.chartConfigs.temperature.label,
+            this.chartConfigs.temperature.borderColor,
+            this.chartConfigs.temperature.backgroundColor
+        );
+
+        this.charts.humidity = this.createChart(
+            'humidityChart',
+            this.chartConfigs.humidity.label,
+            this.chartConfigs.humidity.borderColor,
+            this.chartConfigs.humidity.backgroundColor
+        );
+
+        this.charts.co2 = this.createChart(
+            'co2Chart',
+            this.chartConfigs.co2.label,
+            this.chartConfigs.co2.borderColor,
+            this.chartConfigs.co2.backgroundColor
+        );
+
+        this.charts.pressure = this.createChart(
+            'pressureChart',
+            this.chartConfigs.pressure.label,
+            this.chartConfigs.pressure.borderColor,
+            this.chartConfigs.pressure.backgroundColor
+        );
+    }
+
+    /**
+     * Update all charts with new data
+     */
+    updateCharts(data) {
+        // Update temperature chart
+        this.charts.temperature.data.labels = data.labels;
+        this.charts.temperature.data.datasets[0].data = data.temperature;
+        this.charts.temperature.update('none');
+
+        // Update humidity chart
+        this.charts.humidity.data.labels = data.labels;
+        this.charts.humidity.data.datasets[0].data = data.humidity;
+        this.charts.humidity.update('none');
+
+        // Update CO2 chart
+        this.charts.co2.data.labels = data.labels;
+        this.charts.co2.data.datasets[0].data = data.co2;
+        this.charts.co2.update('none');
+
+        // Update pressure chart
+        this.charts.pressure.data.labels = data.labels;
+        this.charts.pressure.data.datasets[0].data = data.pressure;
+        this.charts.pressure.update('none');
+    }
+
+    /**
+     * Load chart data from API
+     */
+    async loadChartData(range) {
+        try {
+            const response = await fetch(`/api/environmental-data/chart/${range}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            this.updateCharts(data);
+        } catch (error) {
+            console.error('Error loading chart data:', error);
+        }
+    }
+
+    /**
+     * Setup time range button event listeners
+     */
+    setupTimeRangeButtons() {
+        const buttons = document.querySelectorAll('.time-range-buttons button');
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active button
+                buttons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                // Load new data
+                this.currentRange = button.dataset.range;
+                this.loadChartData(this.currentRange);
+            });
+        });
+    }
+
+    /**
+     * Initialize the dashboard
+     */
+    init() {
+        this.initCharts();
+        this.loadChartData(this.currentRange);
+        this.setupTimeRangeButtons();
+    }
+}
+
+// Initialize dashboard when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    const dashboard = new DashboardChartManager();
+    dashboard.init();
+});
