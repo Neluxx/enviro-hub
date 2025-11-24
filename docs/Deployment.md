@@ -6,7 +6,7 @@ Upload the release ZIP to:
 The application can be installed with the following commands executed in SSH on the server:
 
 ```` sh
-export VERSION=v1.0.0
+export VERSION=v1.1.0
 export APP_NAME=enviro-hub
 export APP_RELEASE=${APP_NAME}_${VERSION}
 export APP_DEST=/var/www/$APP_NAME

@@ -21,6 +21,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Dependencies
 
+## [v1.1.0](https://github.com/Neluxx/enviro-hub/releases/tag/v1.1.0) - 2025-11-24
+
+### Added
+
+- Implemented interactive Chart.js visualizations for environmental sensor data [#1](https://github.com/Neluxx/enviro-hub/issues/1)
+
 ## [v1.0.0](https://github.com/Neluxx/enviro-hub/releases/tag/v1.0.0) - 2025-10-27
 
 ### Added
