@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Entity\EnvironmentalData;
 use App\Repository\EnvironmentalDataRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
-use Symfony\UX\Chartjs\Model\Chart;
 
 /**
  * Dashboard Controller.
@@ -25,50 +24,43 @@ class DashboardController extends AbstractController
     }
 
     #[Route('/')]
-    public function index(ChartBuilderInterface $chartBuilder): Response
+    public function index(): Response
     {
-        $lastEntry = $this->repository->getLastEntry();
-        $latestEntries = $this->repository->getLatestEntries();
-        $chart = $this->createEnvironmentalDataChart($chartBuilder, $latestEntries);
+        $data = $this->repository->getLastEntry();
 
-        return $this->render('dashboard/index.html.twig', [
-            'lastEntry' => $lastEntry,
-            'chart' => $chart,
-        ]);
+        return $this->render('dashboard/index.html.twig', ['data' => $data]);
     }
 
-    /**
-     * Creates a chart for environmental data.
-     *
-     * @param ChartBuilderInterface $chartBuilder The chart builder
-     * @param EnvironmentalData[] $latestEntries The latest environmental data
-     */
-    private function createEnvironmentalDataChart(ChartBuilderInterface $chartBuilder, array $latestEntries): Chart
+    #[Route('/api/environmental-data/chart/{range}', methods: ['GET'])]
+    public function getChartData(string $range): JsonResponse
     {
-        $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
-        $temperatures = array_map(fn ($data) => $data->getTemperature(), $latestEntries);
+        $endDate = new DateTime();
+        $startDate = match ($range) {
+            'today' => (new DateTime())->setTime(0, 0, 0),
+            'week' => (new DateTime())->modify('-7 days'),
+            'month' => (new DateTime())->modify('-1 month'),
+            'year' => (new DateTime())->modify('-1 year'),
+            default => (new DateTime())->setTime(0, 0, 0),
+        };
 
-        $chart->setData([
-            'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-            'datasets' => [
-                [
-                    'label' => 'Environmental Data',
-                    'backgroundColor' => 'rgb(54, 162, 235)',
-                    'borderColor' => 'rgb(54, 162, 235)',
-                    'data' => $temperatures,
-                ],
-            ],
-        ]);
+        $data = $this->repository->findByDateRange($startDate, $endDate);
 
-        $chart->setOptions([
-            'scales' => [
-                'y' => [
-                    'suggestedMin' => 15,
-                    'suggestedMax' => 30,
-                ],
-            ],
-        ]);
+        $chartData = [
+            'labels' => [],
+            'temperature' => [],
+            'humidity' => [],
+            'pressure' => [],
+            'co2' => [],
+        ];
 
-        return $chart;
+        foreach ($data as $entry) {
+            $chartData['labels'][] = $entry->getMeasuredAt()->format('Y-m-d H:i');
+            $chartData['temperature'][] = $entry->getTemperature();
+            $chartData['humidity'][] = $entry->getHumidity();
+            $chartData['pressure'][] = $entry->getPressure();
+            $chartData['co2'][] = $entry->getCarbonDioxide();
+        }
+
+        return new JsonResponse($chartData);
     }
 }

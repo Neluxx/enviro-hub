@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\EnvironmentalData;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 
@@ -54,6 +55,26 @@ class EnvironmentalDataRepository
     public function getLatestEntries(int $limit = self::DEFAULT_LIMIT): array
     {
         return $this->repository->findBy([], $this->getDescendingOrderById(), $limit);
+    }
+
+    /**
+     * Get the latest EnvironmentalData entries by date range.
+     *
+     * @param DateTime $startDate The start date of entries to return
+     * @param DateTime $endDate The end date of entries to return
+     *
+     * @return EnvironmentalData[]
+     */
+    public function findByDateRange(DateTime $startDate, DateTime $endDate): array
+    {
+        return $this->repository->createQueryBuilder('e')
+            ->where('e.measuredAt >= :startDate')
+            ->andWhere('e.measuredAt <= :endDate')
+            ->setParameter('startDate', $startDate)
+            ->setParameter('endDate', $endDate)
+            ->orderBy('e.measuredAt', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 
     /**
