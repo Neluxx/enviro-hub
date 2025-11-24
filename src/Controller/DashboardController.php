@@ -5,64 +5,39 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Repository\EnvironmentalDataRepository;
+use App\Service\DashboardService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
-use Symfony\UX\Chartjs\Model\Chart;
 
 /**
  * Dashboard Controller.
  */
 class DashboardController extends AbstractController
 {
+    private DashboardService $service;
     private EnvironmentalDataRepository $repository;
 
-    public function __construct(EnvironmentalDataRepository $repository)
+    public function __construct(EnvironmentalDataRepository $repository, DashboardService $service)
     {
+        $this->service = $service;
         $this->repository = $repository;
     }
 
     #[Route('/')]
-    public function index(ChartBuilderInterface $chartBuilder): Response
+    public function index(): Response
     {
         $data = $this->repository->getLastEntry();
-        // $chart = $this->createEnvironmentalDataChart($chartBuilder);
 
-        return $this->render('dashboard/index.html.twig', [
-            'data' => $data,
-            // 'chart' => $chart,
-        ]);
+        return $this->render('dashboard/index.html.twig', ['data' => $data]);
     }
 
-    /**
-     * @phpstan-ignore-next-line
-     */
-    private function createEnvironmentalDataChart(ChartBuilderInterface $chartBuilder): Chart
+    #[Route('/api/environmental-data/chart/{range}', methods: ['GET'])]
+    public function getChartData(string $range): JsonResponse
     {
-        $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
+        $chartData = $this->service->getChartData($range);
 
-        $chart->setData([
-            'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            'datasets' => [
-                [
-                    'label' => 'Environmental Data',
-                    'backgroundColor' => 'rgb(54, 162, 235)',
-                    'borderColor' => 'rgb(54, 162, 235)',
-                    'data' => [0, 10, 5, 2, 20, 30, 45], // Fake data for testing purposes only
-                ],
-            ],
-        ]);
-
-        $chart->setOptions([
-            'scales' => [
-                'y' => [
-                    'suggestedMin' => 0,
-                    'suggestedMax' => 100,
-                ],
-            ],
-        ]);
-
-        return $chart;
+        return new JsonResponse($chartData);
     }
 }

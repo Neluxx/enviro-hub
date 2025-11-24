@@ -1,16 +1,73 @@
+
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/dashboard.css') }}">
+{% endblock %}
+
 {% block body %}
-<h1>Raspberry Pi sensor data</h1>
-{#{{ render_chart(chart) }}#}
+    <h1>Raspberry Pi Sensor Data</h1>
 
-{#{% for entry in data %}#}
-{#    {{ entry.id }}#}
-{#{% endfor %}#}
+    <div class="current-values">
+        <div class="value-card">
+            <h3>Temperature</h3>
+            <div class="value">{{ data.temperature }} °C</div>
+        </div>
+        <div class="value-card">
+            <h3>Humidity</h3>
+            <div class="value">{{ data.humidity }} %</div>
+        </div>
+        <div class="value-card">
+            <h3>CO₂</h3>
+            <div class="value">{{ data.carbonDioxide ?? 'N/A' }} ppm</div>
+        </div>
+        <div class="value-card">
+            <h3>Air Pressure</h3>
+            <div class="value">{{ data.pressure }} hPa</div>
+        </div>
+    </div>
 
-<p>Temperature: {{ data.temperature }} °C</p>
-<p>Humidity: {{ data.humidity }} %</p>
-<p>Carbon dioxide: {{ data.carbonDioxide }} ppm</p>
-<p>Air pressure: {{ data.pressure }} hPa</p>
-<p>Measured at: {{ data.measuredAt.format('Y-m-d H:i:s') }}</p>
+    <p><small>Last measured: {{ data.measuredAt.format('Y-m-d H:i:s') }}</small></p>
+
+    <div class="time-range-buttons">
+        <button data-range="today" class="active">Today</button>
+        <button data-range="week">Last Week</button>
+        <button data-range="month">Last Month</button>
+        <button data-range="year">Last Year</button>
+    </div>
+
+    <div class="chart-container">
+        <h2>Temperature</h2>
+        <div class="chart-wrapper">
+            <canvas id="temperatureChart"></canvas>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <h2>Humidity</h2>
+        <div class="chart-wrapper">
+            <canvas id="humidityChart"></canvas>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <h2>CO₂ Level</h2>
+        <div class="chart-wrapper">
+            <canvas id="co2Chart"></canvas>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <h2>Air Pressure</h2>
+        <div class="chart-wrapper">
+            <canvas id="pressureChart"></canvas>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="{{ asset('js/dashboard.js') }}"></script>
 {% endblock %}
