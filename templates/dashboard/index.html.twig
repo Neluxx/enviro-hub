@@ -48,9 +48,10 @@
             </div>
         </div>
 
-        <p class="text-muted mb-4">
+        <div class="d-flex justify-content-between align-items-center text-muted mb-4">
             <small>Last measured: {{ data.measuredAt.format('Y-m-d H:i:s') }}</small>
-        </p>
+            <small>Release: {{ version }}</small>
+        </div>
 
         {# Time Range Buttons #}
         <div class="time-range-buttons mb-4 flex-wrap" role="group" aria-label="Time range selection">
