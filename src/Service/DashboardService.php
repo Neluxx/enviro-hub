@@ -33,7 +33,7 @@ class DashboardService
      */
     public function getChartData(string $range): array
     {
-        $timezone = new \DateTimeZone('Europe/Berlin');
+        $timezone = new DateTimeZone('Europe/Berlin');
         $endDate = new DateTime('now', $timezone);
         $startDate = $this->calculateStartDate($range, $endDate);
 
