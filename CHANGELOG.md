@@ -8,8 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Added color-coded status indicators for sensor values based on optimal ranges [#10](https://github.com/Neluxx/enviro-hub/issues/10)
+- Added horizontal reference lines on charts to display optimal ranges [#10](https://github.com/Neluxx/enviro-hub/issues/10)
+- Added release version display in dashboard [#10](https://github.com/Neluxx/enviro-hub/issues/10)
 
 ### Changed
+- Migrated dashboard UI to Bootstrap 5 for improved responsive design [#10](https://github.com/Neluxx/enviro-hub/issues/10)
+- Optimized chart data aggregation with time range-specific limits [#10](https://github.com/Neluxx/enviro-hub/issues/10)
 
 ### Deprecated
 
@@ -20,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 
 ### Dependencies
+- Added Chart.js annotation plugin v3.0.1 for reference line visualization
 
 ## [v1.1.1](https://github.com/Neluxx/enviro-hub/releases/tag/v1.1.1) - 2025-11-25
 
