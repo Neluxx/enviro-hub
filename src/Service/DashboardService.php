@@ -7,6 +7,7 @@ namespace App\Service;
 use App\Entity\EnvironmentalData;
 use App\Repository\EnvironmentalDataRepository;
 use DateTime;
+use DateTimeZone;
 
 /**
  * Dashboard Service.
@@ -32,7 +33,8 @@ class DashboardService
      */
     public function getChartData(string $range): array
     {
-        $endDate = new DateTime();
+        $timezone = new DateTimeZone('Europe/Berlin');
+        $endDate = new DateTime('now', $timezone);
         $startDate = $this->calculateStartDate($range, $endDate);
 
         $data = $this->repository->findByDateRange($startDate, $endDate);
