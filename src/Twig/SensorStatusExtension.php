@@ -40,7 +40,7 @@ class SensorStatusExtension extends AbstractExtension
      * Get temperature status class.
      * Success: 18-22°C
      * Warning: 16-18°C or 22-24°C
-     * Danger: <16°C or >24°C
+     * Danger: <16°C or >24°C.
      */
     private function getTemperatureStatus(float $value): string
     {
@@ -59,7 +59,7 @@ class SensorStatusExtension extends AbstractExtension
      * Get humidity status class.
      * Success: 40-60%
      * Warning: 30-40% or 60-70%
-     * Danger: <30% or >70%
+     * Danger: <30% or >70%.
      */
     private function getHumidityStatus(float $value): string
     {
@@ -78,7 +78,7 @@ class SensorStatusExtension extends AbstractExtension
      * Get CO2 status class.
      * Success: 0-999 ppm
      * Warning: 1000-1599 ppm
-     * Danger: >=1600 ppm
+     * Danger: >=1600 ppm.
      */
     private function getCo2Status(float $value): string
     {
