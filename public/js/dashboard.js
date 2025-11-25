@@ -1,3 +1,4 @@
+
 /**
  * Dashboard Chart Manager
  * Handles initialization and updates of environmental data charts
@@ -16,21 +17,76 @@ class DashboardChartManager {
                 label: 'Temperature (°C)',
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                annotations: {
+                    line1: {
+                        type: 'line',
+                        yMin: 18,
+                        yMax: 18,
+                        borderColor: 'rgba(75, 192, 192, 0.8)',
+                        borderWidth: 1,
+                        borderDash: [5, 5]
+                    },
+                    line2: {
+                        type: 'line',
+                        yMin: 22,
+                        yMax: 22,
+                        borderColor: 'rgba(75, 192, 192, 0.8)',
+                        borderWidth: 1,
+                        borderDash: [5, 5]
+                    }
+                }
             },
             humidity: {
                 label: 'Humidity (%)',
                 borderColor: 'rgb(54, 162, 235)',
                 backgroundColor: 'rgba(54, 162, 235, 0.1)',
+                annotations: {
+                    line1: {
+                        type: 'line',
+                        yMin: 40,
+                        yMax: 40,
+                        borderColor: 'rgba(75, 192, 192, 0.8)',
+                        borderWidth: 1,
+                        borderDash: [5, 5]
+                    },
+                    line2: {
+                        type: 'line',
+                        yMin: 60,
+                        yMax: 60,
+                        borderColor: 'rgba(75, 192, 192, 0.8)',
+                        borderWidth: 1,
+                        borderDash: [5, 5]
+                    }
+                }
             },
             co2: {
                 label: 'CO₂ (ppm)',
                 borderColor: 'rgb(75, 192, 192)',
                 backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                annotations: {
+                    line1: {
+                        type: 'line',
+                        yMin: 1000,
+                        yMax: 1000,
+                        borderColor: 'rgba(255, 127, 0, 0.8)',
+                        borderWidth: 1,
+                        borderDash: [5, 5]
+                    },
+                    line2: {
+                        type: 'line',
+                        yMin: 1600,
+                        yMax: 1600,
+                        borderColor: 'rgba(255, 0, 0, 0.8)',
+                        borderWidth: 1,
+                        borderDash: [5, 5]
+                    }
+                }
             },
             pressure: {
                 label: 'Air Pressure (hPa)',
                 borderColor: 'rgb(153, 102, 255)',
                 backgroundColor: 'rgba(153, 102, 255, 0.1)',
+                annotations: {}
             }
         };
     }
@@ -38,7 +94,7 @@ class DashboardChartManager {
     /**
      * Create a chart instance
      */
-    createChart(canvasId, label, borderColor, backgroundColor) {
+    createChart(canvasId, label, borderColor, backgroundColor, annotations = {}) {
         const ctx = document.getElementById(canvasId).getContext('2d');
         return new Chart(ctx, {
             type: 'line',
@@ -73,6 +129,9 @@ class DashboardChartManager {
                         enabled: true,
                         algorithm: 'lttb',
                         samples: 100
+                    },
+                    annotation: {
+                        annotations: annotations
                     }
                 },
                 scales: {
@@ -114,28 +173,32 @@ class DashboardChartManager {
             'temperatureChart',
             this.chartConfigs.temperature.label,
             this.chartConfigs.temperature.borderColor,
-            this.chartConfigs.temperature.backgroundColor
+            this.chartConfigs.temperature.backgroundColor,
+            this.chartConfigs.temperature.annotations
         );
 
         this.charts.humidity = this.createChart(
             'humidityChart',
             this.chartConfigs.humidity.label,
             this.chartConfigs.humidity.borderColor,
-            this.chartConfigs.humidity.backgroundColor
+            this.chartConfigs.humidity.backgroundColor,
+            this.chartConfigs.humidity.annotations
         );
 
         this.charts.co2 = this.createChart(
             'co2Chart',
             this.chartConfigs.co2.label,
             this.chartConfigs.co2.borderColor,
-            this.chartConfigs.co2.backgroundColor
+            this.chartConfigs.co2.backgroundColor,
+            this.chartConfigs.co2.annotations
         );
 
         this.charts.pressure = this.createChart(
             'pressureChart',
             this.chartConfigs.pressure.label,
             this.chartConfigs.pressure.borderColor,
-            this.chartConfigs.pressure.backgroundColor
+            this.chartConfigs.pressure.backgroundColor,
+            this.chartConfigs.pressure.annotations
         );
     }
 

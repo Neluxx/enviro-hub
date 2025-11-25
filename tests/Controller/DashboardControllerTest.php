@@ -40,8 +40,9 @@ class DashboardControllerTest extends WebTestCase
         $client->request('GET', '/');
 
         static::assertResponseIsSuccessful();
-        static::assertSelectorTextContains('h1', 'Raspberry Pi Sensor Data');
-        static::assertSelectorExists('.current-values');
+        static::assertSelectorExists('.container-fluid');
+        static::assertSelectorExists('.row');
+        static::assertSelectorExists('.card');
         static::assertSelectorExists('#temperatureChart');
         static::assertSelectorExists('#humidityChart');
         static::assertSelectorExists('#co2Chart');
@@ -71,10 +72,16 @@ class DashboardControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/');
 
         static::assertResponseIsSuccessful();
-        static::assertStringContainsString('23.7', $crawler->filter('.current-values')->text());
-        static::assertStringContainsString('58.2', $crawler->filter('.current-values')->text());
-        static::assertStringContainsString('1015.5', $crawler->filter('.current-values')->text());
-        static::assertStringContainsString('425.3', $crawler->filter('.current-values')->text());
+
+        $allCardText = '';
+        $crawler->filter('.card-body')->each(function ($node) use (&$allCardText) {
+            $allCardText .= ' '.$node->text();
+        });
+
+        static::assertStringContainsString('Temperature 23.7 °C', $allCardText);
+        static::assertStringContainsString('Humidity 58.2 %', $allCardText);
+        static::assertStringContainsString('Air Pressure 1015.5 hPa', $allCardText);
+        static::assertStringContainsString('CO₂ 425.3 ppm', $allCardText);
     }
 
     /**
@@ -100,7 +107,13 @@ class DashboardControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/');
 
         static::assertResponseIsSuccessful();
-        static::assertStringContainsString('N/A', $crawler->filter('.current-values')->text());
+
+        $allCardText = '';
+        $crawler->filter('.card-body')->each(function ($node) use (&$allCardText) {
+            $allCardText .= ' '.$node->text();
+        });
+
+        static::assertStringContainsString('CO₂ N/A ppm', $allCardText);
     }
 
     /**

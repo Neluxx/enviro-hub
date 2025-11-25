@@ -30,7 +30,13 @@ class DashboardController extends AbstractController
     {
         $data = $this->repository->getLastEntry();
 
-        return $this->render('dashboard/index.html.twig', ['data' => $data]);
+        $versionFile = $this->getParameter('kernel.project_dir').'/VERSION.txt';
+        $version = file_exists($versionFile) ? trim(file_get_contents($versionFile)) : 'N/A';
+
+        return $this->render('dashboard/index.html.twig', [
+            'data' => $data,
+            'version' => $version,
+        ]);
     }
 
     #[Route('/api/environmental-data/chart/{range}', methods: ['GET'])]

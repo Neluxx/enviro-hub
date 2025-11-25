@@ -16,8 +16,13 @@ use DateTimeZone;
  */
 class DashboardService
 {
-    /** The maximum number of data points to display on the chart */
-    private const MAX_DATA_POINTS = 250;
+    /** Maximum data points for each time range */
+    private const MAX_DATA_POINTS = [
+        'today' => 144,   // 24 hours * 6 = every 10 minutes
+        'week' => 168,    // 7 days * 24 hours = hourly
+        'month' => 120,   // ~30 days * 4 = every 6 hours
+        'year' => 365,    // 365 days = daily
+    ];
 
     private EnvironmentalDataRepository $repository;
 
@@ -49,8 +54,10 @@ class DashboardService
             ];
         }
 
-        if (\count($data) > self::MAX_DATA_POINTS) {
-            $data = $this->aggregateData($data, $range);
+        $maxDataPoints = self::MAX_DATA_POINTS[$range] ?? 250;
+
+        if (\count($data) > $maxDataPoints) {
+            $data = $this->aggregateData($data, $range, $maxDataPoints);
         }
 
         return $this->formatChartData($data);
@@ -115,10 +122,10 @@ class DashboardService
      *
      * @return array<array{label: string, temperature: float, humidity: float, pressure: float, co2: float|null}>
      */
-    private function aggregateData(array $data, string $range): array
+    private function aggregateData(array $data, string $range, int $maxDataPoints): array
     {
         $dataCount = \count($data);
-        $interval = (int) ceil($dataCount / self::MAX_DATA_POINTS);
+        $interval = (int) ceil($dataCount / $maxDataPoints);
 
         $aggregated = [];
         $bucket = [];
