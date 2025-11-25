@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container-fluid py-4">
+    <div class="container-fluid p-4">
         {# Current Values Cards #}
         <div class="row g-3 mb-4">
             <div class="col-12 col-sm-6 col-lg-3">
@@ -53,12 +53,14 @@
             <small>Release: {{ version }}</small>
         </div>
 
+        <div class="d-flex justify-content-center mb-4">
         {# Time Range Buttons #}
-        <div class="time-range-buttons mb-4 flex-wrap" role="group" aria-label="Time range selection">
-            <button type="button" class="btn btn-outline-primary active" data-range="today">Today</button>
-            <button type="button" class="btn btn-outline-primary" data-range="week">Last Week</button>
-            <button type="button" class="btn btn-outline-primary" data-range="month">Last Month</button>
-            <button type="button" class="btn btn-outline-primary" data-range="year">Last Year</button>
+            <div class="time-range-buttons btn-group flex-wrap" role="group" aria-label="Time range selection">
+                <button type="button" class="btn btn-outline-primary active" data-range="today">Today</button>
+                <button type="button" class="btn btn-outline-primary" data-range="week">Last Week</button>
+                <button type="button" class="btn btn-outline-primary" data-range="month">Last Month</button>
+                <button type="button" class="btn btn-outline-primary" data-range="year">Last Year</button>
+            </div>
         </div>
 
         {# Charts Grid #}
@@ -113,5 +115,6 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
     <script src="{{ asset('js/dashboard.js') }}"></script>
 {% endblock %}
