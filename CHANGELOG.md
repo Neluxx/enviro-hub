@@ -16,11 +16,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Fixed
-- Set timezone for date range of the chart data to remove DST delay [#8](https://github.com/Neluxx/enviro-hub/issues/8)
 
 ### Security
 
 ### Dependencies
+
+## [v1.1.1](https://github.com/Neluxx/enviro-hub/releases/tag/v1.1.1) - 2025-11-25
+
+### Fixed
+- Set timezone for date range of the chart data to remove DST delay [#8](https://github.com/Neluxx/enviro-hub/issues/8)
 
 ## [v1.1.0](https://github.com/Neluxx/enviro-hub/releases/tag/v1.1.0) - 2025-11-24
 
