@@ -1,67 +1,28 @@
-/* Dashboard specific styles */
-.chart-container {
-    margin: 20px 0;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #fff;
-}
-
+/* Additional custom styles for charts */
 .chart-wrapper {
     position: relative;
     height: 300px;
-    margin-top: 15px;
+    margin-top: 1rem;
 }
 
-.time-range-buttons {
-    margin: 20px 0;
-    text-align: center;
+/* Custom card styling */
+.card {
+    transition: transform 0.2s ease-in-out;
 }
 
-.time-range-buttons button {
-    margin: 0 5px;
-    padding: 10px 20px;
-    border: 2px solid #007bff;
-    background-color: #fff;
-    color: #007bff;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.3s;
+.card:hover {
+    transform: translateY(-2px);
 }
 
-.time-range-buttons button:hover {
-    background-color: #007bff;
-    color: #fff;
+/* Responsive chart heights */
+@media (max-width: 768px) {
+    .chart-wrapper {
+        height: 250px;
+    }
 }
 
-.time-range-buttons button.active {
-    background-color: #007bff;
-    color: #fff;
-}
-
-.current-values {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    margin: 20px 0;
-}
-
-.value-card {
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f8f9fa;
-}
-
-.value-card h3 {
-    margin: 0 0 10px 0;
-    font-size: 16px;
-    color: #666;
-}
-
-.value-card .value {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
+@media (max-width: 480px) {
+    .chart-wrapper {
+        height: 220px;
+    }
 }

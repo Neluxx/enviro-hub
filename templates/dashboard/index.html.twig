@@ -1,5 +1,6 @@
-
 {% extends 'base.html.twig' %}
+
+{% block title %}Raspberry Pi Sensor Data{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -7,61 +8,103 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Raspberry Pi Sensor Data</h1>
+    <div class="container-fluid py-4">
+        {# Current Values Cards #}
+        <div class="row g-3 mb-4">
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-muted">Temperature</h5>
+                        <p class="display-6 fw-bold mb-0">{{ data.temperature }} °C</p>
+                    </div>
+                </div>
+            </div>
 
-    <div class="current-values">
-        <div class="value-card">
-            <h3>Temperature</h3>
-            <div class="value">{{ data.temperature }} °C</div>
-        </div>
-        <div class="value-card">
-            <h3>Humidity</h3>
-            <div class="value">{{ data.humidity }} %</div>
-        </div>
-        <div class="value-card">
-            <h3>CO₂</h3>
-            <div class="value">{{ data.carbonDioxide ?? 'N/A' }} ppm</div>
-        </div>
-        <div class="value-card">
-            <h3>Air Pressure</h3>
-            <div class="value">{{ data.pressure }} hPa</div>
-        </div>
-    </div>
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-muted">Humidity</h5>
+                        <p class="display-6 fw-bold mb-0">{{ data.humidity }} %</p>
+                    </div>
+                </div>
+            </div>
 
-    <p><small>Last measured: {{ data.measuredAt.format('Y-m-d H:i:s') }}</small></p>
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-muted">CO₂</h5>
+                        <p class="display-6 fw-bold mb-0">{{ data.carbonDioxide ?? 'N/A' }} ppm</p>
+                    </div>
+                </div>
+            </div>
 
-    <div class="time-range-buttons">
-        <button data-range="today" class="active">Today</button>
-        <button data-range="week">Last Week</button>
-        <button data-range="month">Last Month</button>
-        <button data-range="year">Last Year</button>
-    </div>
-
-    <div class="chart-container">
-        <h2>Temperature</h2>
-        <div class="chart-wrapper">
-            <canvas id="temperatureChart"></canvas>
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-muted">Air Pressure</h5>
+                        <p class="display-6 fw-bold mb-0">{{ data.pressure }} hPa</p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="chart-container">
-        <h2>Humidity</h2>
-        <div class="chart-wrapper">
-            <canvas id="humidityChart"></canvas>
+        <p class="text-muted mb-4">
+            <small>Last measured: {{ data.measuredAt.format('Y-m-d H:i:s') }}</small>
+        </p>
+
+        {# Time Range Buttons #}
+        <div class="time-range-buttons mb-4 flex-wrap" role="group" aria-label="Time range selection">
+            <button type="button" class="btn btn-outline-primary active" data-range="today">Today</button>
+            <button type="button" class="btn btn-outline-primary" data-range="week">Last Week</button>
+            <button type="button" class="btn btn-outline-primary" data-range="month">Last Month</button>
+            <button type="button" class="btn btn-outline-primary" data-range="year">Last Year</button>
         </div>
-    </div>
 
-    <div class="chart-container">
-        <h2>CO₂ Level</h2>
-        <div class="chart-wrapper">
-            <canvas id="co2Chart"></canvas>
-        </div>
-    </div>
+        {# Charts Grid #}
+        <div class="row g-4">
+            <div class="col-12 col-lg-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Temperature</h5>
+                        <div class="chart-wrapper">
+                            <canvas id="temperatureChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    <div class="chart-container">
-        <h2>Air Pressure</h2>
-        <div class="chart-wrapper">
-            <canvas id="pressureChart"></canvas>
+            <div class="col-12 col-lg-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Humidity</h5>
+                        <div class="chart-wrapper">
+                            <canvas id="humidityChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">CO₂ Level</h5>
+                        <div class="chart-wrapper">
+                            <canvas id="co2Chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Air Pressure</h5>
+                        <div class="chart-wrapper">
+                            <canvas id="pressureChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
