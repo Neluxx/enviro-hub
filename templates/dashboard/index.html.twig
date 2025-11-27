@@ -12,7 +12,7 @@
     <div class="container-fluid p-4 bg-dark text-white min-vh-100">
         {# Current Values Cards #}
         <div class="row g-3 mb-4">
-            <div class="col-12 col-sm-6 col-lg-3">
+            <div class="col-12 col-md-4">
                 <div class="card h-100 {{ sensor_status_class('temperature', data.temperature) }}">
                     <div class="card-body text-center">
                         <h5 class="card-title text-light">Temperature</h5>
@@ -21,7 +21,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-sm-6 col-lg-3">
+            <div class="col-12 col-md-4">
                 <div class="card h-100 {{ sensor_status_class('humidity', data.humidity) }}">
                     <div class="card-body text-center">
                         <h5 class="card-title text-light">Humidity</h5>
@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-sm-6 col-lg-3">
+            <div class="col-12 col-md-4">
                 <div class="card h-100 {{ sensor_status_class('co2', data.carbonDioxide) }}">
                     <div class="card-body text-center">
                         <h5 class="card-title text-light">CO₂</h5>
@@ -55,7 +55,7 @@
 
         {# Charts Grid #}
         <div class="row g-4">
-            <div class="col-12 col-lg-6">
+            <div class="col-12">
                 <div class="card shadow-sm bg-dark border-secondary">
                     <div class="card-body">
                         <h5 class="card-title text-light">Temperature</h5>
@@ -66,7 +66,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-lg-6">
+            <div class="col-12">
                 <div class="card shadow-sm bg-dark border-secondary">
                     <div class="card-body">
                         <h5 class="card-title text-light">Humidity</h5>
@@ -77,7 +77,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-lg-6">
+            <div class="col-12">
                 <div class="card shadow-sm bg-dark border-secondary">
                     <div class="card-body">
                         <h5 class="card-title text-light">CO₂ Level</h5>
