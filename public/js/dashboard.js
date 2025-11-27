@@ -124,6 +124,9 @@ class DashboardChartManager {
                     legend: {
                         display: true,
                         position: 'top',
+                        labels: {
+                            color: '#e9ecef'
+                        }
                     },
                     decimation: {
                         enabled: true,
@@ -139,20 +142,32 @@ class DashboardChartManager {
                         display: true,
                         title: {
                             display: true,
-                            text: 'Time'
+                            text: 'Time',
+                            color: '#e9ecef'
                         },
                         ticks: {
                             maxTicksLimit: 10,
                             autoSkip: true,
                             maxRotation: 45,
-                            minRotation: 0
+                            minRotation: 0,
+                            color: '#adb5bd'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
                         }
                     },
                     y: {
                         display: true,
                         title: {
                             display: true,
-                            text: label
+                            text: label,
+                            color: '#e9ecef'
+                        },
+                        ticks: {
+                            color: '#adb5bd'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
                         }
                     }
                 },

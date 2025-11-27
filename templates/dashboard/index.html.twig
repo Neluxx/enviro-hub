@@ -1,3 +1,4 @@
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Raspberry Pi Sensor Data{% endblock %}
@@ -8,40 +9,40 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container-fluid p-4">
+    <div class="container-fluid p-4 bg-dark text-white min-vh-100">
         {# Current Values Cards #}
         <div class="row g-3 mb-4">
             <div class="col-12 col-sm-6 col-lg-3">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body text-center {{ sensor_status_class('temperature', data.temperature) }}">
-                        <h5 class="card-title">Temperature</h5>
+                <div class="card h-100 {{ sensor_status_class('temperature', data.temperature) }}">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-light">Temperature</h5>
                         <p class="display-6 fw-bold mb-0">{{ data.temperature }} °C</p>
                     </div>
                 </div>
             </div>
 
             <div class="col-12 col-sm-6 col-lg-3">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body text-center {{ sensor_status_class('humidity', data.humidity) }}">
-                        <h5 class="card-title">Humidity</h5>
+                <div class="card h-100 {{ sensor_status_class('humidity', data.humidity) }}">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-light">Humidity</h5>
                         <p class="display-6 fw-bold mb-0">{{ data.humidity }} %</p>
                     </div>
                 </div>
             </div>
 
             <div class="col-12 col-sm-6 col-lg-3">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body text-center {{ sensor_status_class('co2', data.carbonDioxide) }}">
-                        <h5 class="card-title">CO₂</h5>
+                <div class="card h-100 {{ sensor_status_class('co2', data.carbonDioxide) }}">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-light">CO₂</h5>
                         <p class="display-6 fw-bold mb-0">{{ data.carbonDioxide ?? 'N/A' }} ppm</p>
                     </div>
                 </div>
             </div>
 
             <div class="col-12 col-sm-6 col-lg-3">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body text-center text-bg-primary">
-                        <h5 class="card-title">Air Pressure</h5>
+                <div class="card h-100 {{ sensor_status_class('pressure', data.pressure) }}">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-light">Air Pressure</h5>
                         <p class="display-6 fw-bold mb-0">{{ data.pressure }} hPa</p>
                     </div>
                 </div>
@@ -49,26 +50,26 @@
         </div>
 
         <div class="d-flex justify-content-between align-items-center text-muted mb-4">
-            <small>Last measured: {{ data.measuredAt.format('Y-m-d H:i:s') }}</small>
-            <small>Release: {{ version }}</small>
+            <small class="text-light">Last measured: {{ data.measuredAt.format('Y-m-d H:i:s') }}</small>
+            <small class="text-light">Release: {{ version }}</small>
         </div>
 
         <div class="d-flex justify-content-center mb-4">
             {# Time Range Buttons #}
             <div class="time-range-buttons btn-group flex-wrap" role="group" aria-label="Time range selection">
-                <button type="button" class="btn btn-outline-primary active" data-range="today">Today</button>
-                <button type="button" class="btn btn-outline-primary" data-range="week">Last Week</button>
-                <button type="button" class="btn btn-outline-primary" data-range="month">Last Month</button>
-                <button type="button" class="btn btn-outline-primary" data-range="year">Last Year</button>
+                <button type="button" class="btn btn-outline-light active" data-range="today">Today</button>
+                <button type="button" class="btn btn-outline-light" data-range="week">Last Week</button>
+                <button type="button" class="btn btn-outline-light" data-range="month">Last Month</button>
+                <button type="button" class="btn btn-outline-light" data-range="year">Last Year</button>
             </div>
         </div>
 
         {# Charts Grid #}
         <div class="row g-4">
             <div class="col-12 col-lg-6">
-                <div class="card shadow-sm">
+                <div class="card shadow-sm bg-dark border-secondary">
                     <div class="card-body">
-                        <h5 class="card-title">Temperature</h5>
+                        <h5 class="card-title text-light">Temperature</h5>
                         <div class="chart-wrapper">
                             <canvas id="temperatureChart"></canvas>
                         </div>
@@ -77,9 +78,9 @@
             </div>
 
             <div class="col-12 col-lg-6">
-                <div class="card shadow-sm">
+                <div class="card shadow-sm bg-dark border-secondary">
                     <div class="card-body">
-                        <h5 class="card-title">Humidity</h5>
+                        <h5 class="card-title text-light">Humidity</h5>
                         <div class="chart-wrapper">
                             <canvas id="humidityChart"></canvas>
                         </div>
@@ -88,9 +89,9 @@
             </div>
 
             <div class="col-12 col-lg-6">
-                <div class="card shadow-sm">
+                <div class="card shadow-sm bg-dark border-secondary">
                     <div class="card-body">
-                        <h5 class="card-title">CO₂ Level</h5>
+                        <h5 class="card-title text-light">CO₂ Level</h5>
                         <div class="chart-wrapper">
                             <canvas id="co2Chart"></canvas>
                         </div>
@@ -99,9 +100,9 @@
             </div>
 
             <div class="col-12 col-lg-6">
-                <div class="card shadow-sm">
+                <div class="card shadow-sm bg-dark border-secondary">
                     <div class="card-body">
-                        <h5 class="card-title">Air Pressure</h5>
+                        <h5 class="card-title text-light">Air Pressure</h5>
                         <div class="chart-wrapper">
                             <canvas id="pressureChart"></canvas>
                         </div>
