@@ -54,11 +54,9 @@ class DashboardService
     private function calculateStartDate(string $range, DateTime $endDate): DateTime
     {
         return match ($range) {
-            'today' => (clone $endDate)->setTime(0, 0),
+            'today' => (clone $endDate)->modify('-24 hours'),
             'week' => (clone $endDate)->modify('-7 days'),
-            'month' => (clone $endDate)->modify('-1 month'),
-            'year' => (clone $endDate)->modify('-1 year'),
-            default => (clone $endDate)->setTime(0, 0),
+            default => (clone $endDate)->modify('-24 hours'),
         };
     }
 

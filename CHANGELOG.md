@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Changed style to dark mode [#12](https://github.com/Neluxx/enviro-hub/issues/12)
+- Changed date ranges to last 24 hours and last week [#14](https://github.com/Neluxx/enviro-hub/issues/14)
 
 ### Deprecated
 

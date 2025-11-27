@@ -163,76 +163,6 @@ class DashboardServiceTest extends TestCase
     }
 
     /**
-     * Test getChartData for month range.
-     */
-    public function testGetChartDataForMonthRange(): void
-    {
-        $data = [
-            new EnvironmentalData(
-                temperature: 18.0,
-                humidity: 75.0,
-                pressure: 1008.0,
-                carbonDioxide: 380.0,
-                measuredAt: new DateTime('2023-12-20 10:00:00'),
-            ),
-        ];
-
-        $this->repository->expects($this->once())
-            ->method('findByDateRange')
-            ->with(
-                $this->callback(function ($date) {
-                    // Should be approximately 1 month ago
-                    $now = new DateTime();
-                    $diff = $now->diff($date);
-
-                    return $diff->days >= 28 && $diff->days <= 32;
-                }),
-                $this->callback(fn ($date) => $date instanceof DateTime)
-            )
-            ->willReturn($data);
-
-        $result = $this->service->getChartData('month');
-
-        static::assertCount(1, $result['labels']);
-        static::assertEquals([18.0], $result['temperature']);
-    }
-
-    /**
-     * Test getChartData for year range.
-     */
-    public function testGetChartDataForYearRange(): void
-    {
-        $data = [
-            new EnvironmentalData(
-                temperature: 15.0,
-                humidity: 80.0,
-                pressure: 1005.0,
-                carbonDioxide: 350.0,
-                measuredAt: new DateTime('2023-01-20 10:00:00'),
-            ),
-        ];
-
-        $this->repository->expects($this->once())
-            ->method('findByDateRange')
-            ->with(
-                $this->callback(function ($date) {
-                    // Should be approximately 1 year ago
-                    $now = new DateTime();
-                    $diff = $now->diff($date);
-
-                    return $diff->days >= 360 && $diff->days <= 370;
-                }),
-                $this->callback(fn ($date) => $date instanceof DateTime)
-            )
-            ->willReturn($data);
-
-        $result = $this->service->getChartData('year');
-
-        static::assertCount(1, $result['labels']);
-        static::assertEquals([15.0], $result['temperature']);
-    }
-
-    /**
      * Test getChartData defaults to today for unknown range.
      */
     public function testGetChartDataDefaultForUnknownRange(): void
@@ -242,7 +172,7 @@ class DashboardServiceTest extends TestCase
             ->with(
                 $this->callback(function ($date) {
                     // Should be start of today
-                    $today = (new DateTime())->setTime(0, 0);
+                    $today = (new DateTime())->modify('-24 hours');
                     $diff = $today->diff($date);
 
                     return $diff->s < 5; // Within 5 seconds
