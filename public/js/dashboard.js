@@ -89,6 +89,8 @@ class DashboardChartManager {
      */
     createChart(canvasId, label, borderColor, backgroundColor, annotations = {}) {
         const ctx = document.getElementById(canvasId).getContext('2d');
+        const isMobile = window.innerWidth < 768;
+
         return new Chart(ctx, {
             type: 'line',
             data: {
@@ -100,7 +102,7 @@ class DashboardChartManager {
                     backgroundColor: backgroundColor,
                     tension: 0.4,
                     fill: true,
-                    pointRadius: 2,
+                    pointRadius: 0,
                     pointHoverRadius: 4,
                     borderWidth: 2,
                     spanGaps: true
@@ -114,17 +116,11 @@ class DashboardChartManager {
                     intersect: false,
                 },
                 plugins: {
-                    legend: {
-                        display: true,
-                        position: 'top',
-                        labels: {
-                            color: '#e9ecef'
-                        }
-                    },
+                    legend: false,
                     decimation: {
                         enabled: true,
                         algorithm: 'lttb',
-                        samples: 100
+                        samples: isMobile ? 50 : 100
                     },
                     annotation: {
                         annotations: annotations
@@ -133,17 +129,17 @@ class DashboardChartManager {
                 scales: {
                     x: {
                         display: true,
-                        title: {
-                            display: true,
-                            text: 'Time',
-                            color: '#e9ecef'
-                        },
+                        title: false,
                         ticks: {
-                            maxTicksLimit: 10,
+                            maxTicksLimit: isMobile ? 7 : 14,
                             autoSkip: true,
                             maxRotation: 45,
                             minRotation: 0,
-                            color: '#adb5bd'
+                            color: '#adb5bd',
+                            font: {
+                                size: isMobile ? 9 : 11
+                            },
+                            padding: isMobile ? 2 : 5
                         },
                         grid: {
                             color: 'rgba(255, 255, 255, 0.1)'
@@ -151,13 +147,14 @@ class DashboardChartManager {
                     },
                     y: {
                         display: true,
-                        title: {
-                            display: true,
-                            text: label,
-                            color: '#e9ecef'
-                        },
+                        title: false,
                         ticks: {
-                            color: '#adb5bd'
+                            color: '#adb5bd',
+                            font: {
+                                size: isMobile ? 9 : 11
+                            },
+                            maxTicksLimit: isMobile ? 5 : 8,
+                            padding: isMobile ? 2 : 5
                         },
                         grid: {
                             color: 'rgba(255, 255, 255, 0.1)'

@@ -77,7 +77,7 @@ class DashboardService
         ];
 
         foreach ($data as $entry) {
-            $chartData['labels'][] = $entry->getMeasuredAt()->format('Y-m-d H:i');
+            $chartData['labels'][] = $entry->getMeasuredAt()->format('d.m H:i');
             $chartData['temperature'][] = $entry->getTemperature();
             $chartData['humidity'][] = $entry->getHumidity();
             $chartData['co2'][] = $entry->getCarbonDioxide();
