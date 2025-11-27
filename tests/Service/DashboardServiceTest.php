@@ -82,7 +82,7 @@ class DashboardServiceTest extends TestCase
         $result = $this->service->getChartData('today');
 
         static::assertCount(3, $result['labels']);
-        static::assertEquals(['2024-01-15 10:00', '2024-01-15 11:00', '2024-01-15 12:00'], $result['labels']);
+        static::assertEquals(['15.01 10:00', '15.01 11:00', '15.01 12:00'], $result['labels']);
         static::assertEquals([22.5, 23.0, 23.5], $result['temperature']);
         static::assertEquals([65.0, 64.5, 64.0], $result['humidity']);
         static::assertEquals([450.0, 455.0, 460.0], $result['co2']);
