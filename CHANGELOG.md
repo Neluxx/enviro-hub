@@ -10,22 +10,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
-- Changed style to dark mode [#12](https://github.com/Neluxx/enviro-hub/issues/12)
-- Changed date ranges to last 24 hours and last week [#14](https://github.com/Neluxx/enviro-hub/issues/14)
-- Update thresholds for temperature and CO2 status [#14](https://github.com/Neluxx/enviro-hub/issues/14)
-- Improve chart responsiveness for mobile devices [#14](https://github.com/Neluxx/enviro-hub/issues/14)
 
 ### Deprecated
 
 ### Removed
-- Removed air pressure chart from dashboard [#14](https://github.com/Neluxx/enviro-hub/issues/14)
-- Removed chart data aggregation [#14](https://github.com/Neluxx/enviro-hub/issues/14)
 
 ### Fixed
 
 ### Security
 
 ### Dependencies
+
+## [v1.3.0](https://github.com/Neluxx/enviro-hub/releases/tag/v1.3.0) - 2025-11-27
+
+### Changed
+- Changed style to dark mode [#12](https://github.com/Neluxx/enviro-hub/issues/12)
+- Changed date ranges to last 24 hours and last week [#14](https://github.com/Neluxx/enviro-hub/issues/14)
+- Update thresholds for temperature and CO2 status [#14](https://github.com/Neluxx/enviro-hub/issues/14)
+- Improve chart responsiveness for mobile devices [#14](https://github.com/Neluxx/enviro-hub/issues/14)
+
+### Removed
+- Removed air pressure chart from dashboard [#14](https://github.com/Neluxx/enviro-hub/issues/14)
+- Removed chart data aggregation [#14](https://github.com/Neluxx/enviro-hub/issues/14)
 
 ## [v1.2.0](https://github.com/Neluxx/enviro-hub/releases/tag/v1.2.0) - 2025-11-25
 
