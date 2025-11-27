@@ -8,8 +8,7 @@ class DashboardChartManager {
         this.charts = {
             temperature: null,
             humidity: null,
-            co2: null,
-            pressure: null
+            co2: null
         };
         this.currentRange = 'today';
         this.chartConfigs = {
@@ -28,8 +27,8 @@ class DashboardChartManager {
                     },
                     line2: {
                         type: 'line',
-                        yMin: 22,
-                        yMax: 22,
+                        yMin: 24,
+                        yMax: 24,
                         borderColor: 'rgba(75, 192, 192, 0.8)',
                         borderWidth: 1,
                         borderDash: [5, 5]
@@ -74,19 +73,13 @@ class DashboardChartManager {
                     },
                     line2: {
                         type: 'line',
-                        yMin: 1600,
-                        yMax: 1600,
+                        yMin: 2000,
+                        yMax: 2000,
                         borderColor: 'rgba(255, 0, 0, 0.8)',
                         borderWidth: 1,
                         borderDash: [5, 5]
                     }
                 }
-            },
-            pressure: {
-                label: 'Air Pressure (hPa)',
-                borderColor: 'rgb(153, 102, 255)',
-                backgroundColor: 'rgba(153, 102, 255, 0.1)',
-                annotations: {}
             }
         };
     }
@@ -96,6 +89,8 @@ class DashboardChartManager {
      */
     createChart(canvasId, label, borderColor, backgroundColor, annotations = {}) {
         const ctx = document.getElementById(canvasId).getContext('2d');
+        const isMobile = window.innerWidth < 768;
+
         return new Chart(ctx, {
             type: 'line',
             data: {
@@ -107,7 +102,7 @@ class DashboardChartManager {
                     backgroundColor: backgroundColor,
                     tension: 0.4,
                     fill: true,
-                    pointRadius: 2,
+                    pointRadius: 0,
                     pointHoverRadius: 4,
                     borderWidth: 2,
                     spanGaps: true
@@ -121,17 +116,11 @@ class DashboardChartManager {
                     intersect: false,
                 },
                 plugins: {
-                    legend: {
-                        display: true,
-                        position: 'top',
-                        labels: {
-                            color: '#e9ecef'
-                        }
-                    },
+                    legend: false,
                     decimation: {
                         enabled: true,
                         algorithm: 'lttb',
-                        samples: 100
+                        samples: isMobile ? 50 : 100
                     },
                     annotation: {
                         annotations: annotations
@@ -140,17 +129,17 @@ class DashboardChartManager {
                 scales: {
                     x: {
                         display: true,
-                        title: {
-                            display: true,
-                            text: 'Time',
-                            color: '#e9ecef'
-                        },
+                        title: false,
                         ticks: {
-                            maxTicksLimit: 10,
+                            maxTicksLimit: isMobile ? 7 : 14,
                             autoSkip: true,
                             maxRotation: 45,
                             minRotation: 0,
-                            color: '#adb5bd'
+                            color: '#adb5bd',
+                            font: {
+                                size: isMobile ? 9 : 11
+                            },
+                            padding: isMobile ? 2 : 5
                         },
                         grid: {
                             color: 'rgba(255, 255, 255, 0.1)'
@@ -158,13 +147,14 @@ class DashboardChartManager {
                     },
                     y: {
                         display: true,
-                        title: {
-                            display: true,
-                            text: label,
-                            color: '#e9ecef'
-                        },
+                        title: false,
                         ticks: {
-                            color: '#adb5bd'
+                            color: '#adb5bd',
+                            font: {
+                                size: isMobile ? 9 : 11
+                            },
+                            maxTicksLimit: isMobile ? 5 : 8,
+                            padding: isMobile ? 2 : 5
                         },
                         grid: {
                             color: 'rgba(255, 255, 255, 0.1)'
@@ -207,14 +197,6 @@ class DashboardChartManager {
             this.chartConfigs.co2.backgroundColor,
             this.chartConfigs.co2.annotations
         );
-
-        this.charts.pressure = this.createChart(
-            'pressureChart',
-            this.chartConfigs.pressure.label,
-            this.chartConfigs.pressure.borderColor,
-            this.chartConfigs.pressure.backgroundColor,
-            this.chartConfigs.pressure.annotations
-        );
     }
 
     /**
@@ -235,11 +217,6 @@ class DashboardChartManager {
         this.charts.co2.data.labels = data.labels;
         this.charts.co2.data.datasets[0].data = data.co2;
         this.charts.co2.update('none');
-
-        // Update pressure chart
-        this.charts.pressure.data.labels = data.labels;
-        this.charts.pressure.data.datasets[0].data = data.pressure;
-        this.charts.pressure.update('none');
     }
 
     /**

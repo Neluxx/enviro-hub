@@ -46,7 +46,6 @@ class DashboardControllerTest extends WebTestCase
         static::assertSelectorExists('#temperatureChart');
         static::assertSelectorExists('#humidityChart');
         static::assertSelectorExists('#co2Chart');
-        static::assertSelectorExists('#pressureChart');
     }
 
     /**
@@ -80,7 +79,6 @@ class DashboardControllerTest extends WebTestCase
 
         static::assertStringContainsString('Temperature 23.7 °C', $allCardText);
         static::assertStringContainsString('Humidity 58.2 %', $allCardText);
-        static::assertStringContainsString('Air Pressure 1015.5 hPa', $allCardText);
         static::assertStringContainsString('CO₂ 425.3 ppm', $allCardText);
     }
 
@@ -127,7 +125,6 @@ class DashboardControllerTest extends WebTestCase
             'labels' => ['10:00', '11:00', '12:00'],
             'temperature' => [22.5, 23.0, 23.5],
             'humidity' => [65.0, 64.5, 64.0],
-            'pressure' => [1013.25, 1013.5, 1013.75],
             'co2' => [450.0, 455.0, 460.0],
         ];
 
@@ -150,7 +147,6 @@ class DashboardControllerTest extends WebTestCase
         static::assertArrayHasKey('labels', $responseData);
         static::assertArrayHasKey('temperature', $responseData);
         static::assertArrayHasKey('humidity', $responseData);
-        static::assertArrayHasKey('pressure', $responseData);
         static::assertArrayHasKey('co2', $responseData);
         static::assertCount(3, $responseData['labels']);
         static::assertEquals([22.5, 23.0, 23.5], $responseData['temperature']);
@@ -167,7 +163,6 @@ class DashboardControllerTest extends WebTestCase
             'labels' => ['Mon 10:00', 'Tue 10:00', 'Wed 10:00'],
             'temperature' => [20.0, 21.5, 22.0],
             'humidity' => [70.0, 68.0, 66.0],
-            'pressure' => [1010.0, 1012.0, 1014.0],
             'co2' => [400.0, 420.0, 440.0],
         ];
 
@@ -199,7 +194,6 @@ class DashboardControllerTest extends WebTestCase
             'labels' => ['Jan 01', 'Jan 15', 'Jan 30'],
             'temperature' => [18.0, 20.0, 22.0],
             'humidity' => [75.0, 70.0, 65.0],
-            'pressure' => [1008.0, 1010.0, 1012.0],
             'co2' => [380.0, 400.0, 420.0],
         ];
 
@@ -230,7 +224,6 @@ class DashboardControllerTest extends WebTestCase
             'labels' => ['Jan 2024', 'Jun 2024', 'Dec 2024'],
             'temperature' => [15.0, 25.0, 18.0],
             'humidity' => [80.0, 60.0, 75.0],
-            'pressure' => [1005.0, 1015.0, 1008.0],
             'co2' => [350.0, 450.0, 380.0],
         ];
 
@@ -261,7 +254,6 @@ class DashboardControllerTest extends WebTestCase
             'labels' => [],
             'temperature' => [],
             'humidity' => [],
-            'pressure' => [],
             'co2' => [],
         ];
 
@@ -281,7 +273,6 @@ class DashboardControllerTest extends WebTestCase
         static::assertEmpty($responseData['labels']);
         static::assertEmpty($responseData['temperature']);
         static::assertEmpty($responseData['humidity']);
-        static::assertEmpty($responseData['pressure']);
         static::assertEmpty($responseData['co2']);
     }
 
