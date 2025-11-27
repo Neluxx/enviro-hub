@@ -10,12 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
-- Change style to dark mode [#12](https://github.com/Neluxx/enviro-hub/issues/12)
+- Changed style to dark mode [#12](https://github.com/Neluxx/enviro-hub/issues/12)
 
 ### Deprecated
 
 ### Removed
 - Removed air pressure chart from dashboard [#14](https://github.com/Neluxx/enviro-hub/issues/14)
+- Removed chart data aggregation [#14](https://github.com/Neluxx/enviro-hub/issues/14)
 
 ### Fixed
 
