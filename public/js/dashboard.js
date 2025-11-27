@@ -8,8 +8,7 @@ class DashboardChartManager {
         this.charts = {
             temperature: null,
             humidity: null,
-            co2: null,
-            pressure: null
+            co2: null
         };
         this.currentRange = 'today';
         this.chartConfigs = {
@@ -81,12 +80,6 @@ class DashboardChartManager {
                         borderDash: [5, 5]
                     }
                 }
-            },
-            pressure: {
-                label: 'Air Pressure (hPa)',
-                borderColor: 'rgb(153, 102, 255)',
-                backgroundColor: 'rgba(153, 102, 255, 0.1)',
-                annotations: {}
             }
         };
     }
@@ -207,14 +200,6 @@ class DashboardChartManager {
             this.chartConfigs.co2.backgroundColor,
             this.chartConfigs.co2.annotations
         );
-
-        this.charts.pressure = this.createChart(
-            'pressureChart',
-            this.chartConfigs.pressure.label,
-            this.chartConfigs.pressure.borderColor,
-            this.chartConfigs.pressure.backgroundColor,
-            this.chartConfigs.pressure.annotations
-        );
     }
 
     /**
@@ -235,11 +220,6 @@ class DashboardChartManager {
         this.charts.co2.data.labels = data.labels;
         this.charts.co2.data.datasets[0].data = data.co2;
         this.charts.co2.update('none');
-
-        // Update pressure chart
-        this.charts.pressure.data.labels = data.labels;
-        this.charts.pressure.data.datasets[0].data = data.pressure;
-        this.charts.pressure.update('none');
     }
 
     /**

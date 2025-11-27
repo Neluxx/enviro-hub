@@ -39,7 +39,6 @@ class DashboardServiceTest extends TestCase
         static::assertEmpty($result['labels']);
         static::assertEmpty($result['temperature']);
         static::assertEmpty($result['humidity']);
-        static::assertEmpty($result['pressure']);
         static::assertEmpty($result['co2']);
     }
 
@@ -86,7 +85,6 @@ class DashboardServiceTest extends TestCase
         static::assertEquals(['2024-01-15 10:00', '2024-01-15 11:00', '2024-01-15 12:00'], $result['labels']);
         static::assertEquals([22.5, 23.0, 23.5], $result['temperature']);
         static::assertEquals([65.0, 64.5, 64.0], $result['humidity']);
-        static::assertEquals([1013.25, 1013.50, 1013.75], $result['pressure']);
         static::assertEquals([450.0, 455.0, 460.0], $result['co2']);
     }
 
@@ -151,7 +149,6 @@ class DashboardServiceTest extends TestCase
         static::assertGreaterThan(0, \count($result['labels']));
         static::assertCount(\count($result['labels']), $result['temperature']);
         static::assertCount(\count($result['labels']), $result['humidity']);
-        static::assertCount(\count($result['labels']), $result['pressure']);
         static::assertCount(\count($result['labels']), $result['co2']);
     }
 
@@ -322,10 +319,6 @@ class DashboardServiceTest extends TestCase
 
         foreach ($result['humidity'] as $humidity) {
             static::assertEquals($humidity, round($humidity, 2));
-        }
-
-        foreach ($result['pressure'] as $pressure) {
-            static::assertEquals($pressure, round($pressure, 2));
         }
     }
 

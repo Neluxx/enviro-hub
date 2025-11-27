@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 
 ### Removed
+- Removed air pressure chart from dashboard [#14](https://github.com/Neluxx/enviro-hub/issues/14)
 
 ### Fixed
 
