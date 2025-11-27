@@ -27,8 +27,8 @@ class DashboardChartManager {
                     },
                     line2: {
                         type: 'line',
-                        yMin: 22,
-                        yMax: 22,
+                        yMin: 24,
+                        yMax: 24,
                         borderColor: 'rgba(75, 192, 192, 0.8)',
                         borderWidth: 1,
                         borderDash: [5, 5]
@@ -73,8 +73,8 @@ class DashboardChartManager {
                     },
                     line2: {
                         type: 'line',
-                        yMin: 1600,
-                        yMax: 1600,
+                        yMin: 2000,
+                        yMax: 2000,
                         borderColor: 'rgba(255, 0, 0, 0.8)',
                         borderWidth: 1,
                         borderDash: [5, 5]

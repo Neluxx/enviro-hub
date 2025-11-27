@@ -38,17 +38,17 @@ class SensorStatusExtension extends AbstractExtension
 
     /**
      * Get temperature status class.
-     * Success: 18-22°C
-     * Warning: 16-18°C or 22-24°C
-     * Danger: <16°C or >24°C.
+     * Success: 18-24°C
+     * Warning: 16-18°C or 24-26°C
+     * Danger: <16°C or >26°C.
      */
     private function getTemperatureStatus(float $value): string
     {
-        if ($value >= 18 && $value <= 22) {
+        if ($value >= 18 && $value <= 24) {
             return 'text-bg-success';
         }
 
-        if (($value >= 16 && $value < 18) || ($value > 22 && $value <= 24)) {
+        if (($value >= 16 && $value < 18) || ($value > 24 && $value <= 26)) {
             return 'text-bg-warning';
         }
 
@@ -77,8 +77,8 @@ class SensorStatusExtension extends AbstractExtension
     /**
      * Get CO2 status class.
      * Success: 0-999 ppm
-     * Warning: 1000-1599 ppm
-     * Danger: >=1600 ppm.
+     * Warning: 1000-1999 ppm
+     * Danger: >=2000 ppm.
      */
     private function getCo2Status(float $value): string
     {
@@ -86,7 +86,7 @@ class SensorStatusExtension extends AbstractExtension
             return 'text-bg-success';
         }
 
-        if ($value >= 1000 && $value < 1600) {
+        if ($value >= 1000 && $value < 2000) {
             return 'text-bg-warning';
         }
 
