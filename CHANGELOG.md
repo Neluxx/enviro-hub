@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+- Change style to dark mode [#12](https://github.com/Neluxx/enviro-hub/issues/12)
 
 ### Deprecated
 
