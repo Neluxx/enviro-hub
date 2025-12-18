@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
-- Remove annotations for temperature and humidity charts
+- Remove annotations for all charts
 
 ### Deprecated
 
