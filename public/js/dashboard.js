@@ -15,48 +15,12 @@ class DashboardChartManager {
             temperature: {
                 label: 'Temperature (°C)',
                 borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.1)',
-                annotations: {
-                    line1: {
-                        type: 'line',
-                        yMin: 18,
-                        yMax: 18,
-                        borderColor: 'rgba(75, 192, 192, 0.8)',
-                        borderWidth: 1,
-                        borderDash: [5, 5]
-                    },
-                    line2: {
-                        type: 'line',
-                        yMin: 24,
-                        yMax: 24,
-                        borderColor: 'rgba(75, 192, 192, 0.8)',
-                        borderWidth: 1,
-                        borderDash: [5, 5]
-                    }
-                }
+                backgroundColor: 'rgba(255, 99, 132, 0.1)'
             },
             humidity: {
                 label: 'Humidity (%)',
                 borderColor: 'rgb(54, 162, 235)',
-                backgroundColor: 'rgba(54, 162, 235, 0.1)',
-                annotations: {
-                    line1: {
-                        type: 'line',
-                        yMin: 40,
-                        yMax: 40,
-                        borderColor: 'rgba(75, 192, 192, 0.8)',
-                        borderWidth: 1,
-                        borderDash: [5, 5]
-                    },
-                    line2: {
-                        type: 'line',
-                        yMin: 60,
-                        yMax: 60,
-                        borderColor: 'rgba(75, 192, 192, 0.8)',
-                        borderWidth: 1,
-                        borderDash: [5, 5]
-                    }
-                }
+                backgroundColor: 'rgba(54, 162, 235, 0.1)'
             },
             co2: {
                 label: 'CO₂ (ppm)',
@@ -178,16 +142,14 @@ class DashboardChartManager {
             'temperatureChart',
             this.chartConfigs.temperature.label,
             this.chartConfigs.temperature.borderColor,
-            this.chartConfigs.temperature.backgroundColor,
-            this.chartConfigs.temperature.annotations
+            this.chartConfigs.temperature.backgroundColor
         );
 
         this.charts.humidity = this.createChart(
             'humidityChart',
             this.chartConfigs.humidity.label,
             this.chartConfigs.humidity.borderColor,
-            this.chartConfigs.humidity.backgroundColor,
-            this.chartConfigs.humidity.annotations
+            this.chartConfigs.humidity.backgroundColor
         );
 
         this.charts.co2 = this.createChart(
