@@ -10,11 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
-- Remove annotations for all charts
+- Use Symfony UX Chart.js and Stimulus controller for dynamic dashboard charts instead of CDN
 
 ### Deprecated
 
 ### Removed
+- Remove annotations for all charts
 - Remove OpenWeather Endpoint [#22](https://github.com/Neluxx/enviro-hub/issues/22)
 
 ### Fixed

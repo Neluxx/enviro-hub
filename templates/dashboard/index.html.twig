@@ -3,13 +3,8 @@
 
 {% block title %}Raspberry Pi Sensor Data{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('styles/dashboard.css') }}">
-{% endblock %}
-
 {% block body %}
-    <div class="container-fluid p-4 bg-dark text-white min-vh-100">
+    <div class="container-fluid p-4 bg-dark text-white min-vh-100" data-controller="dashboard">
         {# Current Values Cards #}
         <div class="row g-3 mb-4">
             <div class="col-12 col-md-4">
@@ -47,9 +42,17 @@
 
         <div class="d-flex justify-content-center mb-4">
             {# Time Range Buttons #}
-            <div class="time-range-buttons btn-group flex-wrap" role="group" aria-label="Time range selection">
-                <button type="button" class="btn btn-outline-light active" data-range="today">Today</button>
-                <button type="button" class="btn btn-outline-light" data-range="week">Last Week</button>
+            <div class="time-range-buttons btn-group flex-wrap" role="group">
+                <button type="button"
+                        class="btn btn-outline-light active"
+                        data-dashboard-target="button"
+                        data-range="today"
+                        data-action="click->dashboard#changeRange">Today</button>
+                <button type="button"
+                        class="btn btn-outline-light"
+                        data-dashboard-target="button"
+                        data-range="week"
+                        data-action="click->dashboard#changeRange">Last Week</button>
             </div>
         </div>
 
@@ -60,7 +63,10 @@
                     <div class="card-body">
                         <h5 class="card-title text-light">Temperature</h5>
                         <div class="chart-wrapper">
-                            <canvas id="temperatureChart"></canvas>
+                            {{ render_chart(tempChart, {
+                                'id': 'temperatureChart',
+                                'data-action': 'chartjs:connect->dashboard#onChartConnect'
+                            }) }}
                         </div>
                     </div>
                 </div>
@@ -71,7 +77,10 @@
                     <div class="card-body">
                         <h5 class="card-title text-light">Humidity</h5>
                         <div class="chart-wrapper">
-                            <canvas id="humidityChart"></canvas>
+                            {{ render_chart(humidityChart, {
+                                'id': 'humidityChart',
+                                'data-action': 'chartjs:connect->dashboard#onChartConnect'
+                            }) }}
                         </div>
                     </div>
                 </div>
@@ -82,7 +91,10 @@
                     <div class="card-body">
                         <h5 class="card-title text-light">CO₂ Level</h5>
                         <div class="chart-wrapper">
-                            <canvas id="co2Chart"></canvas>
+                            {{ render_chart(co2Chart, {
+                                'id': 'co2Chart',
+                                'data-action': 'chartjs:connect->dashboard#onChartConnect'
+                            }) }}
                         </div>
                     </div>
                 </div>
@@ -93,6 +105,4 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <script src="{{ asset('js/dashboard.js') }}"></script>
 {% endblock %}
