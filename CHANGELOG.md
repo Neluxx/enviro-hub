@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+- Migrated Bootstrap from CDN to AssetMapper.
 - Use Symfony UX Chart.js and Stimulus controller for dynamic dashboard charts instead of CDN
 
 ### Deprecated
