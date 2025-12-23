@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 
 ### Removed
+- Remove OpenWeather Endpoint [#22](https://github.com/Neluxx/enviro-hub/issues/22)
 
 ### Fixed
 - Change title color according to cards background color [#19](https://github.com/Neluxx/enviro-hub/issues/19)
