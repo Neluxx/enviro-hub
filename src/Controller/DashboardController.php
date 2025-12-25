@@ -92,7 +92,7 @@ class DashboardController extends AbstractController
                     'borderColor' => $color,
                     'data' => $data,
                     'tension' => 0.4,
-                    'fill' => true,
+                    'fill' => false,
                     'pointRadius' => 0,
                 ],
             ],
