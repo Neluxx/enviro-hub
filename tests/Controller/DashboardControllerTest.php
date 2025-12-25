@@ -23,6 +23,7 @@ class DashboardControllerTest extends WebTestCase
         $client = static::createClient();
 
         $environmentalData = new EnvironmentalData(
+            nodeUuid: 'test-node-uuid',
             temperature: 22.5,
             humidity: 65.0,
             pressure: 1013.25,
@@ -56,6 +57,7 @@ class DashboardControllerTest extends WebTestCase
         $client = static::createClient();
 
         $environmentalData = new EnvironmentalData(
+            nodeUuid: 'test-node-uuid',
             temperature: 23.7,
             humidity: 58.2,
             pressure: 1015.5,
@@ -90,6 +92,7 @@ class DashboardControllerTest extends WebTestCase
         $client = static::createClient();
 
         $environmentalData = new EnvironmentalData(
+            nodeUuid: 'test-node-uuid',
             temperature: 21.0,
             humidity: 60.0,
             pressure: 1012.0,
