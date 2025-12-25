@@ -38,7 +38,7 @@ class EnvironmentalDataServiceTest extends KernelTestCase
     public function testSaveEnvironmentalDataSuccess(): void
     {
         $data = [
-            'node_uuid' => 'test-node-uuid',
+            'uuid' => 'test-node-uuid',
             'temperature' => 22.5,
             'humidity' => 45.0,
             'pressure' => 1013.25,
@@ -59,7 +59,7 @@ class EnvironmentalDataServiceTest extends KernelTestCase
     public function testSaveMultipleEnvironmentalDataEntries(): void
     {
         $data1 = [
-            'node_uuid' => 'test-node-uuid',
+            'uuid' => 'test-node-uuid',
             'temperature' => 20.0,
             'humidity' => 40.0,
             'pressure' => 1010.0,
@@ -68,7 +68,7 @@ class EnvironmentalDataServiceTest extends KernelTestCase
         ];
 
         $data2 = [
-            'node_uuid' => 'test-node-uuid',
+            'uuid' => 'test-node-uuid',
             'temperature' => 23.0,
             'humidity' => 50.0,
             'pressure' => 1015.0,
@@ -106,7 +106,7 @@ class EnvironmentalDataServiceTest extends KernelTestCase
         ];
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Undefined array key "node_uuid"');
+        $this->expectExceptionMessage('Undefined array key "uuid"');
 
         $this->service->saveEnvironmentalData($data);
     }
@@ -114,7 +114,7 @@ class EnvironmentalDataServiceTest extends KernelTestCase
     public function testSaveEnvironmentalDataMissingTemperature(): void
     {
         $data = [
-            'node_uuid' => 'test-node-uuid',
+            'uuid' => 'test-node-uuid',
             'humidity' => 45.0,
             'pressure' => 1013.25,
             'co2' => 400,
@@ -130,7 +130,7 @@ class EnvironmentalDataServiceTest extends KernelTestCase
     public function testSaveEnvironmentalDataMissingHumidity(): void
     {
         $data = [
-            'node_uuid' => 'test-node-uuid',
+            'uuid' => 'test-node-uuid',
             'temperature' => 22.5,
             'pressure' => 1013.25,
             'co2' => 400,
@@ -146,7 +146,7 @@ class EnvironmentalDataServiceTest extends KernelTestCase
     public function testSaveEnvironmentalDataMissingPressure(): void
     {
         $data = [
-            'node_uuid' => 'test-node-uuid',
+            'uuid' => 'test-node-uuid',
             'temperature' => 22.5,
             'humidity' => 45.0,
             'co2' => 400,
@@ -162,7 +162,7 @@ class EnvironmentalDataServiceTest extends KernelTestCase
     public function testSaveEnvironmentalDataMissingCo2(): void
     {
         $data = [
-            'node_uuid' => 'test-node-uuid',
+            'uuid' => 'test-node-uuid',
             'temperature' => 22.5,
             'humidity' => 45.0,
             'pressure' => 1013.25,
@@ -182,7 +182,7 @@ class EnvironmentalDataServiceTest extends KernelTestCase
     public function testSaveEnvironmentalDataMissingCreatedAt(): void
     {
         $data = [
-            'node_uuid' => 'test-node-uuid',
+            'uuid' => 'test-node-uuid',
             'temperature' => 22.5,
             'humidity' => 45.0,
             'pressure' => 1013.25,
@@ -198,7 +198,7 @@ class EnvironmentalDataServiceTest extends KernelTestCase
     public function testSaveEnvironmentalDataInvalidTemperatureFormat(): void
     {
         $data = [
-            'node_uuid' => 'test-node-uuid',
+            'uuid' => 'test-node-uuid',
             'temperature' => 'invalid',
             'humidity' => 45.0,
             'pressure' => 1013.25,
@@ -215,7 +215,7 @@ class EnvironmentalDataServiceTest extends KernelTestCase
     public function testSaveEnvironmentalDataInvalidHumidityFormat(): void
     {
         $data = [
-            'node_uuid' => 'test-node-uuid',
+            'uuid' => 'test-node-uuid',
             'temperature' => 22.5,
             'humidity' => 'invalid',
             'pressure' => 1013.25,
@@ -232,7 +232,7 @@ class EnvironmentalDataServiceTest extends KernelTestCase
     public function testSaveEnvironmentalDataInvalidPressureFormat(): void
     {
         $data = [
-            'node_uuid' => 'test-node-uuid',
+            'uuid' => 'test-node-uuid',
             'temperature' => 22.5,
             'humidity' => 45.0,
             'pressure' => 'invalid',
@@ -249,7 +249,7 @@ class EnvironmentalDataServiceTest extends KernelTestCase
     public function testSaveEnvironmentalDataInvalidCo2Format(): void
     {
         $data = [
-            'node_uuid' => 'test-node-uuid',
+            'uuid' => 'test-node-uuid',
             'temperature' => 22.5,
             'humidity' => 45.0,
             'pressure' => 1013.25,
@@ -266,7 +266,7 @@ class EnvironmentalDataServiceTest extends KernelTestCase
     public function testSaveEnvironmentalDataInvalidDateFormat(): void
     {
         $data = [
-            'node_uuid' => 'test-node-uuid',
+            'uuid' => 'test-node-uuid',
             'temperature' => 22.5,
             'humidity' => 45.0,
             'pressure' => 1013.25,

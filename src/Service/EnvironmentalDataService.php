@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class EnvironmentalDataService
 {
     /** The required fields */
-    private const REQUIRED_FIELDS = ['node_uuid', 'temperature', 'humidity', 'pressure', 'created_at'];
+    private const REQUIRED_FIELDS = ['uuid', 'temperature', 'humidity', 'pressure', 'created_at'];
 
     public function __construct(
         private readonly ValidatorInterface $validator,
@@ -87,7 +87,7 @@ class EnvironmentalDataService
     private function createEnvironmentalData(array $data): EnvironmentalData
     {
         return new EnvironmentalData(
-            $data['node_uuid'],
+            $data['uuid'],
             $data['temperature'],
             $data['humidity'],
             $data['pressure'],

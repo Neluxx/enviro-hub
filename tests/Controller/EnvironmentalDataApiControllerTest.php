@@ -15,7 +15,7 @@ class EnvironmentalDataApiControllerTest extends WebTestCase
 
         $data = [
             [
-                'node_uuid' => 'test-node-uuid',
+                'uuid' => 'test-node-uuid',
                 'temperature' => 22.5,
                 'humidity' => 55.0,
                 'pressure' => 1013.25,
@@ -49,7 +49,7 @@ class EnvironmentalDataApiControllerTest extends WebTestCase
 
         $data = [
             [
-                'node_uuid' => 'test-node-uuid',
+                'uuid' => 'test-node-uuid',
                 'temperature' => 22.5,
                 'humidity' => 55.0,
                 'pressure' => 1013.25,
@@ -57,7 +57,7 @@ class EnvironmentalDataApiControllerTest extends WebTestCase
                 'created_at' => '2025-10-26 12:00:00',
             ],
             [
-                'node_uuid' => 'test-node-uuid',
+                'uuid' => 'test-node-uuid',
                 'temperature' => 23.0,
                 'humidity' => 56.0,
                 'pressure' => 1014.0,
@@ -91,7 +91,7 @@ class EnvironmentalDataApiControllerTest extends WebTestCase
 
         $data = [
             [
-                'node_uuid' => 'test-node-uuid',
+                'uuid' => 'test-node-uuid',
                 'temperature' => 22.5,
                 'humidity' => 55.0,
                 'pressure' => 1013.25,
@@ -118,7 +118,7 @@ class EnvironmentalDataApiControllerTest extends WebTestCase
 
         $data = [
             [
-                'node_uuid' => 'test-node-uuid',
+                'uuid' => 'test-node-uuid',
                 'temperature' => 22.5,
                 'humidity' => 55.0,
                 'pressure' => 1013.25,
@@ -148,7 +148,7 @@ class EnvironmentalDataApiControllerTest extends WebTestCase
 
         $data = [
             [
-                'node_uuid' => 'test-node-uuid',
+                'uuid' => 'test-node-uuid',
                 'temperature' => 22.5,
                 'humidity' => 55.0,
                 'co2' => 400.0,
@@ -201,7 +201,7 @@ class EnvironmentalDataApiControllerTest extends WebTestCase
 
         $data = [
             [
-                'node_uuid' => 'test-node-uuid',
+                'uuid' => 'test-node-uuid',
                 'temperature' => 22.5,
                 'humidity' => 55.0,
                 'pressure' => 1013.25,
