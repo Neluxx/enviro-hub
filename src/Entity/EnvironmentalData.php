@@ -16,6 +16,9 @@ class EnvironmentalData
     #[ORM\Column(type: 'integer')]
     private int $id;
 
+    #[ORM\Column(type: 'string', length: 36)]
+    private string $nodeUuid;
+
     #[ORM\Column(type: 'float')]
     private float $temperature;
 
@@ -35,12 +38,14 @@ class EnvironmentalData
     private DateTime $createdAt;
 
     public function __construct(
+        string $nodeUuid,
         float $temperature,
         float $humidity,
         float $pressure,
         ?float $carbonDioxide,
         DateTime $measuredAt,
     ) {
+        $this->nodeUuid = $nodeUuid;
         $this->temperature = $temperature;
         $this->humidity = $humidity;
         $this->pressure = $pressure;
@@ -52,6 +57,11 @@ class EnvironmentalData
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getNodeUuid(): string
+    {
+        return $this->nodeUuid;
     }
 
     public function getTemperature(): float

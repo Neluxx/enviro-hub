@@ -49,6 +49,7 @@ class DashboardServiceTest extends TestCase
     {
         $data = [
             new EnvironmentalData(
+                nodeUuid: 'test-node-uuid',
                 temperature: 22.5,
                 humidity: 65.0,
                 pressure: 1013.25,
@@ -56,6 +57,7 @@ class DashboardServiceTest extends TestCase
                 measuredAt: new DateTime('2024-01-15 10:00:00'),
             ),
             new EnvironmentalData(
+                nodeUuid: 'test-node-uuid',
                 temperature: 23.0,
                 humidity: 64.5,
                 pressure: 1013.50,
@@ -63,6 +65,7 @@ class DashboardServiceTest extends TestCase
                 measuredAt: new DateTime('2024-01-15 11:00:00'),
             ),
             new EnvironmentalData(
+                nodeUuid: 'test-node-uuid',
                 temperature: 23.5,
                 humidity: 64.0,
                 pressure: 1013.75,
@@ -95,6 +98,7 @@ class DashboardServiceTest extends TestCase
     {
         $data = [
             new EnvironmentalData(
+                nodeUuid: 'test-node-uuid',
                 temperature: 22.0,
                 humidity: 60.0,
                 pressure: 1012.0,
@@ -102,6 +106,7 @@ class DashboardServiceTest extends TestCase
                 measuredAt: new DateTime('2024-01-15 10:00:00'),
             ),
             new EnvironmentalData(
+                nodeUuid: 'test-node-uuid',
                 temperature: 22.5,
                 humidity: 61.0,
                 pressure: 1012.5,
@@ -127,6 +132,7 @@ class DashboardServiceTest extends TestCase
     {
         $data = [
             new EnvironmentalData(
+                nodeUuid: 'test-node-uuid',
                 temperature: 20.0,
                 humidity: 70.0,
                 pressure: 1010.0,
@@ -134,6 +140,7 @@ class DashboardServiceTest extends TestCase
                 measuredAt: new DateTime('2024-01-08 10:00:00'),
             ),
             new EnvironmentalData(
+                nodeUuid: 'test-node-uuid',
                 temperature: 21.0,
                 humidity: 68.0,
                 pressure: 1012.0,
