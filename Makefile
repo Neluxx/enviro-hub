@@ -129,8 +129,6 @@ build:
     		--exclude='.phpstan-baseline.neon' \
     		./ $(RELEASE_DIR)
 	$(DDEV_COMPOSER) install --working-dir=$(RELEASE_DIR) --no-dev --optimize-autoloader --no-scripts
-	$(DDEV_PHP) $(SYMFONY) importmap:install --working-dir=$(RELEASE_DIR)
-	$(DDEV_PHP) $(SYMFONY) asset-map:compile --working-dir=$(RELEASE_DIR)
 	cd $(RELEASE_DIR) && zip -r ../$(RELEASE_FILE) .
 
 # -------- Composer --------
