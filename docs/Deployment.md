@@ -21,6 +21,8 @@ mkdir -p var/cache var/log && \
 php bin/console cache:clear --no-warmup --env=prod && \
 php bin/console cache:warmup --env=prod && \
 php bin/console doctrine:migrations:migrate --no-interaction --env=prod && \
+php bin/console importmap:install --env=prod
+php bin/console asset-map:compile --env=prod
 chown -R www-data:www-data $APP_DEST && \
 chmod -R 755 $APP_DEST && \
 chmod -R 775 $APP_DEST/var
