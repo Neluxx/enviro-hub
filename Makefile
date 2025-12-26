@@ -109,7 +109,25 @@ build:
 	@echo "$(INFO) Build release artifact $(RESET)"
 	rm -rf $(BUILD_DIR)
 	mkdir -p $(RELEASE_DIR)
-	rsync -a --exclude=$(BUILD_DIR) --exclude='.git' --exclude='vendor' --exclude='.env.local' --exclude='var' $(SRC) $(RELEASE_DIR)/
+	rsync -a \
+    		--exclude='$(BUILD_DIR)' \
+    		--exclude='.git' \
+    		--exclude='.github' \
+    		--exclude='.idea' \
+    		--exclude='.ddev' \
+    		--exclude='vendor' \
+    		--exclude='var/cache' \
+    		--exclude='var/log' \
+    		--exclude='tests' \
+    		--exclude='.env.local' \
+    		--exclude='.env.test' \
+    		--exclude='.phpunit.cache' \
+    		--exclude='.phpunit.dist.xml' \
+    		--exclude='.php-cs-fixer.cache' \
+    		--exclude='.php-cs-fixer.dist.php' \
+    		--exclude='.phpstan.dist.neon' \
+    		--exclude='.phpstan-baseline.neon' \
+    		./ $(RELEASE_DIR)
 	$(DDEV_COMPOSER) install --working-dir=$(RELEASE_DIR) --no-dev --optimize-autoloader --no-scripts
 	$(DDEV_PHP) $(SYMFONY) importmap:install --working-dir=$(RELEASE_DIR)
 	$(DDEV_PHP) $(SYMFONY) asset-map:compile --working-dir=$(RELEASE_DIR)
