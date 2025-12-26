@@ -45,6 +45,11 @@ jobs:
         run: |
           APP_ENV=prod composer install ${{ env.COMPOSER_FLAGS }}
 
+      - name: Build assets
+        run: |
+            php bin/console importmap:install
+            php bin/console asset-map:compile
+
       # Release preparation
       - name: Extract repository name
         run: echo "REPOSITORY_NAME=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
