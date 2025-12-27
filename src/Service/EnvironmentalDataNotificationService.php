@@ -63,14 +63,14 @@ class EnvironmentalDataNotificationService
         );
     }
 
-    private function isCrossingHighThreshold(float $currentCo2Value, ?float $lastCo2Value): bool
+    private function isCrossingHighThreshold(float $currentCo2Value, float $lastCo2Value): bool
     {
-        return $currentCo2Value >= self::CO2_THRESHOLD && (null === $lastCo2Value || $lastCo2Value < self::CO2_THRESHOLD);
+        return $currentCo2Value >= self::CO2_THRESHOLD && $lastCo2Value < self::CO2_THRESHOLD;
     }
 
-    private function isCrossingLowThreshold(float $currentCo2Value, ?float $lastCo2Value): bool
+    private function isCrossingLowThreshold(float $currentCo2Value, float $lastCo2Value): bool
     {
-        return $currentCo2Value < self::CO2_THRESHOLD && (null === $lastCo2Value || $lastCo2Value >= self::CO2_THRESHOLD);
+        return $currentCo2Value < self::CO2_THRESHOLD && $lastCo2Value >= self::CO2_THRESHOLD;
     }
 
     private function sendNotification(string $subject, string $message): void
