@@ -10,32 +10,25 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
 /**
- * Environmental Data Notification Service.
+ * Notification Service.
  */
-class EnvironmentalDataNotificationService
+class NotificationService
 {
     /** The CO2 threshold */
-    private const CO2_THRESHOLD = 1000;
-
-    /**
-     * The sender mail address.
-     *
-     * @todo Replace with the actual sender email
-     */
-    private const SENDER_EMAIL = 'info@fabian-arndt.dev';
-
-    /**
-     * The receiver mail address.
-     *
-     * @todo Replace with the actual receiver email
-     */
-    private const RECEIVER_EMAIL = 'fabian.arndt96@proton.me';
+    private const CO2_THRESHOLD = 1600;
 
     private MailerInterface $mailer;
+    private string $senderEmail;
+    private string $receiverEmail;
 
-    public function __construct(MailerInterface $mailer)
-    {
+    public function __construct(
+        MailerInterface $mailer,
+        string $senderEmail,
+        string $receiverEmail
+    ) {
         $this->mailer = $mailer;
+        $this->senderEmail = $senderEmail;
+        $this->receiverEmail = $receiverEmail;
     }
 
     /**
@@ -70,14 +63,14 @@ class EnvironmentalDataNotificationService
         );
     }
 
-    private function isCrossingHighThreshold(float $currentCo2Value, ?float $lastCo2Value): bool
+    private function isCrossingHighThreshold(float $currentCo2Value, float $lastCo2Value): bool
     {
-        return $currentCo2Value >= self::CO2_THRESHOLD && (null === $lastCo2Value || $lastCo2Value < self::CO2_THRESHOLD);
+        return $currentCo2Value >= self::CO2_THRESHOLD && $lastCo2Value < self::CO2_THRESHOLD;
     }
 
-    private function isCrossingLowThreshold(float $currentCo2Value, ?float $lastCo2Value): bool
+    private function isCrossingLowThreshold(float $currentCo2Value, float $lastCo2Value): bool
     {
-        return $currentCo2Value < self::CO2_THRESHOLD && (null === $lastCo2Value || $lastCo2Value >= self::CO2_THRESHOLD);
+        return $currentCo2Value < self::CO2_THRESHOLD && $lastCo2Value >= self::CO2_THRESHOLD;
     }
 
     private function sendNotification(string $subject, string $message): void
@@ -94,8 +87,8 @@ class EnvironmentalDataNotificationService
     private function createEmail(string $subject, string $text): Email
     {
         return (new Email())
-            ->from(self::SENDER_EMAIL)
-            ->to(self::RECEIVER_EMAIL)
+            ->from($this->senderEmail)
+            ->to($this->receiverEmail)
             ->subject($subject)
             ->text($text);
     }
