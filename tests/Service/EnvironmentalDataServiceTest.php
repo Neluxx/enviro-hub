@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Service;
 
 use App\Repository\EnvironmentalDataRepository;
-use App\Service\NotificationService;
 use App\Service\EnvironmentalDataService;
+use App\Service\NotificationService;
 use DateTime;
 use Exception;
 use InvalidArgumentException;
