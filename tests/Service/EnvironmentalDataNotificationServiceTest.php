@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Service;
 
 use App\Entity\EnvironmentalData;
-use App\Service\EnvironmentalDataNotificationService;
+use App\Service\NotificationService;
 use DateTime;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -13,7 +13,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
 /**
- * Test class for EnvironmentalDataNotificationService.
+ * Test class for NotificationService.
  */
 class EnvironmentalDataNotificationServiceTest extends TestCase
 {
@@ -21,12 +21,12 @@ class EnvironmentalDataNotificationServiceTest extends TestCase
     private const RECEIVER_EMAIL = 'receiver@example.com';
     private const CO2_THRESHOLD = 1600;
     private MailerInterface&MockObject $mailer;
-    private EnvironmentalDataNotificationService $service;
+    private NotificationService $service;
 
     protected function setUp(): void
     {
         $this->mailer = $this->createMock(MailerInterface::class);
-        $this->service = new EnvironmentalDataNotificationService(
+        $this->service = new NotificationService(
             $this->mailer,
             self::SENDER_EMAIL,
             self::RECEIVER_EMAIL

@@ -10,9 +10,9 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
 /**
- * Environmental Data Notification Service.
+ * Notification Service.
  */
-class EnvironmentalDataNotificationService
+class NotificationService
 {
     /** The CO2 threshold */
     private const CO2_THRESHOLD = 1600;

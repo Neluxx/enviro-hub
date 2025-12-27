@@ -21,7 +21,7 @@ class EnvironmentalDataService
     public function __construct(
         private readonly ValidatorInterface $validator,
         private readonly EnvironmentalDataRepository $repository,
-        private readonly EnvironmentalDataNotificationService $notificationService,
+        private readonly NotificationService $notificationService,
     ) {
     }
 

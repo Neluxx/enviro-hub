@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Service;
 
 use App\Repository\EnvironmentalDataRepository;
-use App\Service\EnvironmentalDataNotificationService;
+use App\Service\NotificationService;
 use App\Service\EnvironmentalDataService;
 use DateTime;
 use Exception;
@@ -26,7 +26,7 @@ class EnvironmentalDataServiceTest extends KernelTestCase
 
         $validator = $container->get(ValidatorInterface::class);
         $this->repository = $container->get(EnvironmentalDataRepository::class);
-        $notificationService = $container->get(EnvironmentalDataNotificationService::class);
+        $notificationService = $container->get(NotificationService::class);
 
         $this->service = new EnvironmentalDataService(
             $validator,
