@@ -15,7 +15,7 @@ use Symfony\Component\Mime\Email;
 /**
  * Test class for NotificationService.
  */
-class EnvironmentalDataNotificationServiceTest extends TestCase
+class NotificationServiceTest extends TestCase
 {
     private const SENDER_EMAIL = 'sender@example.com';
     private const RECEIVER_EMAIL = 'receiver@example.com';
