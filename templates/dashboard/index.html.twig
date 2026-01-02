@@ -35,11 +35,6 @@
             </div>
         </div>
 
-        <div class="d-flex justify-content-between align-items-center text-muted mb-4">
-            <small class="text-light">{{ data.measuredAt.format('Y-m-d H:i:s') }}</small>
-            <small class="text-light">{{ version }}</small>
-        </div>
-
         <div class="d-flex justify-content-center mb-4">
             {# Time Range Buttons #}
             <div class="time-range-buttons btn-group flex-wrap" role="group">
@@ -109,6 +104,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center text-muted mt-4">
+            <small class="text-light">{{ data.measuredAt.format('Y-m-d H:i:s') }}</small>
+            <small class="text-light">{{ version }}</small>
         </div>
     </div>
 {% endblock %}
