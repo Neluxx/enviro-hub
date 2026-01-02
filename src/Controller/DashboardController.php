@@ -92,8 +92,11 @@ class DashboardController extends AbstractController
                     'borderColor' => $color,
                     'data' => $data,
                     'tension' => 0.4,
-                    'fill' => false,
+                    'cubicInterpolationMode' => 'monotone',
+                    'spanGaps' => true,
                     'pointRadius' => 0,
+                    'pointHoverRadius' => 4,
+                    'borderWidth' => 2,
                 ],
             ],
         ]);
@@ -101,10 +104,19 @@ class DashboardController extends AbstractController
         $chart->setOptions([
             'responsive' => true,
             'maintainAspectRatio' => false,
-            'plugins' => ['legend' => ['display' => false]],
+            'interaction' => [
+                'intersect' => false,
+                'mode' => 'index',
+            ],
+            'plugins' => [
+                'legend' => ['display' => false],
+            ],
             'scales' => [
                 'x' => ['grid' => ['color' => 'rgba(255, 255, 255, 0.1)']],
-                'y' => ['grid' => ['color' => 'rgba(255, 255, 255, 0.1)']],
+                'y' => [
+                    'grid' => ['color' => 'rgba(255, 255, 255, 0.1)'],
+                    'beginAtZero' => false,
+                ],
             ],
         ]);
 
