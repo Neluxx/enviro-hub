@@ -46,13 +46,23 @@
                 <button type="button"
                         class="btn btn-outline-light active"
                         data-dashboard-target="button"
-                        data-range="today"
-                        data-action="click->dashboard#changeRange">Today</button>
+                        data-range="-12 hours"
+                        data-action="click->dashboard#changeRange">-12h</button>
                 <button type="button"
                         class="btn btn-outline-light"
                         data-dashboard-target="button"
-                        data-range="week"
-                        data-action="click->dashboard#changeRange">Last Week</button>
+                        data-range="-24 hours"
+                        data-action="click->dashboard#changeRange">-24h</button>
+                <button type="button"
+                        class="btn btn-outline-light"
+                        data-dashboard-target="button"
+                        data-range="-7 days"
+                        data-action="click->dashboard#changeRange">-7d</button>
+                <button type="button"
+                        class="btn btn-outline-light"
+                        data-dashboard-target="button"
+                        data-range="-14 days"
+                        data-action="click->dashboard#changeRange">-14d</button>
             </div>
         </div>
 

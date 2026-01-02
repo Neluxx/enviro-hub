@@ -32,7 +32,7 @@ class DashboardService
     {
         $timezone = new DateTimeZone('Europe/Berlin');
         $endDate = new DateTime('now', $timezone);
-        $startDate = $this->calculateStartDate($range, $endDate);
+        $startDate = (clone $endDate)->modify($range);
 
         $data = $this->repository->findByDateRange($startDate, $endDate);
 
@@ -46,18 +46,6 @@ class DashboardService
         }
 
         return $this->formatChartData($data);
-    }
-
-    /**
-     * Calculate start date based on the range.
-     */
-    private function calculateStartDate(string $range, DateTime $endDate): DateTime
-    {
-        return match ($range) {
-            'today' => (clone $endDate)->modify('-24 hours'),
-            'week' => (clone $endDate)->modify('-7 days'),
-            default => (clone $endDate)->modify('-24 hours'),
-        };
     }
 
     /**

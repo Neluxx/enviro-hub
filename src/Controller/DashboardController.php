@@ -37,7 +37,7 @@ class DashboardController extends AbstractController
     {
         $data = $this->repository->getLastEntry();
 
-        $chartData = $this->service->getChartData('today');
+        $chartData = $this->service->getChartData('-12 hours');
 
         $tempChart = $this->createEnvironmentalChart(
             'Temperature (°C)',
