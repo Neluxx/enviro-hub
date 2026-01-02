@@ -26,10 +26,10 @@ return [
         'version' => '7.3.0',
     ],
     'chart.js' => [
-        'version' => '4.5.1',
+        'version' => '4.4.5',
     ],
     '@kurkle/color' => [
-        'version' => '0.3.4',
+        'version' => '0.3.2',
     ],
     '@symfony/ux-chartjs' => [
         'version' => '2.31.0',
@@ -43,5 +43,11 @@ return [
     'bootstrap/dist/css/bootstrap.min.css' => [
         'version' => '5.3.8',
         'type' => 'css',
+    ],
+    'chartjs-plugin-annotation' => [
+        'version' => '3.1.0',
+    ],
+    'chart.js/helpers' => [
+        'version' => '4.4.5',
     ],
 ];
