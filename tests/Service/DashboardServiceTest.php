@@ -10,6 +10,7 @@ use App\Service\DashboardService;
 use DateTime;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 
 /**
  * Test class for DashboardService.
@@ -17,12 +18,14 @@ use PHPUnit\Framework\TestCase;
 class DashboardServiceTest extends TestCase
 {
     private EnvironmentalDataRepository&MockObject $repository;
+    private ChartBuilderInterface&MockObject $chartBuilder;
     private DashboardService $service;
 
     protected function setUp(): void
     {
         $this->repository = $this->createMock(EnvironmentalDataRepository::class);
-        $this->service = new DashboardService($this->repository);
+        $this->chartBuilder = $this->createMock(ChartBuilderInterface::class);
+        $this->service = new DashboardService($this->repository, $this->chartBuilder);
     }
 
     /**
@@ -34,7 +37,7 @@ class DashboardServiceTest extends TestCase
             ->method('findByDateRange')
             ->willReturn([]);
 
-        $result = $this->service->getChartData('today');
+        $result = $this->service->getChartData('-24 hours');
 
         static::assertEmpty($result['labels']);
         static::assertEmpty($result['temperature']);
@@ -82,7 +85,7 @@ class DashboardServiceTest extends TestCase
             )
             ->willReturn($data);
 
-        $result = $this->service->getChartData('today');
+        $result = $this->service->getChartData('-24 hours');
 
         static::assertCount(3, $result['labels']);
         static::assertEquals(['15.01 10:00', '15.01 11:00', '15.01 12:00'], $result['labels']);
@@ -119,7 +122,7 @@ class DashboardServiceTest extends TestCase
             ->method('findByDateRange')
             ->willReturn($data);
 
-        $result = $this->service->getChartData('today');
+        $result = $this->service->getChartData('-24 hours');
 
         static::assertNull($result['co2'][0]);
         static::assertEquals(450.0, $result['co2'][1]);
@@ -163,33 +166,9 @@ class DashboardServiceTest extends TestCase
             )
             ->willReturn($data);
 
-        $result = $this->service->getChartData('week');
+        $result = $this->service->getChartData('-7 days');
 
         static::assertCount(2, $result['labels']);
         static::assertEquals([20.0, 21.0], $result['temperature']);
-    }
-
-    /**
-     * Test getChartData defaults to today for unknown range.
-     */
-    public function testGetChartDataDefaultForUnknownRange(): void
-    {
-        $this->repository->expects($this->once())
-            ->method('findByDateRange')
-            ->with(
-                $this->callback(function ($date) {
-                    // Should be start of today
-                    $today = (new DateTime())->modify('-24 hours');
-                    $diff = $today->diff($date);
-
-                    return $diff->s < 5; // Within 5 seconds
-                }),
-                $this->callback(fn ($date) => $date instanceof DateTime)
-            )
-            ->willReturn([]);
-
-        $result = $this->service->getChartData('invalid_range');
-
-        static::assertEmpty($result['labels']);
     }
 }
