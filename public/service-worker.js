@@ -1,8 +1,8 @@
 const CACHE_NAME = 'enviro-hub-v1';
 const urlsToCache = [
     '/',
-    '/favicon.svg',
-    '/favicon-96x96.png'
+    '/favicons/favicon.svg',
+    '/favicons/favicon-96x96.png'
 ];
 
 // Install event - cache resources
