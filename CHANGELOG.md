@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Add Multi-Node support [#18](https://github.com/Neluxx/enviro-hub/issues/18)
+- Implement Progressive Web App (PWA) functionality [#16](https://github.com/Neluxx/enviro-hub/issues/16)
 - Add email notification for CO2 levels exceeding configured threshold [#17](https://github.com/Neluxx/enviro-hub/issues/17)
 
 ### Changed
