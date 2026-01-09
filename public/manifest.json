@@ -1,7 +1,7 @@
 {
   "name": "Enviro Hub",
   "short_name": "EnviroHub",
-  "description": "Progressive Web App built with Symfony",
+  "description": "Real-time environmental monitoring and alerting for IoT sensor networks",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
