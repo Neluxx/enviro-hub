@@ -4,8 +4,13 @@ const OFFLINE_URL = '/offline';
 const PRECACHE_ASSETS = [
     '/',
     '/offline',
+    '/manifest.json',
+    '/favicons/favicon.ico',
     '/favicons/favicon.svg',
-    '/favicons/favicon-96x96.png'
+    '/favicons/favicon-96x96.png',
+    '/icons/icon-192.png',
+    '/icons/icon-512.png',
+    '/icons/apple-touch-icon.png'
 ];
 
 // Install event - precache critical assets
