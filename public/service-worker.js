@@ -1,4 +1,4 @@
-const CACHE_NAME = 'enviro-hub-v3';
+const CACHE_NAME = 'enviro-hub-v4';
 const OFFLINE_URL = '/offline';
 
 const PRECACHE_ASSETS = [
