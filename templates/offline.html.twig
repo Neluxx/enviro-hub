@@ -1,14 +1,35 @@
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Offline - No Connection{% endblock %}
 
 {% block body %}
-<div style="text-align: center; padding: 50px; font-family: sans-serif;">
-    <h1>🔌 You're Offline</h1>
-    <p>It looks like you've lost your internet connection.</p>
-    <p>Please check your connection and try again.</p>
-    <button onclick="window.location.reload()" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">
-        Retry
-    </button>
+<div class="container">
+    <div class="row justify-content-center align-items-center min-vh-100">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-lg border-0">
+                <div class="card-body text-center p-5">
+                    <div class="mb-4">
+                        <span class="display-1">🔌</span>
+                    </div>
+                    <h1 class="card-title h2 mb-3">You're Offline</h1>
+                    <p class="card-text text-muted mb-2">
+                        It looks like you've lost your internet connection.
+                    </p>
+                    <p class="card-text text-muted mb-4">
+                        Please check your connection and try again.
+                    </p>
+                    <button onclick="window.location.reload()" class="btn btn-primary btn-lg px-5">
+                        <i class="bi bi-arrow-clockwise me-2"></i>Retry
+                    </button>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <small class="text-muted">
+                    Some content may still be available from cache
+                </small>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
