@@ -3,16 +3,21 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#000000">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-title" content="Enviro Hub">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
         <title>{% block title %}Enviro Hub{% endblock %}</title>
 
         {# Favicons #}
-        <link rel="icon" type="image/png" href="/favicons/favicon-96x96.png" sizes="96x96" />
-        <link rel="icon" type="image/svg+xml" href="/favicons/favicon.svg" />
-        <link rel="shortcut icon" href="/favicons/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
-        <meta name="apple-mobile-web-app-title" content="Enviro Hub" />
-        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="icon" type="image/png" href="{{ asset('favicons/favicon-96x96.png') }}" sizes="96x96">
+        <link rel="icon" type="image/svg+xml" href="{{ asset('favicons/favicon.svg') }}">
+        <link rel="shortcut icon" href="{{ asset('favicons/favicon.ico') }}">
+        <link rel="apple-touch-icon" href="{{ asset('icons/apple-touch-icon.png') }}" sizes="180x180">
+
+        <link rel="manifest" href="{{ asset('manifest.json') }}">
 
         {% block stylesheets %}
         {% endblock %}
