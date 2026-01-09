@@ -1,8 +1,7 @@
-const CACHE_NAME = 'enviro-hub-v2';
+const CACHE_NAME = 'enviro-hub-v3';
 const OFFLINE_URL = '/offline';
 
 const PRECACHE_ASSETS = [
-    '/',
     '/offline',
     '/manifest.json',
     '/favicons/favicon.ico',
@@ -38,7 +37,7 @@ self.addEventListener('activate', (event) => {
     );
 });
 
-// Fetch event - network-first strategy
+// Fetch event - selective caching
 self.addEventListener('fetch', (event) => {
     // Skip non-GET requests
     if (event.request.method !== 'GET') {
@@ -50,18 +49,44 @@ self.addEventListener('fetch', (event) => {
         return;
     }
 
-    event.respondWith(
-        networkFirst(event.request)
-    );
+    const url = new URL(event.request.url);
+
+    // Only cache static assets (CSS, JS, fonts, images)
+    const isStaticAsset = /\.(css|js|woff2?|ttf|eot|svg|png|jpg|jpeg|gif|webp|ico)$/i.test(url.pathname);
+
+    // Cache manifest and favicons
+    const isCacheable = isStaticAsset ||
+        url.pathname === '/manifest.json' ||
+        url.pathname.startsWith('/favicons/') ||
+        url.pathname === '/offline';
+
+    if (isCacheable) {
+        event.respondWith(cacheFirstStaticAssets(event.request));
+    } else {
+        // For everything else (HTML, API calls, data), always use network
+        event.respondWith(
+            fetch(event.request).catch(() => {
+                // Only show offline page for navigation requests
+                if (event.request.mode === 'navigate') {
+                    return caches.match(OFFLINE_URL);
+                }
+                return new Response('Network error', { status: 408 });
+            })
+        );
+    }
 });
 
-// Network-first strategy with cache fallback
-async function networkFirst(request) {
+// Cache-first strategy for static assets
+async function cacheFirstStaticAssets(request) {
+    const cachedResponse = await caches.match(request);
+
+    if (cachedResponse) {
+        return cachedResponse;
+    }
+
     try {
-        // Try to fetch from network
         const networkResponse = await fetch(request);
 
-        // If successful, cache the response and return it
         if (networkResponse.ok) {
             const cache = await caches.open(CACHE_NAME);
             cache.put(request, networkResponse.clone());
@@ -69,32 +94,12 @@ async function networkFirst(request) {
 
         return networkResponse;
     } catch (error) {
-        // Network failed, try to get from cache
-        console.log('Service Worker: Network request failed, falling back to cache', error);
-
-        const cachedResponse = await caches.match(request);
-
-        if (cachedResponse) {
-            return cachedResponse;
-        }
-
-        // If no cache and navigation request, return offline page
-        if (request.mode === 'navigate') {
-            const offlineResponse = await caches.match(OFFLINE_URL);
-            if (offlineResponse) {
-                return offlineResponse;
-            }
-        }
-
-        // No cache available, return error
-        return new Response('Network error occurred', {
-            status: 408,
-            headers: { 'Content-Type': 'text/plain' }
-        });
+        console.log('Failed to fetch:', request.url, error);
+        throw error;
     }
 }
 
-// Optional: Handle messages from the app
+// Handle messages from the app
 self.addEventListener('message', (event) => {
     if (event.data && event.data.type === 'SKIP_WAITING') {
         self.skipWaiting();
@@ -103,9 +108,7 @@ self.addEventListener('message', (event) => {
     if (event.data && event.data.type === 'CLEAR_CACHE') {
         event.waitUntil(
             caches.delete(CACHE_NAME)
-                .then(() => {
-                    return self.clients.matchAll();
-                })
+                .then(() => self.clients.matchAll())
                 .then((clients) => {
                     clients.forEach((client) => {
                         client.postMessage({ type: 'CACHE_CLEARED' });
