@@ -8,9 +8,9 @@ const PRECACHE_ASSETS = [
     '/favicons/favicon.ico',
     '/favicons/favicon.svg',
     '/favicons/favicon-96x96.png',
-    '/icons/icon-192.png',
-    '/icons/icon-512.png',
-    '/icons/apple-touch-icon.png'
+    '/favicons/icon-192.png',
+    '/favicons/icon-512.png',
+    '/favicons/apple-touch-icon.png'
 ];
 
 // Install event - precache critical assets

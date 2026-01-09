@@ -15,8 +15,8 @@ DirectoryIndex index.php
     RewriteRule ^ - [E=HTTP_AUTHORIZATION:%0]
     RewriteRule ^index\.php(?:/(.*)|$) %{ENV:BASE}/$1 [R=301,END]
 
-    # Allow access to static files in icons and favicons directories
-    RewriteCond %{REQUEST_URI} ^/(icons|favicons)/
+    # Allow access to static files in favicons directories
+    RewriteCond %{REQUEST_URI} ^/(favicons)/
     RewriteCond %{REQUEST_FILENAME} -f
     RewriteRule ^ - [END]
 
