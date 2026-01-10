@@ -8,30 +8,36 @@
         {# Current Values Cards #}
         <div class="row g-3 mb-4">
             <div class="col-12 col-md-4">
-                <div class="card h-100 {{ sensor_status_class('temperature', data.temperature) }}">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Temperature</h5>
-                        <p class="display-6 fw-bold mb-0">{{ data.temperature }} °C</p>
+                <a href="#temperature-chart" class="text-decoration-none">
+                    <div class="card h-100 {{ sensor_status_class('temperature', data.temperature) }}" style="cursor: pointer;">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Temperature</h5>
+                            <p class="display-6 fw-bold mb-0">{{ data.temperature }} °C</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
 
             <div class="col-12 col-md-4">
-                <div class="card h-100 {{ sensor_status_class('humidity', data.humidity) }}">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Humidity</h5>
-                        <p class="display-6 fw-bold mb-0">{{ data.humidity }} %</p>
+                <a href="#humidity-chart" class="text-decoration-none">
+                    <div class="card h-100 {{ sensor_status_class('humidity', data.humidity) }}" style="cursor: pointer;">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Humidity</h5>
+                            <p class="display-6 fw-bold mb-0">{{ data.humidity }} %</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
 
             <div class="col-12 col-md-4">
-                <div class="card h-100 {{ sensor_status_class('co2', data.carbonDioxide) }}">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">CO₂</h5>
-                        <p class="display-6 fw-bold mb-0">{{ data.carbonDioxide ?? 'N/A' }} ppm</p>
+                <a href="#co2-chart" class="text-decoration-none">
+                    <div class="card h-100 {{ sensor_status_class('co2', data.carbonDioxide) }}" style="cursor: pointer;">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">CO₂</h5>
+                            <p class="display-6 fw-bold mb-0">{{ data.carbonDioxide ?? 'N/A' }} ppm</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
 
@@ -63,7 +69,7 @@
 
         {# Charts Grid #}
         <div class="row g-4">
-            <div class="col-12">
+            <div class="col-12" id="temperature-chart">
                 <div class="card shadow-sm bg-dark border-secondary">
                     <div class="card-body">
                         <h5 class="card-title text-light">Temperature</h5>
@@ -77,7 +83,7 @@
                 </div>
             </div>
 
-            <div class="col-12">
+            <div class="col-12" id="humidity-chart">
                 <div class="card shadow-sm bg-dark border-secondary">
                     <div class="card-body">
                         <h5 class="card-title text-light">Humidity</h5>
@@ -91,7 +97,7 @@
                 </div>
             </div>
 
-            <div class="col-12">
+            <div class="col-12" id="co2-chart">
                 <div class="card shadow-sm bg-dark border-secondary">
                     <div class="card-body">
                         <h5 class="card-title text-light">CO₂ Level</h5>
