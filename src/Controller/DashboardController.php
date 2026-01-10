@@ -10,8 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
-use Symfony\UX\Chartjs\Model\Chart;
 
 /**
  * Dashboard Controller.
@@ -20,16 +18,11 @@ class DashboardController extends AbstractController
 {
     private DashboardService $service;
     private EnvironmentalDataRepository $repository;
-    private ChartBuilderInterface $chartBuilder;
 
-    public function __construct(
-        EnvironmentalDataRepository $repository,
-        DashboardService $service,
-        ChartBuilderInterface $chartBuilder
-    ) {
+    public function __construct(EnvironmentalDataRepository $repository, DashboardService $service)
+    {
         $this->service = $service;
         $this->repository = $repository;
-        $this->chartBuilder = $chartBuilder;
     }
 
     #[Route('/')]
@@ -39,25 +32,19 @@ class DashboardController extends AbstractController
 
         $chartData = $this->service->getChartData('-12 hours');
 
-        $tempChart = $this->createEnvironmentalChart(
-            'Temperature (°C)',
+        $tempChart = $this->service->createTemperatureChart(
             $chartData['labels'],
-            $chartData['temperature'],
-            'rgb(255, 99, 132)'
+            $chartData['temperature']
         );
 
-        $humidityChart = $this->createEnvironmentalChart(
-            'Humidity (%)',
+        $humidityChart = $this->service->createHumidityChart(
             $chartData['labels'],
-            $chartData['humidity'],
-            'rgb(54, 162, 235)'
+            $chartData['humidity']
         );
 
-        $co2Chart = $this->createEnvironmentalChart(
-            'CO₂ (ppm)',
+        $co2Chart = $this->service->createCo2Chart(
             $chartData['labels'],
-            $chartData['co2'],
-            'rgb(75, 192, 192)'
+            $chartData['co2']
         );
 
         $versionFile = $this->getParameter('kernel.project_dir').'/VERSION.txt';
@@ -78,48 +65,5 @@ class DashboardController extends AbstractController
         $chartData = $this->service->getChartData($range);
 
         return new JsonResponse($chartData);
-    }
-
-    private function createEnvironmentalChart(string $label, array $labels, array $data, string $color): Chart
-    {
-        $chart = $this->chartBuilder->createChart(Chart::TYPE_LINE);
-        $chart->setData([
-            'labels' => $labels,
-            'datasets' => [
-                [
-                    'label' => $label,
-                    'backgroundColor' => str_replace('rgb', 'rgba', $color).', 0.1)',
-                    'borderColor' => $color,
-                    'data' => $data,
-                    'tension' => 0.4,
-                    'cubicInterpolationMode' => 'monotone',
-                    'spanGaps' => true,
-                    'pointRadius' => 0,
-                    'pointHoverRadius' => 4,
-                    'borderWidth' => 2,
-                ],
-            ],
-        ]);
-
-        $chart->setOptions([
-            'responsive' => true,
-            'maintainAspectRatio' => false,
-            'interaction' => [
-                'intersect' => false,
-                'mode' => 'index',
-            ],
-            'plugins' => [
-                'legend' => ['display' => false],
-            ],
-            'scales' => [
-                'x' => ['grid' => ['color' => 'rgba(255, 255, 255, 0.1)']],
-                'y' => [
-                    'grid' => ['color' => 'rgba(255, 255, 255, 0.1)'],
-                    'beginAtZero' => false,
-                ],
-            ],
-        ]);
-
-        return $chart;
     }
 }
