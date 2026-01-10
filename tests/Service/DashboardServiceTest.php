@@ -10,6 +10,7 @@ use App\Service\DashboardService;
 use DateTime;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 
 /**
  * Test class for DashboardService.
@@ -17,12 +18,14 @@ use PHPUnit\Framework\TestCase;
 class DashboardServiceTest extends TestCase
 {
     private EnvironmentalDataRepository&MockObject $repository;
+    private ChartBuilderInterface&MockObject $chartBuilder;
     private DashboardService $service;
 
     protected function setUp(): void
     {
         $this->repository = $this->createMock(EnvironmentalDataRepository::class);
-        $this->service = new DashboardService($this->repository);
+        $this->chartBuilder = $this->createMock(ChartBuilderInterface::class);
+        $this->service = new DashboardService($this->repository, $this->chartBuilder);
     }
 
     /**
