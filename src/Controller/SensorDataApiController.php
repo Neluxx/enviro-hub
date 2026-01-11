@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\EnvironmentalDataService;
+use App\Service\SensorDataService;
 use Exception;
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,11 +13,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Environmental Data API Controller.
+ * Sensor Data API Controller.
  */
-class EnvironmentalDataApiController extends ApiController
+class SensorDataApiController extends ApiController
 {
-    public function __construct(private readonly EnvironmentalDataService $service)
+    public function __construct(private readonly SensorDataService $service)
     {
     }
 
@@ -29,7 +29,7 @@ class EnvironmentalDataApiController extends ApiController
 
         try {
             foreach ($data as $row) {
-                $this->service->saveEnvironmentalData($row);
+                $this->service->saveSensorData($row);
             }
 
             return $this->json(['message' => 'Data saved successfully'], Response::HTTP_CREATED);

@@ -4,49 +4,46 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Entity\EnvironmentalData;
-use App\Repository\EnvironmentalDataRepository;
+use App\Entity\SensorData;
+use App\Repository\SensorDataRepository;
 use DateTime;
 use InvalidArgumentException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
- * Environmental Data API Service.
+ * Sensor Data API Service.
  */
-class EnvironmentalDataService
+class SensorDataService
 {
     /** The required fields */
     private const REQUIRED_FIELDS = ['uuid', 'temperature', 'humidity', 'pressure', 'created_at'];
 
     public function __construct(
         private readonly ValidatorInterface $validator,
-        private readonly EnvironmentalDataRepository $repository,
+        private readonly SensorDataRepository $repository,
         private readonly NotificationService $notificationService,
     ) {
     }
 
     /**
-     * Save environmental data from API response data.
+     * Save sensor data from API response data.
      *
      * @param array<string, mixed> $data
      *
      * @throws InvalidArgumentException if required fields are missing or data is invalid
      * @throws InvalidArgumentException if validation fails
      */
-    public function saveEnvironmentalData(array $data): void
+    public function saveSensorData(array $data): void
     {
         $this->validateRequiredFields($data);
 
-        $environmentalData = $this->createEnvironmentalData($data);
+        $sensorData = $this->createSensorData($data);
 
-        $this->validateEnvironmentalData($environmentalData);
+        $this->validateSensorData($sensorData);
 
-        $this->notificationService->notifyBasedOnCo2Levels(
-            $environmentalData,
-            $this->repository->getLastEntry()
-        );
+        $this->notificationService->notifyBasedOnCo2Levels($sensorData, $this->repository->getLastEntry());
 
-        $this->repository->save($environmentalData);
+        $this->repository->save($sensorData);
     }
 
     /**
@@ -66,13 +63,13 @@ class EnvironmentalDataService
     }
 
     /**
-     * Validate environmental data object using Symfony validator.
+     * Validate sensor data object using Symfony validator.
      *
      * @throws InvalidArgumentException if validation fails
      */
-    private function validateEnvironmentalData(EnvironmentalData $environmentalData): void
+    private function validateSensorData(SensorData $sensorData): void
     {
-        $errors = $this->validator->validate($environmentalData);
+        $errors = $this->validator->validate($sensorData);
 
         if (\count($errors) > 0) {
             throw new InvalidArgumentException((string) $errors);
@@ -80,13 +77,13 @@ class EnvironmentalDataService
     }
 
     /**
-     * Create environmental data object from API response data.
+     * Create sensor data object from API response data.
      *
      * @param array<string, mixed> $data
      */
-    private function createEnvironmentalData(array $data): EnvironmentalData
+    private function createSensorData(array $data): SensorData
     {
-        return new EnvironmentalData(
+        return new SensorData(
             $data['uuid'],
             $data['temperature'],
             $data['humidity'],

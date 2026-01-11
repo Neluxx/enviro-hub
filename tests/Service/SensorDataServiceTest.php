@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests\Service;
 
-use App\Repository\EnvironmentalDataRepository;
-use App\Service\EnvironmentalDataService;
+use App\Repository\SensorDataRepository;
 use App\Service\NotificationService;
+use App\Service\SensorDataService;
 use DateTime;
 use Exception;
 use InvalidArgumentException;
@@ -14,10 +14,10 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use TypeError;
 
-class EnvironmentalDataServiceTest extends KernelTestCase
+class SensorDataServiceTest extends KernelTestCase
 {
-    private EnvironmentalDataService $service;
-    private EnvironmentalDataRepository $repository;
+    private SensorDataService $service;
+    private SensorDataRepository $repository;
 
     protected function setUp(): void
     {
@@ -25,17 +25,17 @@ class EnvironmentalDataServiceTest extends KernelTestCase
         $container = static::getContainer();
 
         $validator = $container->get(ValidatorInterface::class);
-        $this->repository = $container->get(EnvironmentalDataRepository::class);
+        $this->repository = $container->get(SensorDataRepository::class);
         $notificationService = $container->get(NotificationService::class);
 
-        $this->service = new EnvironmentalDataService(
+        $this->service = new SensorDataService(
             $validator,
             $this->repository,
             $notificationService
         );
     }
 
-    public function testSaveEnvironmentalDataSuccess(): void
+    public function testSaveSensorDataSuccess(): void
     {
         $data = [
             'uuid' => 'test-node-uuid',
@@ -46,7 +46,7 @@ class EnvironmentalDataServiceTest extends KernelTestCase
             'created_at' => '2025-10-26 10:00:00',
         ];
 
-        $this->service->saveEnvironmentalData($data);
+        $this->service->saveSensorData($data);
 
         $lastEntry = $this->repository->getLastEntry();
         $this->assertSame(22.5, $lastEntry->getTemperature());
@@ -56,7 +56,7 @@ class EnvironmentalDataServiceTest extends KernelTestCase
         $this->assertEquals(new DateTime('2025-10-26 10:00:00'), $lastEntry->getMeasuredAt());
     }
 
-    public function testSaveMultipleEnvironmentalDataEntries(): void
+    public function testSaveMultipleSensorDataEntries(): void
     {
         $data1 = [
             'uuid' => 'test-node-uuid',
@@ -76,8 +76,8 @@ class EnvironmentalDataServiceTest extends KernelTestCase
             'created_at' => '2025-10-26 10:00:00',
         ];
 
-        $this->service->saveEnvironmentalData($data1);
-        $this->service->saveEnvironmentalData($data2);
+        $this->service->saveSensorData($data1);
+        $this->service->saveSensorData($data2);
 
         $entries = $this->repository->getLatestEntries();
         $this->assertCount(2, $entries);
@@ -95,7 +95,7 @@ class EnvironmentalDataServiceTest extends KernelTestCase
         $this->assertEquals(new DateTime('2025-10-26 09:00:00'), $entries[1]->getMeasuredAt());
     }
 
-    public function testSaveEnvironmentalDataMissingNodeUuid(): void
+    public function testSaveSensorDataMissingNodeUuid(): void
     {
         $data = [
             'temperature' => 22.5,
@@ -108,10 +108,10 @@ class EnvironmentalDataServiceTest extends KernelTestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Undefined array key "uuid"');
 
-        $this->service->saveEnvironmentalData($data);
+        $this->service->saveSensorData($data);
     }
 
-    public function testSaveEnvironmentalDataMissingTemperature(): void
+    public function testSaveSensorDataMissingTemperature(): void
     {
         $data = [
             'uuid' => 'test-node-uuid',
@@ -124,10 +124,10 @@ class EnvironmentalDataServiceTest extends KernelTestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Undefined array key "temperature"');
 
-        $this->service->saveEnvironmentalData($data);
+        $this->service->saveSensorData($data);
     }
 
-    public function testSaveEnvironmentalDataMissingHumidity(): void
+    public function testSaveSensorDataMissingHumidity(): void
     {
         $data = [
             'uuid' => 'test-node-uuid',
@@ -140,10 +140,10 @@ class EnvironmentalDataServiceTest extends KernelTestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Undefined array key "humidity"');
 
-        $this->service->saveEnvironmentalData($data);
+        $this->service->saveSensorData($data);
     }
 
-    public function testSaveEnvironmentalDataMissingPressure(): void
+    public function testSaveSensorDataMissingPressure(): void
     {
         $data = [
             'uuid' => 'test-node-uuid',
@@ -156,10 +156,10 @@ class EnvironmentalDataServiceTest extends KernelTestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Undefined array key "pressure"');
 
-        $this->service->saveEnvironmentalData($data);
+        $this->service->saveSensorData($data);
     }
 
-    public function testSaveEnvironmentalDataMissingCo2(): void
+    public function testSaveSensorDataMissingCo2(): void
     {
         $data = [
             'uuid' => 'test-node-uuid',
@@ -169,7 +169,7 @@ class EnvironmentalDataServiceTest extends KernelTestCase
             'created_at' => '2025-10-26 10:00:00',
         ];
 
-        $this->service->saveEnvironmentalData($data);
+        $this->service->saveSensorData($data);
 
         $lastEntry = $this->repository->getLastEntry();
         $this->assertNull($lastEntry->getCarbonDioxide());
@@ -179,7 +179,7 @@ class EnvironmentalDataServiceTest extends KernelTestCase
         $this->assertEquals(new DateTime('2025-10-26 10:00:00'), $lastEntry->getMeasuredAt());
     }
 
-    public function testSaveEnvironmentalDataMissingCreatedAt(): void
+    public function testSaveSensorDataMissingCreatedAt(): void
     {
         $data = [
             'uuid' => 'test-node-uuid',
@@ -192,10 +192,10 @@ class EnvironmentalDataServiceTest extends KernelTestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Undefined array key "created_at"');
 
-        $this->service->saveEnvironmentalData($data);
+        $this->service->saveSensorData($data);
     }
 
-    public function testSaveEnvironmentalDataInvalidTemperatureFormat(): void
+    public function testSaveSensorDataInvalidTemperatureFormat(): void
     {
         $data = [
             'uuid' => 'test-node-uuid',
@@ -209,10 +209,10 @@ class EnvironmentalDataServiceTest extends KernelTestCase
         $this->expectException(TypeError::class);
         $this->expectExceptionMessage('Argument #2 ($temperature) must be of type float, string given');
 
-        $this->service->saveEnvironmentalData($data);
+        $this->service->saveSensorData($data);
     }
 
-    public function testSaveEnvironmentalDataInvalidHumidityFormat(): void
+    public function testSaveSensorDataInvalidHumidityFormat(): void
     {
         $data = [
             'uuid' => 'test-node-uuid',
@@ -226,10 +226,10 @@ class EnvironmentalDataServiceTest extends KernelTestCase
         $this->expectException(TypeError::class);
         $this->expectExceptionMessage('Argument #3 ($humidity) must be of type float, string given');
 
-        $this->service->saveEnvironmentalData($data);
+        $this->service->saveSensorData($data);
     }
 
-    public function testSaveEnvironmentalDataInvalidPressureFormat(): void
+    public function testSaveSensorDataInvalidPressureFormat(): void
     {
         $data = [
             'uuid' => 'test-node-uuid',
@@ -243,10 +243,10 @@ class EnvironmentalDataServiceTest extends KernelTestCase
         $this->expectException(TypeError::class);
         $this->expectExceptionMessage('Argument #4 ($pressure) must be of type float, string given');
 
-        $this->service->saveEnvironmentalData($data);
+        $this->service->saveSensorData($data);
     }
 
-    public function testSaveEnvironmentalDataInvalidCo2Format(): void
+    public function testSaveSensorDataInvalidCo2Format(): void
     {
         $data = [
             'uuid' => 'test-node-uuid',
@@ -260,10 +260,10 @@ class EnvironmentalDataServiceTest extends KernelTestCase
         $this->expectException(TypeError::class);
         $this->expectExceptionMessage('Argument #5 ($carbonDioxide) must be of type ?float, string given');
 
-        $this->service->saveEnvironmentalData($data);
+        $this->service->saveSensorData($data);
     }
 
-    public function testSaveEnvironmentalDataInvalidDateFormat(): void
+    public function testSaveSensorDataInvalidDateFormat(): void
     {
         $data = [
             'uuid' => 'test-node-uuid',
@@ -277,6 +277,6 @@ class EnvironmentalDataServiceTest extends KernelTestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Failed to parse time string (invalid) at position 0 (i)');
 
-        $this->service->saveEnvironmentalData($data);
+        $this->service->saveSensorData($data);
     }
 }
