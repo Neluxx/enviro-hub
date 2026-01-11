@@ -26,7 +26,7 @@ class SensorDataApiControllerTest extends WebTestCase
 
         $client->request(
             'POST',
-            '/api/environmental-data',
+            '/api/sensor-data',
             [],
             [],
             [
@@ -68,7 +68,7 @@ class SensorDataApiControllerTest extends WebTestCase
 
         $client->request(
             'POST',
-            '/api/environmental-data',
+            '/api/sensor-data',
             [],
             [],
             [
@@ -102,7 +102,7 @@ class SensorDataApiControllerTest extends WebTestCase
 
         $client->request(
             'POST',
-            '/api/environmental-data',
+            '/api/sensor-data',
             [],
             [],
             ['CONTENT_TYPE' => 'application/json'],
@@ -129,7 +129,7 @@ class SensorDataApiControllerTest extends WebTestCase
 
         $client->request(
             'POST',
-            '/api/environmental-data',
+            '/api/sensor-data',
             [],
             [],
             [
@@ -158,7 +158,7 @@ class SensorDataApiControllerTest extends WebTestCase
 
         $client->request(
             'POST',
-            '/api/environmental-data',
+            '/api/sensor-data',
             [],
             [],
             [
@@ -182,7 +182,7 @@ class SensorDataApiControllerTest extends WebTestCase
 
         $client->request(
             'POST',
-            '/api/environmental-data',
+            '/api/sensor-data',
             [],
             [],
             [
@@ -212,7 +212,7 @@ class SensorDataApiControllerTest extends WebTestCase
 
         $client->request(
             'POST',
-            '/api/environmental-data',
+            '/api/sensor-data',
             [],
             [],
             [
@@ -235,7 +235,7 @@ class SensorDataApiControllerTest extends WebTestCase
 
         $client->request(
             'GET',
-            '/api/environmental-data',
+            '/api/sensor-data',
             [],
             [],
             ['HTTP_AUTHORIZATION' => 'Bearer '.$this->getBearerToken()]
