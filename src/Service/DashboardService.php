@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Entity\EnvironmentalData;
-use App\Repository\EnvironmentalDataRepository;
+use App\Entity\SensorData;
+use App\Repository\SensorDataRepository;
 use DateTime;
 use DateTimeZone;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
@@ -25,10 +25,10 @@ class DashboardService
     private const CO2_OPTIMAL_MAX = 1000.0;
     private const CO2_WARNING_MAX = 1600.0;
 
-    private EnvironmentalDataRepository $repository;
+    private SensorDataRepository $repository;
     private ChartBuilderInterface $chartBuilder;
 
-    public function __construct(EnvironmentalDataRepository $repository, ChartBuilderInterface $chartBuilder)
+    public function __construct(SensorDataRepository $repository, ChartBuilderInterface $chartBuilder)
     {
         $this->repository = $repository;
         $this->chartBuilder = $chartBuilder;
@@ -323,7 +323,7 @@ class DashboardService
     /**
      * Format data into chart-ready structure.
      *
-     * @param array<EnvironmentalData|array{label: string, temperature: float, humidity: float, co2: float|null}> $data
+     * @param array<SensorData|array{label: string, temperature: float, humidity: float, co2: float|null}> $data
      *
      * @return array{labels: array<string>, temperature: array<float>, humidity: array<float>, co2: array<float|null>}
      */

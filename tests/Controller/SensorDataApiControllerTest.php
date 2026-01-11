@@ -7,7 +7,7 @@ namespace App\Tests\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class EnvironmentalDataApiControllerTest extends WebTestCase
+class SensorDataApiControllerTest extends WebTestCase
 {
     public function testSaveDataSuccessfully(): void
     {

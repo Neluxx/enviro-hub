@@ -26,7 +26,7 @@ export default class extends Controller {
 
         try {
             // 2. Fetch new data from your existing API
-            const response = await fetch(`/api/environmental-data/chart/${range}`);
+            const response = await fetch(`/api/sensor-data/chart/${range}`);
             const data = await response.json();
 
             // 3. Update the charts

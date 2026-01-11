@@ -35,7 +35,7 @@ Have ideas or found a bug? Contributions are welcome! Feel free to fork the proj
 
 ## API Reference
 
-#### Submit environmental data to the hub
+#### Submit sensor data to the hub
 
 ```http
   POST /api/data

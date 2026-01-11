@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Service;
 
-use App\Entity\EnvironmentalData;
-use App\Repository\EnvironmentalDataRepository;
+use App\Entity\SensorData;
+use App\Repository\SensorDataRepository;
 use App\Service\DashboardService;
 use DateTime;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -17,13 +17,13 @@ use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
  */
 class DashboardServiceTest extends TestCase
 {
-    private EnvironmentalDataRepository&MockObject $repository;
+    private SensorDataRepository&MockObject $repository;
     private ChartBuilderInterface&MockObject $chartBuilder;
     private DashboardService $service;
 
     protected function setUp(): void
     {
-        $this->repository = $this->createMock(EnvironmentalDataRepository::class);
+        $this->repository = $this->createMock(SensorDataRepository::class);
         $this->chartBuilder = $this->createMock(ChartBuilderInterface::class);
         $this->service = new DashboardService($this->repository, $this->chartBuilder);
     }
@@ -51,7 +51,7 @@ class DashboardServiceTest extends TestCase
     public function testGetChartDataReturnsTodayData(): void
     {
         $data = [
-            new EnvironmentalData(
+            new SensorData(
                 nodeUuid: 'test-node-uuid',
                 temperature: 22.5,
                 humidity: 65.0,
@@ -59,7 +59,7 @@ class DashboardServiceTest extends TestCase
                 carbonDioxide: 450.0,
                 measuredAt: new DateTime('2024-01-15 10:00:00'),
             ),
-            new EnvironmentalData(
+            new SensorData(
                 nodeUuid: 'test-node-uuid',
                 temperature: 23.0,
                 humidity: 64.5,
@@ -67,7 +67,7 @@ class DashboardServiceTest extends TestCase
                 carbonDioxide: 455.0,
                 measuredAt: new DateTime('2024-01-15 11:00:00'),
             ),
-            new EnvironmentalData(
+            new SensorData(
                 nodeUuid: 'test-node-uuid',
                 temperature: 23.5,
                 humidity: 64.0,
@@ -100,7 +100,7 @@ class DashboardServiceTest extends TestCase
     public function testGetChartDataHandlesNullCo2Values(): void
     {
         $data = [
-            new EnvironmentalData(
+            new SensorData(
                 nodeUuid: 'test-node-uuid',
                 temperature: 22.0,
                 humidity: 60.0,
@@ -108,7 +108,7 @@ class DashboardServiceTest extends TestCase
                 carbonDioxide: null,
                 measuredAt: new DateTime('2024-01-15 10:00:00'),
             ),
-            new EnvironmentalData(
+            new SensorData(
                 nodeUuid: 'test-node-uuid',
                 temperature: 22.5,
                 humidity: 61.0,
@@ -134,7 +134,7 @@ class DashboardServiceTest extends TestCase
     public function testGetChartDataForWeekRange(): void
     {
         $data = [
-            new EnvironmentalData(
+            new SensorData(
                 nodeUuid: 'test-node-uuid',
                 temperature: 20.0,
                 humidity: 70.0,
@@ -142,7 +142,7 @@ class DashboardServiceTest extends TestCase
                 carbonDioxide: 400.0,
                 measuredAt: new DateTime('2024-01-08 10:00:00'),
             ),
-            new EnvironmentalData(
+            new SensorData(
                 nodeUuid: 'test-node-uuid',
                 temperature: 21.0,
                 humidity: 68.0,
