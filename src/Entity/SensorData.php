@@ -8,8 +8,8 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'environmental_data')]
-class EnvironmentalData
+#[ORM\Table(name: 'sensor_data')]
+class SensorData
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

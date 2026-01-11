@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Entity\EnvironmentalData;
+use App\Entity\SensorData;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
@@ -34,7 +34,7 @@ class NotificationService
     /**
      * Decides whether a notification should be sent based on the current and last CO2 levels.
      */
-    public function notifyBasedOnCo2Levels(EnvironmentalData $currentData, ?EnvironmentalData $previousData): void
+    public function notifyBasedOnCo2Levels(SensorData $currentData, ?SensorData $previousData): void
     {
         $currentCo2Value = $currentData->getCarbonDioxide();
         $lastCo2Value = $previousData?->getCarbonDioxide();
@@ -52,7 +52,7 @@ class NotificationService
         }
     }
 
-    private function formatNotificationMessage(string $statusText, float $co2Value, EnvironmentalData $data): string
+    private function formatNotificationMessage(string $statusText, float $co2Value, SensorData $data): string
     {
         return \sprintf(
             "The CO2 level %s the threshold of %d ppm.\n\nDetails:\n- CO2 Level: %d ppm\n- Measured At: %s",

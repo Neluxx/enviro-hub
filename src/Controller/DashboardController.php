@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Repository\EnvironmentalDataRepository;
+use App\Repository\SensorDataRepository;
 use App\Service\DashboardService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,9 +17,9 @@ use Symfony\Component\Routing\Attribute\Route;
 class DashboardController extends AbstractController
 {
     private DashboardService $service;
-    private EnvironmentalDataRepository $repository;
+    private SensorDataRepository $repository;
 
-    public function __construct(EnvironmentalDataRepository $repository, DashboardService $service)
+    public function __construct(SensorDataRepository $repository, DashboardService $service)
     {
         $this->service = $service;
         $this->repository = $repository;
@@ -59,7 +59,7 @@ class DashboardController extends AbstractController
         ]);
     }
 
-    #[Route('/api/environmental-data/chart/{range}', methods: ['GET'])]
+    #[Route('/api/sensor-data/chart/{range}', methods: ['GET'])]
     public function getChartData(string $range): JsonResponse
     {
         $chartData = $this->service->getChartData($range);

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
-use App\Entity\EnvironmentalData;
-use App\Repository\EnvironmentalDataRepository;
+use App\Entity\SensorData;
+use App\Repository\SensorDataRepository;
 use App\Service\DashboardService;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -22,7 +22,7 @@ class DashboardControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $environmentalData = new EnvironmentalData(
+        $sensorData = new SensorData(
             nodeUuid: 'test-node-uuid',
             temperature: 22.5,
             humidity: 65.0,
@@ -31,12 +31,12 @@ class DashboardControllerTest extends WebTestCase
             measuredAt: new DateTime(),
         );
 
-        $repository = $this->createMock(EnvironmentalDataRepository::class);
+        $repository = $this->createMock(SensorDataRepository::class);
         $repository->expects($this->once())
             ->method('getLastEntry')
-            ->willReturn($environmentalData);
+            ->willReturn($sensorData);
 
-        static::getContainer()->set(EnvironmentalDataRepository::class, $repository);
+        static::getContainer()->set(SensorDataRepository::class, $repository);
 
         $client->request('GET', '/');
 
@@ -50,13 +50,13 @@ class DashboardControllerTest extends WebTestCase
     }
 
     /**
-     * Test the index action displays correct environmental data values.
+     * Test the index action displays correct sensor data values.
      */
     public function testIndexDisplaysCorrectValues(): void
     {
         $client = static::createClient();
 
-        $environmentalData = new EnvironmentalData(
+        $sensorData = new SensorData(
             nodeUuid: 'test-node-uuid',
             temperature: 23.7,
             humidity: 58.2,
@@ -65,10 +65,10 @@ class DashboardControllerTest extends WebTestCase
             measuredAt: new DateTime('2024-01-15 10:30:00'),
         );
 
-        $repository = $this->createMock(EnvironmentalDataRepository::class);
-        $repository->method('getLastEntry')->willReturn($environmentalData);
+        $repository = $this->createMock(SensorDataRepository::class);
+        $repository->method('getLastEntry')->willReturn($sensorData);
 
-        static::getContainer()->set(EnvironmentalDataRepository::class, $repository);
+        static::getContainer()->set(SensorDataRepository::class, $repository);
 
         $crawler = $client->request('GET', '/');
 
@@ -91,7 +91,7 @@ class DashboardControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $environmentalData = new EnvironmentalData(
+        $sensorData = new SensorData(
             nodeUuid: 'test-node-uuid',
             temperature: 21.0,
             humidity: 60.0,
@@ -100,10 +100,10 @@ class DashboardControllerTest extends WebTestCase
             measuredAt: new DateTime(),
         );
 
-        $repository = $this->createMock(EnvironmentalDataRepository::class);
-        $repository->method('getLastEntry')->willReturn($environmentalData);
+        $repository = $this->createMock(SensorDataRepository::class);
+        $repository->method('getLastEntry')->willReturn($sensorData);
 
-        static::getContainer()->set(EnvironmentalDataRepository::class, $repository);
+        static::getContainer()->set(SensorDataRepository::class, $repository);
 
         $crawler = $client->request('GET', '/');
 
@@ -139,7 +139,7 @@ class DashboardControllerTest extends WebTestCase
 
         static::getContainer()->set(DashboardService::class, $service);
 
-        $client->request('GET', '/api/environmental-data/chart/today');
+        $client->request('GET', '/api/sensor-data/chart/today');
 
         static::assertResponseIsSuccessful();
         static::assertResponseHeaderSame('Content-Type', 'application/json');
@@ -177,7 +177,7 @@ class DashboardControllerTest extends WebTestCase
 
         static::getContainer()->set(DashboardService::class, $service);
 
-        $client->request('GET', '/api/environmental-data/chart/week');
+        $client->request('GET', '/api/sensor-data/chart/week');
 
         static::assertResponseIsSuccessful();
         $responseData = json_decode($client->getResponse()->getContent(), true);
@@ -208,7 +208,7 @@ class DashboardControllerTest extends WebTestCase
 
         static::getContainer()->set(DashboardService::class, $service);
 
-        $client->request('GET', '/api/environmental-data/chart/month');
+        $client->request('GET', '/api/sensor-data/chart/month');
 
         static::assertResponseIsSuccessful();
         $responseData = json_decode($client->getResponse()->getContent(), true);
@@ -238,7 +238,7 @@ class DashboardControllerTest extends WebTestCase
 
         static::getContainer()->set(DashboardService::class, $service);
 
-        $client->request('GET', '/api/environmental-data/chart/year');
+        $client->request('GET', '/api/sensor-data/chart/year');
 
         static::assertResponseIsSuccessful();
         $responseData = json_decode($client->getResponse()->getContent(), true);
@@ -268,7 +268,7 @@ class DashboardControllerTest extends WebTestCase
 
         static::getContainer()->set(DashboardService::class, $service);
 
-        $client->request('GET', '/api/environmental-data/chart/today');
+        $client->request('GET', '/api/sensor-data/chart/today');
 
         static::assertResponseIsSuccessful();
         $responseData = json_decode($client->getResponse()->getContent(), true);
@@ -286,13 +286,13 @@ class DashboardControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('POST', '/api/environmental-data/chart/today');
+        $client->request('POST', '/api/sensor-data/chart/today');
         static::assertResponseStatusCodeSame(405);
 
-        $client->request('PUT', '/api/environmental-data/chart/today');
+        $client->request('PUT', '/api/sensor-data/chart/today');
         static::assertResponseStatusCodeSame(405);
 
-        $client->request('DELETE', '/api/environmental-data/chart/today');
+        $client->request('DELETE', '/api/sensor-data/chart/today');
         static::assertResponseStatusCodeSame(405);
     }
 }

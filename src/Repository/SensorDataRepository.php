@@ -4,53 +4,53 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use App\Entity\EnvironmentalData;
+use App\Entity\SensorData;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * Environmental Data Repository.
+ * Sensor Data Repository.
  */
-class EnvironmentalDataRepository
+class SensorDataRepository
 {
     /** Default limit */
     private const DEFAULT_LIMIT = 1000;
 
     private EntityManagerInterface $entityManager;
 
-    /** @var EntityRepository<EnvironmentalData> */
+    /** @var EntityRepository<SensorData> */
     private EntityRepository $repository;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->repository = $this->entityManager->getRepository(EnvironmentalData::class);
+        $this->repository = $this->entityManager->getRepository(SensorData::class);
     }
 
     /**
-     * Save EnvironmentalData entry.
+     * Save SensorData entry.
      */
-    public function save(EnvironmentalData $environmentalData): void
+    public function save(SensorData $sensorData): void
     {
-        $this->entityManager->persist($environmentalData);
+        $this->entityManager->persist($sensorData);
         $this->entityManager->flush();
     }
 
     /**
-     * Get the last EnvironmentalData entry.
+     * Get the last SensorData entry.
      */
-    public function getLastEntry(): ?EnvironmentalData
+    public function getLastEntry(): ?SensorData
     {
         return $this->repository->findOneBy([], $this->getDescendingOrderById());
     }
 
     /**
-     * Get the latest EnvironmentalData entries.
+     * Get the latest SensorData entries.
      *
      * @param int $limit The maximum number of entries to return
      *
-     * @return EnvironmentalData[]
+     * @return SensorData[]
      */
     public function getLatestEntries(int $limit = self::DEFAULT_LIMIT): array
     {
@@ -58,12 +58,12 @@ class EnvironmentalDataRepository
     }
 
     /**
-     * Get the latest EnvironmentalData entries by date range.
+     * Get the latest SensorData entries by date range.
      *
      * @param DateTime $startDate The start date of entries to return
      * @param DateTime $endDate The end date of entries to return
      *
-     * @return EnvironmentalData[]
+     * @return SensorData[]
      */
     public function findByDateRange(DateTime $startDate, DateTime $endDate): array
     {

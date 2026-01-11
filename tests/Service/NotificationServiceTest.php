@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Service;
 
-use App\Entity\EnvironmentalData;
+use App\Entity\SensorData;
 use App\Service\NotificationService;
 use DateTime;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -38,7 +38,7 @@ class NotificationServiceTest extends TestCase
      */
     public function testNotifyBasedOnCo2LevelsDoesNotSendWhenCurrentCo2IsNull(): void
     {
-        $currentData = new EnvironmentalData(
+        $currentData = new SensorData(
             nodeUuid: 'test-node-uuid',
             temperature: 22.5,
             humidity: 65.0,
@@ -47,7 +47,7 @@ class NotificationServiceTest extends TestCase
             measuredAt: new DateTime('2024-01-15 10:00:00'),
         );
 
-        $previousData = new EnvironmentalData(
+        $previousData = new SensorData(
             nodeUuid: 'test-node-uuid',
             temperature: 22.0,
             humidity: 64.0,
@@ -67,7 +67,7 @@ class NotificationServiceTest extends TestCase
      */
     public function testNotifyBasedOnCo2LevelsDoesNotSendWhenPreviousCo2IsNull(): void
     {
-        $currentData = new EnvironmentalData(
+        $currentData = new SensorData(
             nodeUuid: 'test-node-uuid',
             temperature: 22.5,
             humidity: 65.0,
@@ -76,7 +76,7 @@ class NotificationServiceTest extends TestCase
             measuredAt: new DateTime('2024-01-15 10:00:00'),
         );
 
-        $previousData = new EnvironmentalData(
+        $previousData = new SensorData(
             nodeUuid: 'test-node-uuid',
             temperature: 22.0,
             humidity: 64.0,
@@ -96,7 +96,7 @@ class NotificationServiceTest extends TestCase
      */
     public function testNotifyBasedOnCo2LevelsDoesNotSendWhenPreviousDataIsNull(): void
     {
-        $currentData = new EnvironmentalData(
+        $currentData = new SensorData(
             nodeUuid: 'test-node-uuid',
             temperature: 22.5,
             humidity: 65.0,
@@ -116,7 +116,7 @@ class NotificationServiceTest extends TestCase
      */
     public function testNotifyBasedOnCo2LevelsSendsHighAlertWhenCrossingThresholdUpward(): void
     {
-        $currentData = new EnvironmentalData(
+        $currentData = new SensorData(
             nodeUuid: 'test-node-uuid',
             temperature: 22.5,
             humidity: 65.0,
@@ -125,7 +125,7 @@ class NotificationServiceTest extends TestCase
             measuredAt: new DateTime('2024-01-15 10:00:00'),
         );
 
-        $previousData = new EnvironmentalData(
+        $previousData = new SensorData(
             nodeUuid: 'test-node-uuid',
             temperature: 22.0,
             humidity: 64.0,
@@ -160,7 +160,7 @@ class NotificationServiceTest extends TestCase
      */
     public function testNotifyBasedOnCo2LevelsSendsLowAlertWhenCrossingThresholdDownward(): void
     {
-        $currentData = new EnvironmentalData(
+        $currentData = new SensorData(
             nodeUuid: 'test-node-uuid',
             temperature: 22.5,
             humidity: 65.0,
@@ -169,7 +169,7 @@ class NotificationServiceTest extends TestCase
             measuredAt: new DateTime('2024-01-15 10:00:00'),
         );
 
-        $previousData = new EnvironmentalData(
+        $previousData = new SensorData(
             nodeUuid: 'test-node-uuid',
             temperature: 22.0,
             humidity: 64.0,
@@ -204,7 +204,7 @@ class NotificationServiceTest extends TestCase
      */
     public function testNotifyBasedOnCo2LevelsDoesNotSendWhenCo2StaysAboveThreshold(): void
     {
-        $currentData = new EnvironmentalData(
+        $currentData = new SensorData(
             nodeUuid: 'test-node-uuid',
             temperature: 22.5,
             humidity: 65.0,
@@ -213,7 +213,7 @@ class NotificationServiceTest extends TestCase
             measuredAt: new DateTime('2024-01-15 10:00:00'),
         );
 
-        $previousData = new EnvironmentalData(
+        $previousData = new SensorData(
             nodeUuid: 'test-node-uuid',
             temperature: 22.0,
             humidity: 64.0,
@@ -233,7 +233,7 @@ class NotificationServiceTest extends TestCase
      */
     public function testNotifyBasedOnCo2LevelsDoesNotSendWhenCo2StaysBelowThreshold(): void
     {
-        $currentData = new EnvironmentalData(
+        $currentData = new SensorData(
             nodeUuid: 'test-node-uuid',
             temperature: 22.5,
             humidity: 65.0,
@@ -242,7 +242,7 @@ class NotificationServiceTest extends TestCase
             measuredAt: new DateTime('2024-01-15 10:00:00'),
         );
 
-        $previousData = new EnvironmentalData(
+        $previousData = new SensorData(
             nodeUuid: 'test-node-uuid',
             temperature: 22.0,
             humidity: 64.0,
@@ -262,7 +262,7 @@ class NotificationServiceTest extends TestCase
      */
     public function testNotifyBasedOnCo2LevelsSendsHighAlertWhenCo2EqualsThreshold(): void
     {
-        $currentData = new EnvironmentalData(
+        $currentData = new SensorData(
             nodeUuid: 'test-node-uuid',
             temperature: 22.5,
             humidity: 65.0,
@@ -271,7 +271,7 @@ class NotificationServiceTest extends TestCase
             measuredAt: new DateTime('2024-01-15 10:00:00'),
         );
 
-        $previousData = new EnvironmentalData(
+        $previousData = new SensorData(
             nodeUuid: 'test-node-uuid',
             temperature: 22.0,
             humidity: 64.0,
@@ -296,7 +296,7 @@ class NotificationServiceTest extends TestCase
      */
     public function testNotifyBasedOnCo2LevelsSendsHighAlertWithBoundaryValueJustAboveThreshold(): void
     {
-        $currentData = new EnvironmentalData(
+        $currentData = new SensorData(
             nodeUuid: 'test-node-uuid',
             temperature: 22.5,
             humidity: 65.0,
@@ -305,7 +305,7 @@ class NotificationServiceTest extends TestCase
             measuredAt: new DateTime('2024-01-15 10:00:00'),
         );
 
-        $previousData = new EnvironmentalData(
+        $previousData = new SensorData(
             nodeUuid: 'test-node-uuid',
             temperature: 22.0,
             humidity: 64.0,
@@ -330,7 +330,7 @@ class NotificationServiceTest extends TestCase
      */
     public function testNotifyBasedOnCo2LevelsSendsLowAlertWithBoundaryValueJustBelowThreshold(): void
     {
-        $currentData = new EnvironmentalData(
+        $currentData = new SensorData(
             nodeUuid: 'test-node-uuid',
             temperature: 22.5,
             humidity: 65.0,
@@ -339,7 +339,7 @@ class NotificationServiceTest extends TestCase
             measuredAt: new DateTime('2024-01-15 10:00:00'),
         );
 
-        $previousData = new EnvironmentalData(
+        $previousData = new SensorData(
             nodeUuid: 'test-node-uuid',
             temperature: 22.0,
             humidity: 64.0,
