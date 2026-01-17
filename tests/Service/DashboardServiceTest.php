@@ -34,10 +34,10 @@ class DashboardServiceTest extends TestCase
     public function testGetChartDataReturnsEmptyArraysWhenNoData(): void
     {
         $this->repository->expects($this->once())
-            ->method('findByDateRange')
+            ->method('findByNodeUuidAndDateRange')
             ->willReturn([]);
 
-        $result = $this->service->getChartData('-24 hours');
+        $result = $this->service->getChartDataByNodeUuid('test-node-uuid', '-24 hours');
 
         static::assertEmpty($result['labels']);
         static::assertEmpty($result['temperature']);
@@ -78,14 +78,15 @@ class DashboardServiceTest extends TestCase
         ];
 
         $this->repository->expects($this->once())
-            ->method('findByDateRange')
+            ->method('findByNodeUuidAndDateRange')
             ->with(
+                'test-node-uuid',
                 $this->callback(fn ($date) => $date instanceof DateTime),
                 $this->callback(fn ($date) => $date instanceof DateTime)
             )
             ->willReturn($data);
 
-        $result = $this->service->getChartData('-24 hours');
+        $result = $this->service->getChartDataByNodeUuid('test-node-uuid', '-24 hours');
 
         static::assertCount(3, $result['labels']);
         static::assertEquals(['15.01 10:00', '15.01 11:00', '15.01 12:00'], $result['labels']);
@@ -119,10 +120,10 @@ class DashboardServiceTest extends TestCase
         ];
 
         $this->repository->expects($this->once())
-            ->method('findByDateRange')
+            ->method('findByNodeUuidAndDateRange')
             ->willReturn($data);
 
-        $result = $this->service->getChartData('-24 hours');
+        $result = $this->service->getChartDataByNodeUuid('test-node-uuid', '-24 hours');
 
         static::assertNull($result['co2'][0]);
         static::assertEquals(450.0, $result['co2'][1]);
@@ -153,8 +154,9 @@ class DashboardServiceTest extends TestCase
         ];
 
         $this->repository->expects($this->once())
-            ->method('findByDateRange')
+            ->method('findByNodeUuidAndDateRange')
             ->with(
+                'test-node-uuid',
                 $this->callback(function ($date) {
                     // Should be approximately 7 days ago
                     $now = new DateTime();
@@ -166,7 +168,7 @@ class DashboardServiceTest extends TestCase
             )
             ->willReturn($data);
 
-        $result = $this->service->getChartData('-7 days');
+        $result = $this->service->getChartDataByNodeUuid('test-node-uuid', '-7 days');
 
         static::assertCount(2, $result['labels']);
         static::assertEquals([20.0, 21.0], $result['temperature']);

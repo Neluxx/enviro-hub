@@ -33,12 +33,12 @@ class DashboardControllerTest extends WebTestCase
 
         $repository = $this->createMock(SensorDataRepository::class);
         $repository->expects($this->once())
-            ->method('getLastEntry')
+            ->method('getLastEntryByNodeUuid')
             ->willReturn($sensorData);
 
         static::getContainer()->set(SensorDataRepository::class, $repository);
 
-        $client->request('GET', '/');
+        $client->request('GET', '/test-node-uuid');
 
         static::assertResponseIsSuccessful();
         static::assertSelectorExists('.container-fluid');
@@ -66,11 +66,11 @@ class DashboardControllerTest extends WebTestCase
         );
 
         $repository = $this->createMock(SensorDataRepository::class);
-        $repository->method('getLastEntry')->willReturn($sensorData);
+        $repository->method('getLastEntryByNodeUuid')->willReturn($sensorData);
 
         static::getContainer()->set(SensorDataRepository::class, $repository);
 
-        $crawler = $client->request('GET', '/');
+        $crawler = $client->request('GET', '/test-node-uuid');
 
         static::assertResponseIsSuccessful();
 
@@ -101,11 +101,11 @@ class DashboardControllerTest extends WebTestCase
         );
 
         $repository = $this->createMock(SensorDataRepository::class);
-        $repository->method('getLastEntry')->willReturn($sensorData);
+        $repository->method('getLastEntryByNodeUuid')->willReturn($sensorData);
 
         static::getContainer()->set(SensorDataRepository::class, $repository);
 
-        $crawler = $client->request('GET', '/');
+        $crawler = $client->request('GET', '/test-node-uuid');
 
         static::assertResponseIsSuccessful();
 
@@ -133,13 +133,13 @@ class DashboardControllerTest extends WebTestCase
 
         $service = $this->createMock(DashboardService::class);
         $service->expects($this->once())
-            ->method('getChartData')
-            ->with('today')
+            ->method('getChartDataByNodeUuid')
+            ->with('test-node-uuid', 'today')
             ->willReturn($chartData);
 
         static::getContainer()->set(DashboardService::class, $service);
 
-        $client->request('GET', '/api/sensor-data/chart/today');
+        $client->request('GET', '/test-node-uuid/api/sensor-data/chart/today');
 
         static::assertResponseIsSuccessful();
         static::assertResponseHeaderSame('Content-Type', 'application/json');
@@ -171,13 +171,13 @@ class DashboardControllerTest extends WebTestCase
 
         $service = $this->createMock(DashboardService::class);
         $service->expects($this->once())
-            ->method('getChartData')
-            ->with('week')
+            ->method('getChartDataByNodeUuid')
+            ->with('test-node-uuid', 'week')
             ->willReturn($chartData);
 
         static::getContainer()->set(DashboardService::class, $service);
 
-        $client->request('GET', '/api/sensor-data/chart/week');
+        $client->request('GET', '/test-node-uuid/api/sensor-data/chart/week');
 
         static::assertResponseIsSuccessful();
         $responseData = json_decode($client->getResponse()->getContent(), true);
@@ -202,13 +202,13 @@ class DashboardControllerTest extends WebTestCase
 
         $service = $this->createMock(DashboardService::class);
         $service->expects($this->once())
-            ->method('getChartData')
-            ->with('month')
+            ->method('getChartDataByNodeUuid')
+            ->with('test-node-uuid', 'month')
             ->willReturn($chartData);
 
         static::getContainer()->set(DashboardService::class, $service);
 
-        $client->request('GET', '/api/sensor-data/chart/month');
+        $client->request('GET', '/test-node-uuid/api/sensor-data/chart/month');
 
         static::assertResponseIsSuccessful();
         $responseData = json_decode($client->getResponse()->getContent(), true);
@@ -232,13 +232,13 @@ class DashboardControllerTest extends WebTestCase
 
         $service = $this->createMock(DashboardService::class);
         $service->expects($this->once())
-            ->method('getChartData')
-            ->with('year')
+            ->method('getChartDataByNodeUuid')
+            ->with('test-node-uuid', 'year')
             ->willReturn($chartData);
 
         static::getContainer()->set(DashboardService::class, $service);
 
-        $client->request('GET', '/api/sensor-data/chart/year');
+        $client->request('GET', '/test-node-uuid/api/sensor-data/chart/year');
 
         static::assertResponseIsSuccessful();
         $responseData = json_decode($client->getResponse()->getContent(), true);
@@ -262,13 +262,13 @@ class DashboardControllerTest extends WebTestCase
 
         $service = $this->createMock(DashboardService::class);
         $service->expects($this->once())
-            ->method('getChartData')
-            ->with('today')
+            ->method('getChartDataByNodeUuid')
+            ->with('test-node-uuid', 'today')
             ->willReturn($emptyChartData);
 
         static::getContainer()->set(DashboardService::class, $service);
 
-        $client->request('GET', '/api/sensor-data/chart/today');
+        $client->request('GET', '/test-node-uuid/api/sensor-data/chart/today');
 
         static::assertResponseIsSuccessful();
         $responseData = json_decode($client->getResponse()->getContent(), true);
@@ -286,13 +286,13 @@ class DashboardControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('POST', '/api/sensor-data/chart/today');
+        $client->request('POST', '/test-node-uuid/api/sensor-data/chart/today');
         static::assertResponseStatusCodeSame(405);
 
-        $client->request('PUT', '/api/sensor-data/chart/today');
+        $client->request('PUT', '/test-node-uuid/api/sensor-data/chart/today');
         static::assertResponseStatusCodeSame(405);
 
-        $client->request('DELETE', '/api/sensor-data/chart/today');
+        $client->request('DELETE', '/test-node-uuid/api/sensor-data/chart/today');
         static::assertResponseStatusCodeSame(405);
     }
 }
