@@ -1,3 +1,4 @@
+
 {% extends 'base.html.twig' %}
 
 {% block title %}{{ home.title }} - Nodes{% endblock %}
@@ -12,8 +13,7 @@
                 </svg>
                 Back to Homes
             </a>
-            <h1 class="display-5 fw-bold text-white">{{ home.title }}</h1>
-            <p class="text-muted">Select a node to view sensor data</p>
+            <h1 class="display-5 fw-bold text-white">{{ home.title }} Nodes</h1>
         </div>
     </div>
 
@@ -32,7 +32,7 @@
     <div class="row g-3">
         {% for node in nodes %}
         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-            <a href="/{{ node.uuid }}" class="text-decoration-none">
+            <a href="/{{ home.identifier }}/{{ node.uuid }}" class="text-decoration-none">
                 <div class="card h-100 bg-dark border-secondary shadow-sm hover-card" style="cursor: pointer;">
                     <div class="card-body text-center">
                         <h5 class="card-title text-white mb-0">{{ node.title }}</h5>
