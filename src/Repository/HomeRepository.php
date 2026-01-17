@@ -1,0 +1,36 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Repository;
+
+use App\Entity\Home;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+
+/**
+ * Home Repository.
+ */
+class HomeRepository
+{
+    private EntityManagerInterface $entityManager;
+
+    /** @var EntityRepository<Home> */
+    private EntityRepository $repository;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+        $this->repository = $this->entityManager->getRepository(Home::class);
+    }
+
+    /**
+     * Find all Homes.
+     *
+     * @return Home[]
+     */
+    public function findAll(): array
+    {
+        return $this->repository->findAll();
+    }
+}
