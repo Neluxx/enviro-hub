@@ -27,7 +27,7 @@ class DashboardController extends AbstractController
         $this->sensorDataRepository = $sensorDataRepository;
     }
 
-    #[Route('/{nodeUuid}')]
+    #[Route('/{homeIdentifier}/{nodeUuid}')]
     public function index(string $nodeUuid): Response
     {
         $data = $this->sensorDataRepository->getLastEntryByNodeUuid($nodeUuid);
@@ -62,7 +62,7 @@ class DashboardController extends AbstractController
         ]);
     }
 
-    #[Route('/{nodeUuid}/api/sensor-data/chart/{range}', methods: ['GET'])]
+    #[Route('/{homeIdentifier}/{nodeUuid}/api/sensor-data/chart/{range}', methods: ['GET'])]
     public function getChartData(string $nodeUuid, string $range): JsonResponse
     {
         $chartData = $this->dashboardService->getChartDataByNodeUuid($nodeUuid, $range);
