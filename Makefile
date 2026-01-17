@@ -64,6 +64,7 @@ help:
 	@echo ""
 	@echo "Testing:"
 	@echo "  test         — Execute tests"
+	@echo "  fixtures     — Load fixtures (test only)"
 	@echo "  stan         — Static Analysis (PHPStan)"
 	@echo "  cs-fix       — Code Style Fixer"
 	@echo ""
@@ -200,7 +201,13 @@ diff:
 .PHONY: test
 test:
 	@echo "$(INFO) Run test suite $(RESET)"
+	$(MAKE) fixtures
 	$(DDEV_PHP) $(PHPUNIT) --colors=always
+
+.PHONY: fixtures
+fixtures:
+	@echo "$(INFO) Load fixtures for test environment $(RESET)"
+	$(DDEV_PHP) $(SYMFONY) doctrine:fixtures:load --env=test --no-interaction
 
 .PHONY: stan
 stan:
