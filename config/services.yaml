@@ -17,6 +17,11 @@ services:
     App\:
         resource: '../src/'
 
+    # Register test fixtures as services
+    App\Tests\Fixtures\:
+        resource: '../tests/Fixtures/'
+        tags: ['doctrine.fixture.orm']
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
     App\Service\NotificationService:
