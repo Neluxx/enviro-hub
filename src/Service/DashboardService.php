@@ -42,7 +42,7 @@ class DashboardService
      *
      * @return array{labels: array<string>, temperature: array<float>, humidity: array<float>, co2: array<float|null>}
      */
-    public function getChartDataByNode(string $nodeUuid, string $range): array
+    public function getChartDataByNodeUuid(string $nodeUuid, string $range): array
     {
         $timezone = new DateTimeZone('Europe/Berlin');
         $endDate = new DateTime('now', $timezone);

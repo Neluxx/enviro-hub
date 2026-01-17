@@ -32,7 +32,7 @@ class DashboardController extends AbstractController
     {
         $data = $this->sensorDataRepository->getLastEntryByNodeUuid($nodeUuid);
 
-        $chartData = $this->dashboardService->getChartDataByNode($nodeUuid, '-12 hours');
+        $chartData = $this->dashboardService->getChartDataByNodeUuid($nodeUuid, '-12 hours');
 
         $tempChart = $this->dashboardService->createTemperatureChart(
             $chartData['labels'],
@@ -66,7 +66,7 @@ class DashboardController extends AbstractController
     #[Route('/{home}/{nodeUuid}/api/sensor-data/chart/{range}', methods: ['GET'])]
     public function getChartData(string $home, string $nodeUuid, string $range): JsonResponse
     {
-        $chartData = $this->dashboardService->getChartDataByNode($nodeUuid, $range);
+        $chartData = $this->dashboardService->getChartDataByNodeUuid($nodeUuid, $range);
 
         return new JsonResponse($chartData);
     }
