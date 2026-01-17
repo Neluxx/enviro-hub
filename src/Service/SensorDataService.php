@@ -41,7 +41,8 @@ class SensorDataService
 
         $this->validateSensorData($sensorData);
 
-        $this->notificationService->notifyBasedOnCo2Levels($sensorData, $this->repository->getLastEntry());
+        $lastEntry = $this->repository->getLastEntryByNodeUuid($sensorData->getNodeUuid());
+        $this->notificationService->notifyBasedOnCo2Levels($sensorData, $lastEntry);
 
         $this->repository->save($sensorData);
     }
