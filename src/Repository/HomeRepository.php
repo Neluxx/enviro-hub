@@ -25,6 +25,14 @@ class HomeRepository
     }
 
     /**
+     * Find Home by identifier.
+     */
+    public function findByIdentifier(string $identifier): ?Home
+    {
+        return $this->repository->findOneBy(['identifier' => $identifier]);
+    }
+
+    /**
      * Find all Homes.
      *
      * @return Home[]
