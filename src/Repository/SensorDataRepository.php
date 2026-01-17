@@ -38,38 +38,44 @@ class SensorDataRepository
     }
 
     /**
-     * Get the last SensorData entry.
+     * Get the last SensorData entry for a specific node UUID.
+     *
+     * @param string $nodeUuid The node UUID to filter by
      */
-    public function getLastEntry(): ?SensorData
+    public function getLastEntryByNodeUuid(string $nodeUuid): ?SensorData
     {
-        return $this->repository->findOneBy([], $this->getDescendingOrderById());
+        return $this->repository->findOneBy(['nodeUuid' => $nodeUuid], $this->getDescendingOrderById());
     }
 
     /**
-     * Get the latest SensorData entries.
+     * Get the latest SensorData entries for a specific node UUID.
      *
+     * @param string $nodeUuid The node UUID to filter by
      * @param int $limit The maximum number of entries to return
      *
      * @return SensorData[]
      */
-    public function getLatestEntries(int $limit = self::DEFAULT_LIMIT): array
+    public function getLatestEntriesByNodeUuid(string $nodeUuid, int $limit = self::DEFAULT_LIMIT): array
     {
-        return $this->repository->findBy([], $this->getDescendingOrderById(), $limit);
+        return $this->repository->findBy(['nodeUuid' => $nodeUuid], $this->getDescendingOrderById(), $limit);
     }
 
     /**
-     * Get the latest SensorData entries by date range.
+     * Get the latest SensorData entries by date range for a specific node UUID.
      *
+     * @param string $nodeUuid The node UUID to filter by
      * @param DateTime $startDate The start date of entries to return
      * @param DateTime $endDate The end date of entries to return
      *
      * @return SensorData[]
      */
-    public function findByDateRange(DateTime $startDate, DateTime $endDate): array
+    public function findByNodeUuidAndDateRange(string $nodeUuid, DateTime $startDate, DateTime $endDate): array
     {
         return $this->repository->createQueryBuilder('e')
-            ->where('e.measuredAt >= :startDate')
+            ->where('e.nodeUuid = (:nodeUuid)')
+            ->andWhere('e.measuredAt >= :startDate')
             ->andWhere('e.measuredAt <= :endDate')
+            ->setParameter('nodeUuid', $nodeUuid)
             ->setParameter('startDate', $startDate)
             ->setParameter('endDate', $endDate)
             ->orderBy('e.measuredAt', 'ASC')
