@@ -21,7 +21,7 @@ class SensorDataApiController extends ApiController
     {
     }
 
-    #[Route('/api/sensor-data', name: 'api_sensor_data', methods: ['POST'])]
+    #[Route('/api/sensor-data', methods: ['POST'])]
     public function saveData(Request $request): JsonResponse
     {
         $this->checkAuthorization($request);

@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
  */
 class OfflineController extends AbstractController
 {
-    #[Route('/offline', name: 'app_offline')]
+    #[Route('/offline')]
     public function offline(): Response
     {
         return $this->render('offline.html.twig');
