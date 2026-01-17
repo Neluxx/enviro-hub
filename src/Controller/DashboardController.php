@@ -27,8 +27,8 @@ class DashboardController extends AbstractController
         $this->sensorDataRepository = $sensorDataRepository;
     }
 
-    #[Route('/{home}/{nodeUuid}')]
-    public function index(string $home, string $nodeUuid): Response
+    #[Route('/{nodeUuid}')]
+    public function index(string $nodeUuid): Response
     {
         $data = $this->sensorDataRepository->getLastEntryByNodeUuid($nodeUuid);
 
@@ -53,7 +53,6 @@ class DashboardController extends AbstractController
         $version = file_exists($versionFile) ? trim(file_get_contents($versionFile)) : 'N/A';
 
         return $this->render('dashboard/index.html.twig', [
-            'home' => $home,
             'nodeUuid' => $nodeUuid,
             'data' => $data,
             'version' => $version,
@@ -63,8 +62,8 @@ class DashboardController extends AbstractController
         ]);
     }
 
-    #[Route('/{home}/{nodeUuid}/api/sensor-data/chart/{range}', methods: ['GET'])]
-    public function getChartData(string $home, string $nodeUuid, string $range): JsonResponse
+    #[Route('/{nodeUuid}/api/sensor-data/chart/{range}', methods: ['GET'])]
+    public function getChartData(string $nodeUuid, string $range): JsonResponse
     {
         $chartData = $this->dashboardService->getChartDataByNodeUuid($nodeUuid, $range);
 
