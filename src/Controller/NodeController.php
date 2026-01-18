@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Repository\HomeRepository;
 use App\Repository\NodeRepository;
+use App\Repository\SensorDataRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -17,11 +18,16 @@ class NodeController extends AbstractController
 {
     private HomeRepository $homeRepository;
     private NodeRepository $nodeRepository;
+    private SensorDataRepository $sensorDataRepository;
 
-    public function __construct(HomeRepository $homeRepository, NodeRepository $nodeRepository)
-    {
+    public function __construct(
+        HomeRepository $homeRepository,
+        NodeRepository $nodeRepository,
+        SensorDataRepository $sensorDataRepository
+    ) {
         $this->homeRepository = $homeRepository;
         $this->nodeRepository = $nodeRepository;
+        $this->sensorDataRepository = $sensorDataRepository;
     }
 
     #[Route('/{identifier}')]
@@ -35,9 +41,14 @@ class NodeController extends AbstractController
 
         $nodes = $this->nodeRepository->findByHomeId($home->getId());
 
+        // Get last sensor data for all nodes
+        $nodeUuids = array_map(fn ($node) => $node->getUuid(), $nodes);
+        $sensorData = $this->sensorDataRepository->getLastEntriesByNodeUuids($nodeUuids);
+
         return $this->render('node/index.html.twig', [
             'home' => $home,
             'nodes' => $nodes,
+            'sensorData' => $sensorData,
         ]);
     }
 }

@@ -6,6 +6,7 @@ namespace App\Tests\Controller;
 
 use App\Tests\Fixtures\HomeFixtures;
 use App\Tests\Fixtures\NodeFixtures;
+use App\Tests\Fixtures\SensorDataFixture;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
@@ -120,6 +121,61 @@ class NodeControllerTest extends WebTestCase
     }
 
     /**
+     * Test the index page displays sensor data for each node.
+     */
+    public function testIndexPageDisplaysSensorDataForNodes(): void
+    {
+        $client = static::createClient();
+        $this->loadFixtures($client);
+
+        $crawler = $client->request('GET', '/main-house');
+
+        static::assertResponseIsSuccessful();
+
+        $pageContent = $crawler->filter('body')->text();
+
+        // Verify temperature and humidity values are displayed
+        static::assertStringContainsString('20°C', $pageContent);
+        static::assertStringContainsString('50%', $pageContent);
+
+        // Verify timestamp format is present (Y-m-d H:i)
+        static::assertMatchesRegularExpression(
+            '/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/',
+            $pageContent,
+            'Should display timestamps in Y-m-d H:i format'
+        );
+    }
+
+    /**
+     * Test that nodes with no sensor data show appropriate message.
+     */
+    public function testNodesWithoutSensorDataShowMessage(): void
+    {
+        $client = static::createClient();
+
+        // Load only home and node fixtures, not sensor data
+        $container = $client->getContainer();
+        $doctrine = $container->get('doctrine');
+        $entityManager = $doctrine->getManager();
+
+        $loader = new Loader();
+        $loader->addFixture(new HomeFixtures());
+        $loader->addFixture(new NodeFixtures());
+
+        $purger = new ORMPurger($entityManager);
+        $executor = new ORMExecutor($entityManager, $purger);
+        $executor->execute($loader->getFixtures());
+
+        $crawler = $client->request('GET', '/main-house');
+
+        static::assertResponseIsSuccessful();
+
+        // Should show "No data available" for nodes without sensor data
+        $pageContent = $crawler->filter('body')->text();
+        static::assertStringContainsString('No data available', $pageContent);
+    }
+
+    /**
      * Load fixtures for testing.
      */
     private function loadFixtures($client): void
@@ -131,6 +187,7 @@ class NodeControllerTest extends WebTestCase
         $loader = new Loader();
         $loader->addFixture(new HomeFixtures());
         $loader->addFixture(new NodeFixtures());
+        $loader->addFixture(new SensorDataFixture());
 
         $purger = new ORMPurger($entityManager);
         $executor = new ORMExecutor($entityManager, $purger);

@@ -84,6 +84,43 @@ class SensorDataRepository
     }
 
     /**
+     * Get the last SensorData entry for multiple node UUIDs.
+     *
+     * @param string[] $nodeUuids Array of node UUIDs
+     *
+     * @return array<string, SensorData|null> Array indexed by node UUID
+     */
+    public function getLastEntriesByNodeUuids(array $nodeUuids): array
+    {
+        if (empty($nodeUuids)) {
+            return [];
+        }
+
+        // Get all sensor data for these nodes, ordered by ID desc
+        $results = $this->repository->createQueryBuilder('sd')
+            ->where('sd.nodeUuid IN (:nodeUuids)')
+            ->setParameter('nodeUuids', $nodeUuids)
+            ->orderBy('sd.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        // Group by nodeUuid and take the first (most recent) for each
+        $lastEntries = [];
+        foreach ($nodeUuids as $uuid) {
+            $lastEntries[$uuid] = null;
+        }
+
+        foreach ($results as $sensorData) {
+            $uuid = $sensorData->getNodeUuid();
+            if ($lastEntries[$uuid] === null) {
+                $lastEntries[$uuid] = $sensorData;
+            }
+        }
+
+        return $lastEntries;
+    }
+
+    /**
      * Get descending order by ID.
      *
      * @return array<string, string>
