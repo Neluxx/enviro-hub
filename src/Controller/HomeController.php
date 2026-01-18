@@ -31,6 +31,7 @@ class HomeController extends AbstractController
 
         // Build node counts for each home
         $nodeCounts = [];
+
         foreach ($homes as $home) {
             $homeId = $home->getId();
             $nodeCounts[$homeId] = $this->nodeRepository->countByHomeId($homeId);

@@ -106,12 +106,14 @@ class SensorDataRepository
 
         // Group by nodeUuid and take the first (most recent) for each
         $lastEntries = [];
+
         foreach ($nodeUuids as $uuid) {
             $lastEntries[$uuid] = null;
         }
 
         foreach ($results as $sensorData) {
             $uuid = $sensorData->getNodeUuid();
+
             if ($lastEntries[$uuid] === null) {
                 $lastEntries[$uuid] = $sensorData;
             }
