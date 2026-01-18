@@ -41,4 +41,12 @@ class NodeRepository
     {
         return $this->repository->findOneBy(['uuid' => $uuid]);
     }
+
+    /**
+     * Count Nodes by Home ID.
+     */
+    public function countByHomeId(int $homeId): int
+    {
+        return $this->repository->count(['homeId' => $homeId]);
+    }
 }

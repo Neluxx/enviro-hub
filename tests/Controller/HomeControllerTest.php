@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Controller;
 
 use App\Tests\Fixtures\HomeFixtures;
+use App\Tests\Fixtures\NodeFixtures;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
@@ -48,6 +49,30 @@ class HomeControllerTest extends WebTestCase
     }
 
     /**
+     * Test that node counts are displayed for each home.
+     */
+    public function testIndexPageDisplaysNodeCounts(): void
+    {
+        $client = static::createClient();
+        $this->loadFixtures($client);
+
+        $crawler = $client->request('GET', '/');
+
+        static::assertResponseIsSuccessful();
+
+        $pageContent = $crawler->filter('body')->text();
+
+        // Main House has 3 nodes (Living Room, Bedroom, Kitchen)
+        static::assertStringContainsString('3 Nodes', $pageContent);
+
+        // Guest House has 2 nodes (Guest Room, Guest Bathroom)
+        static::assertStringContainsString('2 Nodes', $pageContent);
+
+        // Garden Shed has 1 node (Shed)
+        static::assertStringContainsString('1 Node', $pageContent);
+    }
+
+    /**
      * Load fixtures for testing.
      */
     private function loadFixtures($client): void
@@ -58,6 +83,7 @@ class HomeControllerTest extends WebTestCase
 
         $loader = new Loader();
         $loader->addFixture(new HomeFixtures());
+        $loader->addFixture(new NodeFixtures());
 
         $purger = new ORMPurger($entityManager);
         $executor = new ORMExecutor($entityManager, $purger);

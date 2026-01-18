@@ -1,40 +1,40 @@
 
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Homes - Enviro Hub{% endblock %}
 
 {% block body %}
     <div class="container-fluid p-4 bg-dark text-white min-vh-100">
-        <div class="row mb-4">
-            <div class="col-12">
-                <h1 class="display-5 fw-bold text-white">Homes</h1>
-            </div>
-        </div>
-
-        {% if homes is empty %}
-            <div class="row">
-                <div class="col-12">
-                    <div class="card bg-dark border-secondary shadow-sm">
-                        <div class="card-body text-center py-5">
-                            <h3 class="text-white mb-2">No Homes Found</h3>
+        <div class="container-lg">
+            {% if homes is empty %}
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card bg-dark border-secondary shadow-sm">
+                            <div class="card-body text-center py-5">
+                                <h3 class="text-white mb-2">No Homes Found</h3>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        {% else %}
-            <div class="row g-3">
-                {% for home in homes %}
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                        <a href="/{{ home.identifier }}" class="text-decoration-none">
-                            <div class="card h-100 bg-dark border-secondary shadow-sm hover-card" style="cursor: pointer;">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title text-white mb-0">{{ home.title }}</h5>
+            {% else %}
+                <div class="row g-3">
+                    {% for home in homes %}
+                        <div class="col-12 col-sm-6 col-lg-4">
+                            <a href="/{{ home.identifier }}" class="text-decoration-none">
+                                <div class="card h-100 bg-dark border-secondary hover-card" style="cursor: pointer;">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title text-white mb-2">{{ home.title }}</h5>
+                                        <p class="text-white mb-0">
+                                            {{ nodeCounts[home.id] }} {{ nodeCounts[home.id] == 1 ? 'Node' : 'Nodes' }}
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
