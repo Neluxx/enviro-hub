@@ -48,20 +48,19 @@ class SensorDataFixture extends Fixture implements DependentFixtureInterface
         for ($day = 30; $day >= 0; --$day) {
             $measuredAt = (clone $now)->modify("-{$day} days");
 
-            // Create varied but realistic sensor data
-            $baseTemp = 18 + ($nodeIndex * 2);
-            $temperature = $baseTemp + sin($day / 5) * 3 + random_int(-10, 10) / 10;
+            // Fixed base values per node
+            $baseTemp = 18.0 + ($nodeIndex * 2.0);
+            $temperature = $baseTemp + ($day % 5) * 0.5;
 
-            $baseHumidity = 45 + ($nodeIndex * 5);
-            $humidity = $baseHumidity + cos($day / 7) * 10 + random_int(-50, 50) / 10;
-            $humidity = max(20, min(80, $humidity));
+            $baseHumidity = 45.0 + ($nodeIndex * 5.0);
+            $humidity = $baseHumidity + ($day % 7) * 1.0;
 
-            $basePressure = 1013 + ($nodeIndex * 2);
-            $pressure = $basePressure + sin($day / 10) * 5 + random_int(-20, 20) / 10;
+            $basePressure = 1013.0 + ($nodeIndex * 2.0);
+            $pressure = $basePressure + ($day % 10) * 0.5;
 
-            // Only some nodes have CO2 sensors
+            // Only some nodes have CO2 sensors (even indices)
             $carbonDioxide = ($nodeIndex % 2 === 0)
-                ? 400 + random_int(0, 200) + sin($day / 3) * 50
+                ? 400.0 + ($day % 15) * 10.0
                 : null;
 
             $sensorData = new SensorData(
@@ -85,11 +84,14 @@ class SensorDataFixture extends Fixture implements DependentFixtureInterface
         for ($hour = 24; $hour >= 0; --$hour) {
             $measuredAt = (clone $now)->modify("-{$hour} hours");
 
-            $temperature = 20 + random_int(-20, 30) / 10;
-            $humidity = 50 + random_int(-100, 100) / 10;
-            $pressure = 1013 + random_int(-30, 30) / 10;
+            // Fixed values based on hour and node index
+            $temperature = 20.0 + ($hour % 12) * 0.5;
+            $humidity = 50.0 + ($hour % 10) * 1.5;
+            $pressure = 1013.0 + ($hour % 8) * 0.75;
+
+            // Only some nodes have CO2 sensors (even indices)
             $carbonDioxide = ($nodeIndex % 2 === 0)
-                ? 400 + random_int(0, 300)
+                ? 400.0 + ($hour % 20) * 15.0
                 : null;
 
             $sensorData = new SensorData(
