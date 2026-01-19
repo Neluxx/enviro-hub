@@ -16,33 +16,35 @@ use Symfony\Component\Routing\Attribute\Route;
  */
 class DashboardController extends AbstractController
 {
-    private DashboardService $service;
-    private SensorDataRepository $repository;
+    private DashboardService $dashboardService;
+    private SensorDataRepository $sensorDataRepository;
 
-    public function __construct(SensorDataRepository $repository, DashboardService $service)
-    {
-        $this->service = $service;
-        $this->repository = $repository;
+    public function __construct(
+        DashboardService $dashboardService,
+        SensorDataRepository $sensorDataRepository,
+    ) {
+        $this->dashboardService = $dashboardService;
+        $this->sensorDataRepository = $sensorDataRepository;
     }
 
-    #[Route('/')]
-    public function index(): Response
+    #[Route('/{homeIdentifier}/{nodeUuid}', requirements: ['homeIdentifier' => '^(?!api).*'])]
+    public function index(string $nodeUuid): Response
     {
-        $data = $this->repository->getLastEntry();
+        $data = $this->sensorDataRepository->getLastEntryByNodeUuid($nodeUuid);
 
-        $chartData = $this->service->getChartData('-12 hours');
+        $chartData = $this->dashboardService->getChartDataByNodeUuid($nodeUuid, '-12 hours');
 
-        $tempChart = $this->service->createTemperatureChart(
+        $tempChart = $this->dashboardService->createTemperatureChart(
             $chartData['labels'],
             $chartData['temperature']
         );
 
-        $humidityChart = $this->service->createHumidityChart(
+        $humidityChart = $this->dashboardService->createHumidityChart(
             $chartData['labels'],
             $chartData['humidity']
         );
 
-        $co2Chart = $this->service->createCo2Chart(
+        $co2Chart = $this->dashboardService->createCo2Chart(
             $chartData['labels'],
             $chartData['co2']
         );
@@ -51,6 +53,7 @@ class DashboardController extends AbstractController
         $version = file_exists($versionFile) ? trim(file_get_contents($versionFile)) : 'N/A';
 
         return $this->render('dashboard/index.html.twig', [
+            'nodeUuid' => $nodeUuid,
             'data' => $data,
             'version' => $version,
             'tempChart' => $tempChart,
@@ -59,10 +62,10 @@ class DashboardController extends AbstractController
         ]);
     }
 
-    #[Route('/api/sensor-data/chart/{range}', methods: ['GET'])]
-    public function getChartData(string $range): JsonResponse
+    #[Route('/{homeIdentifier}/{nodeUuid}/api/sensor-data/chart/{range}', methods: ['GET'], requirements: ['homeIdentifier' => '^(?!api).*'])]
+    public function getChartData(string $nodeUuid, string $range): JsonResponse
     {
-        $chartData = $this->service->getChartData($range);
+        $chartData = $this->dashboardService->getChartDataByNodeUuid($nodeUuid, $range);
 
         return new JsonResponse($chartData);
     }

@@ -1,0 +1,5 @@
+services:
+    # Register test fixtures as services
+    App\Tests\Fixtures\:
+        resource: '../tests/Fixtures/'
+        tags: ['doctrine.fixture.orm']

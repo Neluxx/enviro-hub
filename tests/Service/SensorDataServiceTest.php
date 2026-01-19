@@ -48,7 +48,7 @@ class SensorDataServiceTest extends KernelTestCase
 
         $this->service->saveSensorData($data);
 
-        $lastEntry = $this->repository->getLastEntry();
+        $lastEntry = $this->repository->getLastEntryByNodeUuid('test-node-uuid');
         $this->assertSame(22.5, $lastEntry->getTemperature());
         $this->assertSame(45.0, $lastEntry->getHumidity());
         $this->assertSame(1013.25, $lastEntry->getPressure());
@@ -79,7 +79,7 @@ class SensorDataServiceTest extends KernelTestCase
         $this->service->saveSensorData($data1);
         $this->service->saveSensorData($data2);
 
-        $entries = $this->repository->getLatestEntries();
+        $entries = $this->repository->getLatestEntriesByNodeUuid('test-node-uuid');
         $this->assertCount(2, $entries);
 
         $this->assertSame(23.0, $entries[0]->getTemperature());
@@ -171,7 +171,7 @@ class SensorDataServiceTest extends KernelTestCase
 
         $this->service->saveSensorData($data);
 
-        $lastEntry = $this->repository->getLastEntry();
+        $lastEntry = $this->repository->getLastEntryByNodeUuid('test-node-uuid');
         $this->assertNull($lastEntry->getCarbonDioxide());
         $this->assertSame(22.5, $lastEntry->getTemperature());
         $this->assertSame(45.0, $lastEntry->getHumidity());

@@ -1,3 +1,4 @@
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
@@ -11,10 +12,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add Multi-Node support [#18](https://github.com/Neluxx/enviro-hub/issues/18)
 - Implement Progressive Web App (PWA) functionality [#16](https://github.com/Neluxx/enviro-hub/issues/16)
 - Add email notification for CO2 levels exceeding configured threshold [#17](https://github.com/Neluxx/enviro-hub/issues/17)
+- Add Home and Node entity models with relationships [#27](https://github.com/Neluxx/enviro-hub/issues/27)
+- Add home controller and template to display all available homes [#27](https://github.com/Neluxx/enviro-hub/issues/27)
+- Add node controller and template to display all nodes of a home [#27](https://github.com/Neluxx/enviro-hub/issues/27)
 
 ### Changed
 - Migrated Bootstrap from CDN to AssetMapper
 - Use Symfony UX Chart.js and Stimulus controller instead of CDN
+- Update routes to include home identifier for multi-home support [#27](https://github.com/Neluxx/enviro-hub/issues/27)
+- Update dashboard to display sensor data for a specific node of a home [#27](https://github.com/Neluxx/enviro-hub/issues/27)
 
 ### Deprecated
 
@@ -28,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 
 ### Dependencies
+- Added doctrine/doctrine-fixtures-bundle for test fixtures [#27](https://github.com/Neluxx/enviro-hub/issues/27)
 
 ## [v1.3.0](https://github.com/Neluxx/enviro-hub/releases/tag/v1.3.0) - 2025-11-27
 

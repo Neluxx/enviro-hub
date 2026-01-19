@@ -35,17 +35,20 @@ class DashboardService
     }
 
     /**
-     * Get chart data for a specific time range.
+     * Get chart data for a specific time range and node UUID.
+     *
+     * @param string $nodeUuid The node UUID
+     * @param string $range Time range string
      *
      * @return array{labels: array<string>, temperature: array<float>, humidity: array<float>, co2: array<float|null>}
      */
-    public function getChartData(string $range): array
+    public function getChartDataByNodeUuid(string $nodeUuid, string $range): array
     {
         $timezone = new DateTimeZone('Europe/Berlin');
         $endDate = new DateTime('now', $timezone);
         $startDate = (clone $endDate)->modify($range);
 
-        $data = $this->repository->findByDateRange($startDate, $endDate);
+        $data = $this->repository->findByNodeUuidAndDateRange($nodeUuid, $startDate, $endDate);
 
         if (empty($data)) {
             return [
