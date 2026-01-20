@@ -9,6 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+### Dependencies
+
+## [v2.0.0](https://github.com/Neluxx/enviro-hub/releases/tag/v2.0.0) - 2026-01-20
+
+### Added
 - Add Multi-Node support [#18](https://github.com/Neluxx/enviro-hub/issues/18)
 - Implement Progressive Web App (PWA) functionality [#16](https://github.com/Neluxx/enviro-hub/issues/16)
 - Add email notification for CO2 levels exceeding configured threshold [#17](https://github.com/Neluxx/enviro-hub/issues/17)
@@ -22,8 +38,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update routes to include home identifier for multi-home support [#27](https://github.com/Neluxx/enviro-hub/issues/27)
 - Update dashboard to display sensor data for a specific node of a home [#27](https://github.com/Neluxx/enviro-hub/issues/27)
 
-### Deprecated
-
 ### Removed
 - Remove annotations for all charts
 - Remove OpenWeather Endpoint [#22](https://github.com/Neluxx/enviro-hub/issues/22)
@@ -31,8 +45,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Change title color according to cards background color [#19](https://github.com/Neluxx/enviro-hub/issues/19)
 - Fix chart data fetching with newly added route parameters
-
-### Security
 
 ### Dependencies
 - Added doctrine/doctrine-fixtures-bundle for test fixtures [#27](https://github.com/Neluxx/enviro-hub/issues/27)
