@@ -2,6 +2,10 @@ import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
     static targets = ['button'];
+    static values = {
+        nodeUuid: String,
+        homeIdentifier: String
+    };
 
     connect() {
         this.charts = {};
@@ -25,8 +29,9 @@ export default class extends Controller {
         event.currentTarget.classList.add('active');
 
         try {
-            // 2. Fetch new data from your existing API
-            const response = await fetch(`/api/sensor-data/chart/${range}`);
+            // 2. Fetch new data from your existing API with homeIdentifier and nodeUuid
+            const url = `/${this.homeIdentifierValue}/${this.nodeUuidValue}/api/sensor-data/chart/${range}`;
+            const response = await fetch(url);
             const data = await response.json();
 
             // 3. Update the charts

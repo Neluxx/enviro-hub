@@ -4,7 +4,10 @@
 {% block title %}Raspberry Pi Sensor Data{% endblock %}
 
 {% block body %}
-    <div class="container-fluid p-4 bg-dark text-white min-vh-100" data-controller="dashboard">
+    <div class="container-fluid p-4 bg-dark text-white min-vh-100"
+         data-controller="dashboard"
+         data-dashboard-node-uuid-value="{{ nodeUuid }}"
+         data-dashboard-home-identifier-value="{{ homeIdentifier }}">
         {# Current Values Cards #}
         <div class="row g-3 mb-4">
             <div class="col-12 col-md-4">

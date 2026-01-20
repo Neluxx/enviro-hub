@@ -28,7 +28,7 @@ class DashboardController extends AbstractController
     }
 
     #[Route('/{homeIdentifier}/{nodeUuid}', requirements: ['homeIdentifier' => '^(?!api).*'])]
-    public function index(string $nodeUuid): Response
+    public function index(string $homeIdentifier, string $nodeUuid): Response
     {
         $data = $this->sensorDataRepository->getLastEntryByNodeUuid($nodeUuid);
 
@@ -53,6 +53,7 @@ class DashboardController extends AbstractController
         $version = file_exists($versionFile) ? trim(file_get_contents($versionFile)) : 'N/A';
 
         return $this->render('dashboard/index.html.twig', [
+            'homeIdentifier' => $homeIdentifier,
             'nodeUuid' => $nodeUuid,
             'data' => $data,
             'version' => $version,
