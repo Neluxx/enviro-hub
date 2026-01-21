@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+- Swap position of version number and timestamp in dashboard template
 
 ### Deprecated
 
