@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Add index to node UUID to prevent memory exhaustion
+- Retrieve only the latest entry of the specified node UUIDs
 
 ### Security
 
