@@ -11,19 +11,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
-- Swap position of version number and timestamp in dashboard template
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
-- Add index to node UUID to prevent memory exhaustion
-- Retrieve only the latest entry of the specified node UUIDs
 
 ### Security
 
 ### Dependencies
+
+## [v2.0.1](https://github.com/Neluxx/enviro-hub/releases/tag/v2.0.1) - 2026-01-21
+
+### Changed
+- Swap position of version number and timestamp in dashboard template
+
+### Fixed
+- Add index to node UUID to prevent memory exhaustion
+- Retrieve only the latest entry of the specified node UUIDs
 
 ## [v2.0.0](https://github.com/Neluxx/enviro-hub/releases/tag/v2.0.0) - 2026-01-20
 
