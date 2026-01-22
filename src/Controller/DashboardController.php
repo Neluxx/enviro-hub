@@ -63,8 +63,8 @@ class DashboardController extends AbstractController
         ]);
     }
 
-    #[Route('/{homeIdentifier}/{nodeUuid}/api/sensor-data/chart/{range}', methods: ['GET'], requirements: ['homeIdentifier' => '^(?!api).*'])]
-    public function getChartData(string $nodeUuid, string $range): JsonResponse
+    #[Route('/api/{homeIdentifier}/{nodeUuid}/sensor-data/chart/{range}', methods: ['GET'])]
+    public function getChartData(string $homeIdentifier, string $nodeUuid, string $range): JsonResponse
     {
         $chartData = $this->dashboardService->getChartDataByNodeUuid($nodeUuid, $range);
 

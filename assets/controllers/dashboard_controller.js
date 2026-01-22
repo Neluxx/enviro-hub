@@ -30,12 +30,11 @@ export default class extends Controller {
 
         try {
             // 2. Fetch new data from your existing API with homeIdentifier and nodeUuid
-            const url = `/${this.homeIdentifierValue}/${this.nodeUuidValue}/api/sensor-data/chart/${range}`;
+            const url = `/api/${this.homeIdentifierValue}/${this.nodeUuidValue}/sensor-data/chart/${encodeURIComponent(range)}`;
             const response = await fetch(url);
             const data = await response.json();
 
             // 3. Update the charts
-            // Symfony UX stores the Chart.js instance on the element
             this.updateChart('temperatureChart', data.labels, data.temperature);
             this.updateChart('humidityChart', data.labels, data.humidity);
             this.updateChart('co2Chart', data.labels, data.co2);
