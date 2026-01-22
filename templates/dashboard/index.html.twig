@@ -12,10 +12,10 @@
         <div class="row g-3 mb-4">
             <div class="col-12 col-md-4">
                 <a href="#temperature-chart" class="text-decoration-none">
-                    <div class="card h-100 {{ sensor_status_class('temperature', data.temperature) }}" style="cursor: pointer;">
+                    <div class="card h-100 {{ sensor_status_class('temperature', data.temperature ?? null) }}" style="cursor: pointer;">
                         <div class="card-body text-center">
                             <h5 class="card-title">Temperature</h5>
-                            <p class="display-6 fw-bold mb-0">{{ data.temperature }} °C</p>
+                            <p class="display-6 fw-bold mb-0">{{ data.temperature ?? 'N/A' }} °C</p>
                         </div>
                     </div>
                 </a>
@@ -23,10 +23,10 @@
 
             <div class="col-12 col-md-4">
                 <a href="#humidity-chart" class="text-decoration-none">
-                    <div class="card h-100 {{ sensor_status_class('humidity', data.humidity) }}" style="cursor: pointer;">
+                    <div class="card h-100 {{ sensor_status_class('humidity', data.humidity ?? null) }}" style="cursor: pointer;">
                         <div class="card-body text-center">
                             <h5 class="card-title">Humidity</h5>
-                            <p class="display-6 fw-bold mb-0">{{ data.humidity }} %</p>
+                            <p class="display-6 fw-bold mb-0">{{ data.humidity ?? 'N/A' }} %</p>
                         </div>
                     </div>
                 </a>
@@ -34,7 +34,7 @@
 
             <div class="col-12 col-md-4">
                 <a href="#co2-chart" class="text-decoration-none">
-                    <div class="card h-100 {{ sensor_status_class('co2', data.carbonDioxide) }}" style="cursor: pointer;">
+                    <div class="card h-100 {{ sensor_status_class('co2', data.carbonDioxide ?? null) }}" style="cursor: pointer;">
                         <div class="card-body text-center">
                             <h5 class="card-title">CO₂</h5>
                             <p class="display-6 fw-bold mb-0">{{ data.carbonDioxide ?? 'N/A' }} ppm</p>
@@ -116,8 +116,8 @@
         </div>
 
         <div class="d-flex justify-content-between align-items-center text-muted mt-4">
-            <small class="text-light">{{ version }}</small>
-            <small class="text-light">{{ data.measuredAt.format('Y-m-d H:i:s') }}</small>
+            <small class="text-light">{{ version ?? '' }}</small>
+            <small class="text-light">{{ data.measuredAt.format('Y-m-d H:i:s') ?? '' }}</small>
         </div>
     </div>
 {% endblock %}
