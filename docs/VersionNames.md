@@ -7,8 +7,8 @@ Mark each used entry with the date when the entry has been used.
 The version names of this project are named after planets.
 
 ## Versions
-- Mercury
-- Venus
+- 2025-10-27 Mercury
+- 2026-01-20 Venus
 - Earth
 - Mars
 - Jupiter
