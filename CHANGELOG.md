@@ -9,14 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Add default values for not existing sensor data in dashboard template
 
 ### Changed
+- Standardize titles of all templates
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+- Change the API route pattern to enable dynamic chart data loading [#36](https://github.com/Neluxx/enviro-hub/issues/36)
 
 ### Security
 
