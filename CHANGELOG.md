@@ -9,21 +9,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Add default values for not existing sensor data in dashboard template
 
 ### Changed
-- Standardize titles of all templates
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
-- Change the API route pattern to enable dynamic chart data loading [#36](https://github.com/Neluxx/enviro-hub/issues/36)
 
 ### Security
 
 ### Dependencies
+
+## [v2.0.2 Venus](https://github.com/Neluxx/enviro-hub/releases/tag/v2.0.2) - 2026-01-23
+
+### Added
+- Add default values for not existing sensor data in dashboard template
+
+### Changed
+- Standardize titles of all templates
+
+### Fixed
+- Change the API route pattern to enable dynamic chart data loading [#36](https://github.com/Neluxx/enviro-hub/issues/36)
+
+### Dependencies
+- doctrine/dbal updated from 3.10.3 to 3.10.4 patch
+- doctrine/doctrine-bundle updated from 2.18.1 to 2.18.2 patch
+- doctrine/orm updated from 3.5.7 to 3.6.1 minor
+- phpdocumentor/reflection-docblock updated from 5.6.4 to 5.6.6 patch
+- phpstan/phpdoc-parser updated from 2.3 to 2.3.1 patch
+- symfony/monolog-bundle updated from 3.10 to 3.11.1 minor
+- symfony/stimulus-bundle updated from 2.31.0 to 2.32.0 minor
+- symfony/ux-chartjs updated from 2.31.0 to 2.32.0 minor
+- symfony/ux-turbo updated from 2.31.0 to 2.32.0 minor
+- twig/extra-bundle updated from 3.22.1 to 3.22.2 patch
+- twig/twig updated from 3.22.0 to 3.22.2 patch
+- dama/doctrine-test-bundle updated from 8.4 to 8.6 minor
+- doctrine/doctrine-fixtures-bundle updated from 4.3 to 4.3.1 patch
+- friendsofphp/php-cs-fixer updated from 3.90.0 to 3.92.5 minor
+- phpstan/phpstan updated from 2.1.32 to 2.1.36 patch
+- phpstan/phpstan-doctrine updated from 2.0.11 to 2.0.13 patch
+- phpstan/phpstan-phpunit updated from 2.0.8 to 2.0.12 patch
+- phpstan/phpstan-symfony updated from 2.0.8 to 2.0.12 patch
+- phpunit/phpunit updated from 12.4.4 to 12.5.6 minor
+- symfony/maker-bundle updated from 1.64 to 1.65.1 minor
 
 ## [v2.0.1 Venus](https://github.com/Neluxx/enviro-hub/releases/tag/v2.0.1) - 2026-01-21
 
