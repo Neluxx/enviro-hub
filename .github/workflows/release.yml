@@ -9,7 +9,7 @@ permissions:
 
 env:
   # Build configuration
-  PHP_VERSION: '8.3'
+  PHP_VERSION: '8.4'
   COMPOSER_FLAGS: '--no-dev --optimize-autoloader --no-scripts'
 
   # Release configuration
