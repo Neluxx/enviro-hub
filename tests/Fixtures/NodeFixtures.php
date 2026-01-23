@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Fixtures;
 
-use App\Entity\Home;
-use App\Entity\Node;
+use App\Home\Entity\Home;
+use App\Node\Entity\Node;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;

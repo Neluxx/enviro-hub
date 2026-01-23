@@ -1,5 +1,10 @@
 twig:
     file_name_pattern: '*.twig'
+    default_path: '%kernel.project_dir%/templates'
+    paths:
+        '%kernel.project_dir%/src/Dashboard/Templates': Dashboard
+        '%kernel.project_dir%/src/Home/Templates': Home
+        '%kernel.project_dir%/src/Node/Templates': Node
 
 when@test:
     twig:

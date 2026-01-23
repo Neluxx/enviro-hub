@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Fixtures;
 
-use App\Entity\Node;
-use App\Entity\SensorData;
+use App\Api\SensorData\Entity\SensorData;
+use App\Node\Entity\Node;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
