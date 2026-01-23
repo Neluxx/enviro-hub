@@ -8,6 +8,7 @@ use App\Api\SensorData\Entity\SensorData;
 use App\Api\SensorData\Repository\SensorDataRepository;
 use App\Dashboard\Service\DashboardService;
 use DateTime;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
@@ -31,6 +32,7 @@ class DashboardServiceTest extends TestCase
     /**
      * Test getChartData returns empty arrays when no data exists.
      */
+    #[AllowMockObjectsWithoutExpectations]
     public function testGetChartDataReturnsEmptyArraysWhenNoData(): void
     {
         $this->repository->expects($this->once())
@@ -48,6 +50,7 @@ class DashboardServiceTest extends TestCase
     /**
      * Test getChartData returns formatted data for today range.
      */
+    #[AllowMockObjectsWithoutExpectations]
     public function testGetChartDataReturnsTodayData(): void
     {
         $data = [
@@ -98,6 +101,7 @@ class DashboardServiceTest extends TestCase
     /**
      * Test getChartData handles null CO2 values correctly.
      */
+    #[AllowMockObjectsWithoutExpectations]
     public function testGetChartDataHandlesNullCo2Values(): void
     {
         $data = [
@@ -132,6 +136,7 @@ class DashboardServiceTest extends TestCase
     /**
      * Test getChartData for week range.
      */
+    #[AllowMockObjectsWithoutExpectations]
     public function testGetChartDataForWeekRange(): void
     {
         $data = [
