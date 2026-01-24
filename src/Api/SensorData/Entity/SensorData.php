@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SensorDataRepository::class)]
 #[ORM\Table(name: 'sensor_data')]
+#[ORM\Index(name: 'idx_node_uuid', columns: ['node_uuid'])]
 class SensorData
 {
     #[ORM\Id]
