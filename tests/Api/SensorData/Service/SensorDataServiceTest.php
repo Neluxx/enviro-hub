@@ -7,7 +7,7 @@ namespace App\Tests\Api\SensorData\Service;
 use App\Api\SensorData\Repository\SensorDataRepository;
 use App\Api\SensorData\Service\SensorDataService;
 use App\Notification\Service\NotificationService;
-use DateTime;
+use DateTimeImmutable;
 use Exception;
 use InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -53,7 +53,7 @@ class SensorDataServiceTest extends KernelTestCase
         $this->assertSame(45.0, $lastEntry->getHumidity());
         $this->assertSame(1013.25, $lastEntry->getPressure());
         $this->assertSame(400.0, $lastEntry->getCarbonDioxide());
-        $this->assertEquals(new DateTime('2025-10-26 10:00:00'), $lastEntry->getMeasuredAt());
+        $this->assertEquals(new DateTimeImmutable('2025-10-26 10:00:00'), $lastEntry->getMeasuredAt());
     }
 
     public function testSaveMultipleSensorDataEntries(): void
@@ -86,13 +86,13 @@ class SensorDataServiceTest extends KernelTestCase
         $this->assertSame(50.0, $entries[0]->getHumidity());
         $this->assertSame(1015.0, $entries[0]->getPressure());
         $this->assertSame(420.0, $entries[0]->getCarbonDioxide());
-        $this->assertEquals(new DateTime('2025-10-26 10:00:00'), $entries[0]->getMeasuredAt());
+        $this->assertEquals(new DateTimeImmutable('2025-10-26 10:00:00'), $entries[0]->getMeasuredAt());
 
         $this->assertSame(20.0, $entries[1]->getTemperature());
         $this->assertSame(40.0, $entries[1]->getHumidity());
         $this->assertSame(1010.0, $entries[1]->getPressure());
         $this->assertSame(380.0, $entries[1]->getCarbonDioxide());
-        $this->assertEquals(new DateTime('2025-10-26 09:00:00'), $entries[1]->getMeasuredAt());
+        $this->assertEquals(new DateTimeImmutable('2025-10-26 09:00:00'), $entries[1]->getMeasuredAt());
     }
 
     public function testSaveSensorDataMissingNodeUuid(): void
@@ -176,7 +176,7 @@ class SensorDataServiceTest extends KernelTestCase
         $this->assertSame(22.5, $lastEntry->getTemperature());
         $this->assertSame(45.0, $lastEntry->getHumidity());
         $this->assertSame(1013.25, $lastEntry->getPressure());
-        $this->assertEquals(new DateTime('2025-10-26 10:00:00'), $lastEntry->getMeasuredAt());
+        $this->assertEquals(new DateTimeImmutable('2025-10-26 10:00:00'), $lastEntry->getMeasuredAt());
     }
 
     public function testSaveSensorDataMissingCreatedAt(): void

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Api\SensorData\Entity;
 
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -32,10 +32,10 @@ class SensorData
     private ?float $carbonDioxide = null;
 
     #[ORM\Column(type: 'datetime')]
-    private DateTime $measuredAt;
+    private DateTimeImmutable $measuredAt;
 
     #[ORM\Column(type: 'datetime')]
-    private DateTime $createdAt;
+    private DateTimeImmutable $createdAt;
 
     public function __construct(
         string $nodeUuid,
@@ -43,7 +43,7 @@ class SensorData
         float $humidity,
         float $pressure,
         ?float $carbonDioxide,
-        DateTime $measuredAt,
+        DateTimeImmutable $measuredAt,
     ) {
         $this->nodeUuid = $nodeUuid;
         $this->temperature = $temperature;
@@ -51,7 +51,7 @@ class SensorData
         $this->pressure = $pressure;
         $this->carbonDioxide = $carbonDioxide;
         $this->measuredAt = $measuredAt;
-        $this->createdAt = new DateTime();
+        $this->createdAt = new DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -84,12 +84,12 @@ class SensorData
         return $this->carbonDioxide;
     }
 
-    public function getMeasuredAt(): DateTime
+    public function getMeasuredAt(): DateTimeImmutable
     {
         return $this->measuredAt;
     }
 
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
     }

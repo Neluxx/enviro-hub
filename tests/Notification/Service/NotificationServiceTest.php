@@ -6,7 +6,7 @@ namespace App\Tests\Notification\Service;
 
 use App\Api\SensorData\Entity\SensorData;
 use App\Notification\Service\NotificationService;
-use DateTime;
+use DateTimeImmutable;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Mailer\MailerInterface;
@@ -44,7 +44,7 @@ class NotificationServiceTest extends TestCase
             humidity: 65.0,
             pressure: 1013.25,
             carbonDioxide: null,
-            measuredAt: new DateTime('2024-01-15 10:00:00'),
+            measuredAt: new DateTimeImmutable('2024-01-15 10:00:00'),
         );
 
         $previousData = new SensorData(
@@ -53,7 +53,7 @@ class NotificationServiceTest extends TestCase
             humidity: 64.0,
             pressure: 1013.0,
             carbonDioxide: 1500.0,
-            measuredAt: new DateTime('2024-01-15 09:00:00'),
+            measuredAt: new DateTimeImmutable('2024-01-15 09:00:00'),
         );
 
         $this->mailer->expects($this->never())
@@ -73,7 +73,7 @@ class NotificationServiceTest extends TestCase
             humidity: 65.0,
             pressure: 1013.25,
             carbonDioxide: 1700.0,
-            measuredAt: new DateTime('2024-01-15 10:00:00'),
+            measuredAt: new DateTimeImmutable('2024-01-15 10:00:00'),
         );
 
         $previousData = new SensorData(
@@ -82,7 +82,7 @@ class NotificationServiceTest extends TestCase
             humidity: 64.0,
             pressure: 1013.0,
             carbonDioxide: null,
-            measuredAt: new DateTime('2024-01-15 09:00:00'),
+            measuredAt: new DateTimeImmutable('2024-01-15 09:00:00'),
         );
 
         $this->mailer->expects($this->never())
@@ -102,7 +102,7 @@ class NotificationServiceTest extends TestCase
             humidity: 65.0,
             pressure: 1013.25,
             carbonDioxide: 1700.0,
-            measuredAt: new DateTime('2024-01-15 10:00:00'),
+            measuredAt: new DateTimeImmutable('2024-01-15 10:00:00'),
         );
 
         $this->mailer->expects($this->never())
@@ -122,7 +122,7 @@ class NotificationServiceTest extends TestCase
             humidity: 65.0,
             pressure: 1013.25,
             carbonDioxide: 1700.0,
-            measuredAt: new DateTime('2024-01-15 10:00:00'),
+            measuredAt: new DateTimeImmutable('2024-01-15 10:00:00'),
         );
 
         $previousData = new SensorData(
@@ -131,7 +131,7 @@ class NotificationServiceTest extends TestCase
             humidity: 64.0,
             pressure: 1013.0,
             carbonDioxide: 1500.0,
-            measuredAt: new DateTime('2024-01-15 09:00:00'),
+            measuredAt: new DateTimeImmutable('2024-01-15 09:00:00'),
         );
 
         $this->mailer->expects($this->once())
@@ -166,7 +166,7 @@ class NotificationServiceTest extends TestCase
             humidity: 65.0,
             pressure: 1013.25,
             carbonDioxide: 1500.0,
-            measuredAt: new DateTime('2024-01-15 10:00:00'),
+            measuredAt: new DateTimeImmutable('2024-01-15 10:00:00'),
         );
 
         $previousData = new SensorData(
@@ -175,7 +175,7 @@ class NotificationServiceTest extends TestCase
             humidity: 64.0,
             pressure: 1013.0,
             carbonDioxide: 1700.0,
-            measuredAt: new DateTime('2024-01-15 09:00:00'),
+            measuredAt: new DateTimeImmutable('2024-01-15 09:00:00'),
         );
 
         $this->mailer->expects($this->once())
@@ -210,7 +210,7 @@ class NotificationServiceTest extends TestCase
             humidity: 65.0,
             pressure: 1013.25,
             carbonDioxide: 1800.0,
-            measuredAt: new DateTime('2024-01-15 10:00:00'),
+            measuredAt: new DateTimeImmutable('2024-01-15 10:00:00'),
         );
 
         $previousData = new SensorData(
@@ -219,7 +219,7 @@ class NotificationServiceTest extends TestCase
             humidity: 64.0,
             pressure: 1013.0,
             carbonDioxide: 1700.0,
-            measuredAt: new DateTime('2024-01-15 09:00:00'),
+            measuredAt: new DateTimeImmutable('2024-01-15 09:00:00'),
         );
 
         $this->mailer->expects($this->never())
@@ -239,7 +239,7 @@ class NotificationServiceTest extends TestCase
             humidity: 65.0,
             pressure: 1013.25,
             carbonDioxide: 1400.0,
-            measuredAt: new DateTime('2024-01-15 10:00:00'),
+            measuredAt: new DateTimeImmutable('2024-01-15 10:00:00'),
         );
 
         $previousData = new SensorData(
@@ -248,7 +248,7 @@ class NotificationServiceTest extends TestCase
             humidity: 64.0,
             pressure: 1013.0,
             carbonDioxide: 1500.0,
-            measuredAt: new DateTime('2024-01-15 09:00:00'),
+            measuredAt: new DateTimeImmutable('2024-01-15 09:00:00'),
         );
 
         $this->mailer->expects($this->never())
@@ -268,7 +268,7 @@ class NotificationServiceTest extends TestCase
             humidity: 65.0,
             pressure: 1013.25,
             carbonDioxide: (float) self::CO2_THRESHOLD,
-            measuredAt: new DateTime('2024-01-15 10:00:00'),
+            measuredAt: new DateTimeImmutable('2024-01-15 10:00:00'),
         );
 
         $previousData = new SensorData(
@@ -277,7 +277,7 @@ class NotificationServiceTest extends TestCase
             humidity: 64.0,
             pressure: 1013.0,
             carbonDioxide: 1500.0,
-            measuredAt: new DateTime('2024-01-15 09:00:00'),
+            measuredAt: new DateTimeImmutable('2024-01-15 09:00:00'),
         );
 
         $this->mailer->expects($this->once())
@@ -302,7 +302,7 @@ class NotificationServiceTest extends TestCase
             humidity: 65.0,
             pressure: 1013.25,
             carbonDioxide: self::CO2_THRESHOLD + 0.1,
-            measuredAt: new DateTime('2024-01-15 10:00:00'),
+            measuredAt: new DateTimeImmutable('2024-01-15 10:00:00'),
         );
 
         $previousData = new SensorData(
@@ -311,7 +311,7 @@ class NotificationServiceTest extends TestCase
             humidity: 64.0,
             pressure: 1013.0,
             carbonDioxide: self::CO2_THRESHOLD - 0.1,
-            measuredAt: new DateTime('2024-01-15 09:00:00'),
+            measuredAt: new DateTimeImmutable('2024-01-15 09:00:00'),
         );
 
         $this->mailer->expects($this->once())
@@ -336,7 +336,7 @@ class NotificationServiceTest extends TestCase
             humidity: 65.0,
             pressure: 1013.25,
             carbonDioxide: self::CO2_THRESHOLD - 0.1,
-            measuredAt: new DateTime('2024-01-15 10:00:00'),
+            measuredAt: new DateTimeImmutable('2024-01-15 10:00:00'),
         );
 
         $previousData = new SensorData(
@@ -345,7 +345,7 @@ class NotificationServiceTest extends TestCase
             humidity: 64.0,
             pressure: 1013.0,
             carbonDioxide: self::CO2_THRESHOLD + 0.1,
-            measuredAt: new DateTime('2024-01-15 09:00:00'),
+            measuredAt: new DateTimeImmutable('2024-01-15 09:00:00'),
         );
 
         $this->mailer->expects($this->once())

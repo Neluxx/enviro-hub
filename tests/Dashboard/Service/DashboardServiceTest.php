@@ -8,6 +8,7 @@ use App\Api\SensorData\Entity\SensorData;
 use App\Api\SensorData\Repository\SensorDataRepository;
 use App\Dashboard\Service\DashboardService;
 use DateTime;
+use DateTimeImmutable;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -60,7 +61,7 @@ class DashboardServiceTest extends TestCase
                 humidity: 65.0,
                 pressure: 1013.25,
                 carbonDioxide: 450.0,
-                measuredAt: new DateTime('2024-01-15 10:00:00'),
+                measuredAt: new DateTimeImmutable('2024-01-15 10:00:00'),
             ),
             new SensorData(
                 nodeUuid: 'test-node-uuid',
@@ -68,7 +69,7 @@ class DashboardServiceTest extends TestCase
                 humidity: 64.5,
                 pressure: 1013.50,
                 carbonDioxide: 455.0,
-                measuredAt: new DateTime('2024-01-15 11:00:00'),
+                measuredAt: new DateTimeImmutable('2024-01-15 11:00:00'),
             ),
             new SensorData(
                 nodeUuid: 'test-node-uuid',
@@ -76,7 +77,7 @@ class DashboardServiceTest extends TestCase
                 humidity: 64.0,
                 pressure: 1013.75,
                 carbonDioxide: 460.0,
-                measuredAt: new DateTime('2024-01-15 12:00:00'),
+                measuredAt: new DateTimeImmutable('2024-01-15 12:00:00'),
             ),
         ];
 
@@ -111,7 +112,7 @@ class DashboardServiceTest extends TestCase
                 humidity: 60.0,
                 pressure: 1012.0,
                 carbonDioxide: null,
-                measuredAt: new DateTime('2024-01-15 10:00:00'),
+                measuredAt: new DateTimeImmutable('2024-01-15 10:00:00'),
             ),
             new SensorData(
                 nodeUuid: 'test-node-uuid',
@@ -119,7 +120,7 @@ class DashboardServiceTest extends TestCase
                 humidity: 61.0,
                 pressure: 1012.5,
                 carbonDioxide: 450.0,
-                measuredAt: new DateTime('2024-01-15 11:00:00'),
+                measuredAt: new DateTimeImmutable('2024-01-15 11:00:00'),
             ),
         ];
 
@@ -146,7 +147,7 @@ class DashboardServiceTest extends TestCase
                 humidity: 70.0,
                 pressure: 1010.0,
                 carbonDioxide: 400.0,
-                measuredAt: new DateTime('2024-01-08 10:00:00'),
+                measuredAt: new DateTimeImmutable('2024-01-08 10:00:00'),
             ),
             new SensorData(
                 nodeUuid: 'test-node-uuid',
@@ -154,7 +155,7 @@ class DashboardServiceTest extends TestCase
                 humidity: 68.0,
                 pressure: 1012.0,
                 carbonDioxide: 420.0,
-                measuredAt: new DateTime('2024-01-10 10:00:00'),
+                measuredAt: new DateTimeImmutable('2024-01-10 10:00:00'),
             ),
         ];
 

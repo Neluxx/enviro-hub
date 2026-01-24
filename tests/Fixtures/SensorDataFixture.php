@@ -6,7 +6,7 @@ namespace App\Tests\Fixtures;
 
 use App\Api\SensorData\Entity\SensorData;
 use App\Node\Entity\Node;
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -42,7 +42,7 @@ class SensorDataFixture extends Fixture implements DependentFixtureInterface
 
     private function createDailySensorData(ObjectManager $manager, Node $node, int $nodeIndex): void
     {
-        $now = new DateTime();
+        $now = new DateTimeImmutable();
 
         // Create 30 days of historical data (one reading per day)
         for ($day = 30; $day >= 0; --$day) {
@@ -78,7 +78,7 @@ class SensorDataFixture extends Fixture implements DependentFixtureInterface
 
     private function createHourlySensorData(ObjectManager $manager, Node $node, int $nodeIndex): void
     {
-        $now = new DateTime();
+        $now = new DateTimeImmutable();
 
         // Add hourly data for the last 24 hours
         for ($hour = 24; $hour >= 0; --$hour) {

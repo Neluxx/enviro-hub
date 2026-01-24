@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Home\Entity;
 
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -23,17 +23,17 @@ class Home
     private string $identifier;
 
     #[ORM\Column(type: 'datetime')]
-    private DateTime $createdAt;
+    private DateTimeImmutable $createdAt;
 
     #[ORM\Column(type: 'datetime')]
-    private DateTime $modifiedAt;
+    private DateTimeImmutable $modifiedAt;
 
     public function __construct(string $title, string $identifier)
     {
         $this->title = $title;
         $this->identifier = $identifier;
-        $this->createdAt = new DateTime();
-        $this->modifiedAt = new DateTime();
+        $this->createdAt = new DateTimeImmutable();
+        $this->modifiedAt = new DateTimeImmutable();
     }
 
     public function getId(): int
@@ -51,12 +51,12 @@ class Home
         return $this->identifier;
     }
 
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function getModifiedAt(): DateTime
+    public function getModifiedAt(): DateTimeImmutable
     {
         return $this->modifiedAt;
     }
