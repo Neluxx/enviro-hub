@@ -32,10 +32,10 @@ class SensorData
     #[ORM\Column(type: 'float', nullable: true)]
     private ?float $carbonDioxide;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $measuredAt;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $createdAt;
 
     public function __construct(

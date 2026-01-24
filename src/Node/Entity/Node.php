@@ -26,10 +26,10 @@ class Node
     #[ORM\Column(type: 'integer')]
     private int $homeId;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $createdAt;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $modifiedAt;
 
     public function __construct(string $uuid, string $title, int $homeId)

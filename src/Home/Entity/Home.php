@@ -23,10 +23,10 @@ class Home
     #[ORM\Column(type: 'string', length: 255)]
     private string $identifier;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $createdAt;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $modifiedAt;
 
     public function __construct(string $title, string $identifier)
