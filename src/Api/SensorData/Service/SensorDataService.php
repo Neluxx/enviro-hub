@@ -7,7 +7,7 @@ namespace App\Api\SensorData\Service;
 use App\Api\SensorData\Entity\SensorData;
 use App\Api\SensorData\Repository\SensorDataRepository;
 use App\Notification\Service\NotificationService;
-use DateTime;
+use DateTimeImmutable;
 use InvalidArgumentException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -91,7 +91,7 @@ class SensorDataService
             $data['humidity'],
             $data['pressure'],
             $data['co2'] ?? null,
-            new DateTime($data['created_at'])
+            new DateTimeImmutable($data['created_at'])
         );
     }
 }
