@@ -56,6 +56,11 @@ help:
 	@echo "  db-drop      — Drop local database"
 	@echo "  db-reset     — Reset local database"
 	@echo ""
+	@echo "Make:"
+	@echo "  entity       — Generate entity"
+	@echo "  controller   — Generate controller"
+	@echo "  migration    — Generate migration"
+	@echo ""
 	@echo "Migrations:"
 	@echo "  migrate      — Migrate new migrations"
 	@echo "  rollback     — Rollback last migration"
@@ -172,6 +177,22 @@ db-reset:
 	$(MAKE) db-drop
 	$(MAKE) db-create
 	$(MAKE) migrate
+
+# -------- Make --------
+.PHONY: entity
+entity:
+	@echo "$(INFO) Generate entity $(RESET)"
+	$(DDEV_PHP) $(SYMFONY) make:entity
+
+.PHONY: controller
+controller:
+	@echo "$(INFO) Generate controller $(RESET)"
+	$(DDEV_PHP) $(SYMFONY) make:controller
+
+.PHONY: migration
+migration:
+	@echo "$(INFO) Generate migration $(RESET)"
+	$(DDEV_PHP) $(SYMFONY) make:migration --formatted
 
 # -------- Migrations --------
 .PHONY: migrate
