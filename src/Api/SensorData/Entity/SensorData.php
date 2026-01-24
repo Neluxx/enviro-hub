@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Api\SensorData\Entity;
 
+use App\Api\SensorData\Repository\SensorDataRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: SensorDataRepository::class)]
 #[ORM\Table(name: 'sensor_data')]
 class SensorData
 {
@@ -29,7 +30,7 @@ class SensorData
     private float $pressure;
 
     #[ORM\Column(type: 'float', nullable: true)]
-    private ?float $carbonDioxide = null;
+    private ?float $carbonDioxide;
 
     #[ORM\Column(type: 'datetime')]
     private DateTimeImmutable $measuredAt;

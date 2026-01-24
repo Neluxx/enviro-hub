@@ -5,23 +5,19 @@ declare(strict_types=1);
 namespace App\Home\Repository;
 
 use App\Home\Entity\Home;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * Home Repository.
+ *
+ * @extends ServiceEntityRepository<Home>
  */
-class HomeRepository
+class HomeRepository extends ServiceEntityRepository
 {
-    private EntityManagerInterface $entityManager;
-
-    /** @var EntityRepository<Home> */
-    private EntityRepository $repository;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(ManagerRegistry $registry)
     {
-        $this->entityManager = $entityManager;
-        $this->repository = $this->entityManager->getRepository(Home::class);
+        parent::__construct($registry, Home::class);
     }
 
     /**
@@ -29,16 +25,6 @@ class HomeRepository
      */
     public function findByIdentifier(string $identifier): ?Home
     {
-        return $this->repository->findOneBy(['identifier' => $identifier]);
-    }
-
-    /**
-     * Find all Homes.
-     *
-     * @return Home[]
-     */
-    public function findAll(): array
-    {
-        return $this->repository->findAll();
+        return $this->findOneBy(['identifier' => $identifier]);
     }
 }

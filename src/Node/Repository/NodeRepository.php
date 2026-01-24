@@ -5,23 +5,19 @@ declare(strict_types=1);
 namespace App\Node\Repository;
 
 use App\Node\Entity\Node;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * Node Repository.
+ *
+ * @extends ServiceEntityRepository<Node>
  */
-class NodeRepository
+class NodeRepository extends ServiceEntityRepository
 {
-    private EntityManagerInterface $entityManager;
-
-    /** @var EntityRepository<Node> */
-    private EntityRepository $repository;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(ManagerRegistry $registry)
     {
-        $this->entityManager = $entityManager;
-        $this->repository = $this->entityManager->getRepository(Node::class);
+        parent::__construct($registry, Node::class);
     }
 
     /**
@@ -31,15 +27,7 @@ class NodeRepository
      */
     public function findByHomeId(int $homeId): array
     {
-        return $this->repository->findBy(['homeId' => $homeId]);
-    }
-
-    /**
-     * Find Node by UUID.
-     */
-    public function findByUuid(string $uuid): ?Node
-    {
-        return $this->repository->findOneBy(['uuid' => $uuid]);
+        return $this->findBy(['homeId' => $homeId]);
     }
 
     /**
@@ -47,6 +35,6 @@ class NodeRepository
      */
     public function countByHomeId(int $homeId): int
     {
-        return $this->repository->count(['homeId' => $homeId]);
+        return $this->count(['homeId' => $homeId]);
     }
 }

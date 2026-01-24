@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Home\Entity;
 
+use App\Home\Repository\HomeRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: HomeRepository::class)]
 #[ORM\Table(name: 'homes')]
 class Home
 {
@@ -16,10 +17,10 @@ class Home
     #[ORM\Column(type: 'integer')]
     private int $id;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string', length: 255)]
     private string $title;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string', length: 255)]
     private string $identifier;
 
     #[ORM\Column(type: 'datetime')]

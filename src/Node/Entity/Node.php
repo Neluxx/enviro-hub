@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Node\Entity;
 
+use App\Node\Repository\NodeRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: NodeRepository::class)]
 #[ORM\Table(name: 'nodes')]
 class Node
 {
@@ -19,7 +20,7 @@ class Node
     #[ORM\Column(type: 'string', length: 36)]
     private string $uuid;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string', length: 255)]
     private string $title;
 
     #[ORM\Column(type: 'integer')]

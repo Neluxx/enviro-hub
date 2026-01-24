@@ -6,26 +6,24 @@ namespace App\Api\SensorData\Repository;
 
 use App\Api\SensorData\Entity\SensorData;
 use DateTime;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * Sensor Data Repository.
+ *
+ * @extends ServiceEntityRepository<SensorData>
  */
-class SensorDataRepository
+class SensorDataRepository extends ServiceEntityRepository
 {
-    /** Default limit */
-    private const DEFAULT_LIMIT = 1000;
-
+    private const int DEFAULT_LIMIT = 1000;
     private EntityManagerInterface $entityManager;
 
-    /** @var EntityRepository<SensorData> */
-    private EntityRepository $repository;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->repository = $this->entityManager->getRepository(SensorData::class);
+        parent::__construct($registry, SensorData::class);
     }
 
     /**
@@ -44,7 +42,7 @@ class SensorDataRepository
      */
     public function getLastEntryByNodeUuid(string $nodeUuid): ?SensorData
     {
-        return $this->repository->findOneBy(['nodeUuid' => $nodeUuid], $this->getDescendingOrderById());
+        return $this->findOneBy(['nodeUuid' => $nodeUuid], ['id' => 'DESC']);
     }
 
     /**
@@ -57,7 +55,7 @@ class SensorDataRepository
      */
     public function getLatestEntriesByNodeUuid(string $nodeUuid, int $limit = self::DEFAULT_LIMIT): array
     {
-        return $this->repository->findBy(['nodeUuid' => $nodeUuid], $this->getDescendingOrderById(), $limit);
+        return $this->findBy(['nodeUuid' => $nodeUuid], ['id' => 'DESC'], $limit);
     }
 
     /**
@@ -71,7 +69,7 @@ class SensorDataRepository
      */
     public function findByNodeUuidAndDateRange(string $nodeUuid, DateTime $startDate, DateTime $endDate): array
     {
-        return $this->repository->createQueryBuilder('e')
+        return $this->createQueryBuilder('e')
             ->where('e.nodeUuid = (:nodeUuid)')
             ->andWhere('e.measuredAt >= :startDate')
             ->andWhere('e.measuredAt <= :endDate')
@@ -99,15 +97,5 @@ class SensorDataRepository
         }
 
         return $lastEntries;
-    }
-
-    /**
-     * Get descending order by ID.
-     *
-     * @return array<string, string>
-     */
-    private function getDescendingOrderById(): array
-    {
-        return ['id' => 'DESC'];
     }
 }
