@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class SensorDataService
 {
     /** The required fields */
-    private const REQUIRED_FIELDS = ['uuid', 'temperature', 'humidity', 'pressure', 'created_at'];
+    private const array REQUIRED_FIELDS = ['uuid', 'temperature', 'humidity', 'pressure', 'created_at'];
 
     public function __construct(
         private readonly ValidatorInterface $validator,

@@ -18,12 +18,12 @@ use Symfony\UX\Chartjs\Model\Chart;
  */
 class DashboardService
 {
-    private const TEMP_OPTIMAL_MIN = 18.0;
-    private const TEMP_OPTIMAL_MAX = 24.0;
-    private const HUMIDITY_OPTIMAL_MIN = 40.0;
-    private const HUMIDITY_OPTIMAL_MAX = 60.0;
-    private const CO2_OPTIMAL_MAX = 1000.0;
-    private const CO2_WARNING_MAX = 1600.0;
+    private const int TEMP_OPTIMAL_MIN = 18;
+    private const int TEMP_OPTIMAL_MAX = 24;
+    private const int HUMIDITY_OPTIMAL_MIN = 40;
+    private const int HUMIDITY_OPTIMAL_MAX = 60;
+    private const int CO2_OPTIMAL_MAX = 1000;
+    private const int CO2_WARNING_MAX = 1600;
 
     private SensorDataRepository $repository;
     private ChartBuilderInterface $chartBuilder;

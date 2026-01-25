@@ -17,9 +17,9 @@ use Symfony\Component\Mime\Email;
  */
 class NotificationServiceTest extends TestCase
 {
-    private const SENDER_EMAIL = 'sender@example.com';
-    private const RECEIVER_EMAIL = 'receiver@example.com';
-    private const CO2_THRESHOLD = 1600;
+    private const string SENDER_EMAIL = 'sender@example.com';
+    private const string RECEIVER_EMAIL = 'receiver@example.com';
+    private const int CO2_THRESHOLD = 1600;
     private MailerInterface&MockObject $mailer;
     private NotificationService $service;
 

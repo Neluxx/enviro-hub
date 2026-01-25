@@ -15,7 +15,7 @@ use Symfony\Component\Mime\Email;
 class NotificationService
 {
     /** The CO2 threshold */
-    private const CO2_THRESHOLD = 1600;
+    private const int CO2_THRESHOLD = 1600;
 
     private MailerInterface $mailer;
     private string $senderEmail;
