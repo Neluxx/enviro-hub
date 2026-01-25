@@ -52,7 +52,7 @@ class NotificationService
         }
     }
 
-    private function formatNotificationMessage(string $statusText, float $co2Value, SensorData $data): string
+    private function formatNotificationMessage(string $statusText, int $co2Value, SensorData $data): string
     {
         return \sprintf(
             "The CO2 level %s the threshold of %d ppm.\n\nDetails:\n- CO2 Level: %d ppm\n- Measured At: %s",
@@ -63,12 +63,12 @@ class NotificationService
         );
     }
 
-    private function isCrossingHighThreshold(float $currentCo2Value, float $lastCo2Value): bool
+    private function isCrossingHighThreshold(int $currentCo2Value, int $lastCo2Value): bool
     {
         return $currentCo2Value >= self::CO2_THRESHOLD && $lastCo2Value < self::CO2_THRESHOLD;
     }
 
-    private function isCrossingLowThreshold(float $currentCo2Value, float $lastCo2Value): bool
+    private function isCrossingLowThreshold(int $currentCo2Value, int $lastCo2Value): bool
     {
         return $currentCo2Value < self::CO2_THRESHOLD && $lastCo2Value >= self::CO2_THRESHOLD;
     }

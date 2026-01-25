@@ -22,7 +22,7 @@ class SensorStatusExtension extends AbstractExtension
     /**
      * Get the Bootstrap background class based on sensor type and value.
      */
-    public function getSensorStatusClass(string $type, ?float $value): string
+    public function getSensorStatusClass(string $type, ?int $value): string
     {
         if ($value === null) {
             return 'text-bg-secondary';
@@ -42,7 +42,7 @@ class SensorStatusExtension extends AbstractExtension
      * Warning: 16-18°C or 24-26°C
      * Danger: <16°C or >26°C.
      */
-    private function getTemperatureStatus(float $value): string
+    private function getTemperatureStatus(int $value): string
     {
         if ($value >= 18 && $value <= 24) {
             return 'text-bg-success';
@@ -61,7 +61,7 @@ class SensorStatusExtension extends AbstractExtension
      * Warning: 30-40% or 60-70%
      * Danger: <30% or >70%.
      */
-    private function getHumidityStatus(float $value): string
+    private function getHumidityStatus(int $value): string
     {
         if ($value >= 40 && $value <= 60) {
             return 'text-bg-success';
@@ -80,7 +80,7 @@ class SensorStatusExtension extends AbstractExtension
      * Warning: 1000-1999 ppm
      * Danger: >=2000 ppm.
      */
-    private function getCo2Status(float $value): string
+    private function getCo2Status(int $value): string
     {
         if ($value >= 0 && $value < 1000) {
             return 'text-bg-success';

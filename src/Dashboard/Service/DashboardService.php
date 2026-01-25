@@ -40,7 +40,7 @@ class DashboardService
      * @param string $nodeUuid The node UUID
      * @param string $range Time range string
      *
-     * @return array{labels: array<string>, temperature: array<float>, humidity: array<float>, co2: array<float|null>}
+     * @return array{labels: array<string>, temperature: array<int>, humidity: array<int>, co2: array<int|null>}
      */
     public function getChartDataByNodeUuid(string $nodeUuid, string $range): array
     {
@@ -326,9 +326,9 @@ class DashboardService
     /**
      * Format data into chart-ready structure.
      *
-     * @param array<SensorData|array{label: string, temperature: float, humidity: float, co2: float|null}> $data
+     * @param array<SensorData|array{label: string, temperature: int, humidity: int, co2: int|null}> $data
      *
-     * @return array{labels: array<string>, temperature: array<float>, humidity: array<float>, co2: array<float|null>}
+     * @return array{labels: array<string>, temperature: array<int>, humidity: array<int>, co2: array<int|null>}
      */
     private function formatChartData(array $data): array
     {

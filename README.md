@@ -43,10 +43,10 @@ Have ideas or found a bug? Contributions are welcome! Feel free to fork the proj
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `temperature` | `float` | **Required**. The temperature in degrees Celsius. |
-| `humidity` | `float` | **Required**. The relative humidity in percent. |
-| `pressure` | `float` | **Required**. The atmospheric pressure in hPa. |
-| `co2` | `float` | **Required**. The CO₂ level in ppm. |
+| `temperature` | `int` | **Required**. The temperature in degrees Celsius. |
+| `humidity` | `int` | **Required**. The relative humidity in percent. |
+| `pressure` | `int` | **Required**. The atmospheric pressure in hPa. |
+| `co2` | `int` | **Required**. The CO₂ level in ppm. |
 | `created` | `datetime` | **Required**. The time of the measurement. |
 
 ## License

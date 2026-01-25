@@ -207,7 +207,7 @@ class SensorDataServiceTest extends KernelTestCase
         ];
 
         $this->expectException(TypeError::class);
-        $this->expectExceptionMessage('Argument #2 ($temperature) must be of type float, string given');
+        $this->expectExceptionMessage('Argument #2 ($temperature) must be of type int, string given');
 
         $this->service->saveSensorData($data);
     }
@@ -224,7 +224,7 @@ class SensorDataServiceTest extends KernelTestCase
         ];
 
         $this->expectException(TypeError::class);
-        $this->expectExceptionMessage('Argument #3 ($humidity) must be of type float, string given');
+        $this->expectExceptionMessage('Argument #3 ($humidity) must be of type int, string given');
 
         $this->service->saveSensorData($data);
     }
@@ -241,7 +241,7 @@ class SensorDataServiceTest extends KernelTestCase
         ];
 
         $this->expectException(TypeError::class);
-        $this->expectExceptionMessage('Argument #4 ($pressure) must be of type float, string given');
+        $this->expectExceptionMessage('Argument #4 ($pressure) must be of type int, string given');
 
         $this->service->saveSensorData($data);
     }
@@ -258,7 +258,7 @@ class SensorDataServiceTest extends KernelTestCase
         ];
 
         $this->expectException(TypeError::class);
-        $this->expectExceptionMessage('Argument #5 ($carbonDioxide) must be of type ?float, string given');
+        $this->expectExceptionMessage('Argument #5 ($carbonDioxide) must be of type ?int, string given');
 
         $this->service->saveSensorData($data);
     }

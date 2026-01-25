@@ -267,7 +267,7 @@ class NotificationServiceTest extends TestCase
             temperature: 22.5,
             humidity: 65.0,
             pressure: 1013.25,
-            carbonDioxide: (float) self::CO2_THRESHOLD,
+            carbonDioxide: self::CO2_THRESHOLD,
             measuredAt: new DateTimeImmutable('2024-01-15 10:00:00'),
         );
 
