@@ -65,10 +65,10 @@ class SensorDataFixture extends Fixture implements DependentFixtureInterface
 
             $sensorData = new SensorData(
                 $node->getUuid(),
-                (int) round($temperature, 2),
-                (int) round($humidity, 2),
-                (int) round($pressure, 2),
-                $carbonDioxide ? (int) round($carbonDioxide, 2) : null,
+                $temperature,
+                $humidity,
+                $pressure,
+                $carbonDioxide,
                 $measuredAt
             );
 
@@ -96,10 +96,10 @@ class SensorDataFixture extends Fixture implements DependentFixtureInterface
 
             $sensorData = new SensorData(
                 $node->getUuid(),
-                (int) round($temperature, 2),
-                (int) round($humidity, 2),
-                (int) round($pressure, 2),
-                $carbonDioxide ? (int) round($carbonDioxide, 2) : null,
+                $temperature,
+                $humidity,
+                $pressure,
+                $carbonDioxide,
                 $measuredAt
             );
 
