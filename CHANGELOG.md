@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Squash all migrations into initial ones
 - Use DateTimeImmutable instead of DateTime
-- Use integers as sensor data values instead of floats
+- Use decimals and integers as sensor data values instead of doubles
 
 ## [v2.0.2 Venus](https://github.com/Neluxx/enviro-hub/releases/tag/v2.0.2) - 2026-01-23
 
