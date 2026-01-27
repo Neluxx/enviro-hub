@@ -301,7 +301,7 @@ class NotificationServiceTest extends TestCase
             temperature: 22.5,
             humidity: 65.0,
             pressure: 1013.25,
-            carbonDioxide: self::CO2_THRESHOLD + 0.1,
+            carbonDioxide: self::CO2_THRESHOLD + 1,
             measuredAt: new DateTimeImmutable('2024-01-15 10:00:00'),
         );
 
@@ -310,7 +310,7 @@ class NotificationServiceTest extends TestCase
             temperature: 22.0,
             humidity: 64.0,
             pressure: 1013.0,
-            carbonDioxide: self::CO2_THRESHOLD - 0.1,
+            carbonDioxide: self::CO2_THRESHOLD - 1,
             measuredAt: new DateTimeImmutable('2024-01-15 09:00:00'),
         );
 
@@ -335,7 +335,7 @@ class NotificationServiceTest extends TestCase
             temperature: 22.5,
             humidity: 65.0,
             pressure: 1013.25,
-            carbonDioxide: self::CO2_THRESHOLD - 0.1,
+            carbonDioxide: self::CO2_THRESHOLD - 1,
             measuredAt: new DateTimeImmutable('2024-01-15 10:00:00'),
         );
 
@@ -344,7 +344,7 @@ class NotificationServiceTest extends TestCase
             temperature: 22.0,
             humidity: 64.0,
             pressure: 1013.0,
-            carbonDioxide: self::CO2_THRESHOLD + 0.1,
+            carbonDioxide: self::CO2_THRESHOLD + 1,
             measuredAt: new DateTimeImmutable('2024-01-15 09:00:00'),
         );
 

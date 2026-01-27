@@ -49,10 +49,10 @@ class SensorDataServiceTest extends KernelTestCase
         $this->service->saveSensorData($data);
 
         $lastEntry = $this->repository->getLastEntryByNodeUuid('test-node-uuid');
-        $this->assertSame(22.5, $lastEntry->getTemperature());
-        $this->assertSame(45.0, $lastEntry->getHumidity());
-        $this->assertSame(1013.25, $lastEntry->getPressure());
-        $this->assertSame(400.0, $lastEntry->getCarbonDioxide());
+        $this->assertSame(23, $lastEntry->getTemperature());
+        $this->assertSame(45, $lastEntry->getHumidity());
+        $this->assertSame(1013, $lastEntry->getPressure());
+        $this->assertSame(400, $lastEntry->getCarbonDioxide());
         $this->assertEquals(new DateTimeImmutable('2025-10-26 10:00:00'), $lastEntry->getMeasuredAt());
     }
 
@@ -82,16 +82,16 @@ class SensorDataServiceTest extends KernelTestCase
         $entries = $this->repository->getLatestEntriesByNodeUuid('test-node-uuid');
         $this->assertCount(2, $entries);
 
-        $this->assertSame(23.0, $entries[0]->getTemperature());
-        $this->assertSame(50.0, $entries[0]->getHumidity());
-        $this->assertSame(1015.0, $entries[0]->getPressure());
-        $this->assertSame(420.0, $entries[0]->getCarbonDioxide());
+        $this->assertSame(23, $entries[0]->getTemperature());
+        $this->assertSame(50, $entries[0]->getHumidity());
+        $this->assertSame(1015, $entries[0]->getPressure());
+        $this->assertSame(420, $entries[0]->getCarbonDioxide());
         $this->assertEquals(new DateTimeImmutable('2025-10-26 10:00:00'), $entries[0]->getMeasuredAt());
 
-        $this->assertSame(20.0, $entries[1]->getTemperature());
-        $this->assertSame(40.0, $entries[1]->getHumidity());
-        $this->assertSame(1010.0, $entries[1]->getPressure());
-        $this->assertSame(380.0, $entries[1]->getCarbonDioxide());
+        $this->assertSame(20, $entries[1]->getTemperature());
+        $this->assertSame(40, $entries[1]->getHumidity());
+        $this->assertSame(1010, $entries[1]->getPressure());
+        $this->assertSame(380, $entries[1]->getCarbonDioxide());
         $this->assertEquals(new DateTimeImmutable('2025-10-26 09:00:00'), $entries[1]->getMeasuredAt());
     }
 
@@ -163,7 +163,7 @@ class SensorDataServiceTest extends KernelTestCase
     {
         $data = [
             'uuid' => 'test-node-uuid',
-            'temperature' => 22.5,
+            'temperature' => 22.6,
             'humidity' => 45.0,
             'pressure' => 1013.25,
             'created_at' => '2025-10-26 10:00:00',
@@ -173,9 +173,9 @@ class SensorDataServiceTest extends KernelTestCase
 
         $lastEntry = $this->repository->getLastEntryByNodeUuid('test-node-uuid');
         $this->assertNull($lastEntry->getCarbonDioxide());
-        $this->assertSame(22.5, $lastEntry->getTemperature());
-        $this->assertSame(45.0, $lastEntry->getHumidity());
-        $this->assertSame(1013.25, $lastEntry->getPressure());
+        $this->assertSame(23, $lastEntry->getTemperature());
+        $this->assertSame(45, $lastEntry->getHumidity());
+        $this->assertSame(1013, $lastEntry->getPressure());
         $this->assertEquals(new DateTimeImmutable('2025-10-26 10:00:00'), $lastEntry->getMeasuredAt());
     }
 
@@ -207,7 +207,7 @@ class SensorDataServiceTest extends KernelTestCase
         ];
 
         $this->expectException(TypeError::class);
-        $this->expectExceptionMessage('Argument #2 ($temperature) must be of type int, string given');
+        $this->expectExceptionMessage('Argument #2 ($temperature) must be of type int|float, string given');
 
         $this->service->saveSensorData($data);
     }
@@ -224,7 +224,7 @@ class SensorDataServiceTest extends KernelTestCase
         ];
 
         $this->expectException(TypeError::class);
-        $this->expectExceptionMessage('Argument #3 ($humidity) must be of type int, string given');
+        $this->expectExceptionMessage('Argument #3 ($humidity) must be of type int|float, string given');
 
         $this->service->saveSensorData($data);
     }
@@ -241,7 +241,7 @@ class SensorDataServiceTest extends KernelTestCase
         ];
 
         $this->expectException(TypeError::class);
-        $this->expectExceptionMessage('Argument #4 ($pressure) must be of type int, string given');
+        $this->expectExceptionMessage('Argument #4 ($pressure) must be of type int|float, string given');
 
         $this->service->saveSensorData($data);
     }
@@ -258,7 +258,7 @@ class SensorDataServiceTest extends KernelTestCase
         ];
 
         $this->expectException(TypeError::class);
-        $this->expectExceptionMessage('Argument #5 ($carbonDioxide) must be of type ?int, string given');
+        $this->expectExceptionMessage('Argument #5 ($carbonDioxide) must be of type int|float|null, string given');
 
         $this->service->saveSensorData($data);
     }
