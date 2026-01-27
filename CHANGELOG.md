@@ -9,12 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Add index for node_uuid column in sensor_data table
 
 ### Changed
-- Squash all migrations into initial ones
-- Use DateTimeImmutable instead of DateTime
-- Use integers as sensor data values instead of floats
 
 ### Deprecated
 
@@ -25,6 +21,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 
 ### Dependencies
+
+## [v2.0.3 Venus](https://github.com/Neluxx/enviro-hub/releases/tag/v2.0.3) - 2026-01-27
+
+### Added
+- Add index for node_uuid column in sensor_data table
+
+### Changed
+- Squash all migrations into initial ones
+- Use DateTimeImmutable instead of DateTime
+- Use integers as sensor data values instead of floats
 
 ## [v2.0.2 Venus](https://github.com/Neluxx/enviro-hub/releases/tag/v2.0.2) - 2026-01-23
 
