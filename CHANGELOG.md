@@ -9,8 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Add index for node_uuid column in sensor_data table
 
 ### Changed
+- Squash all migrations into initial ones
+- Use DateTimeImmutable instead of DateTime
+- Use integers as sensor data values instead of floats
 
 ### Deprecated
 
