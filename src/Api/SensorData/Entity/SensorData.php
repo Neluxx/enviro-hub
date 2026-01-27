@@ -41,17 +41,17 @@ class SensorData
 
     public function __construct(
         string $nodeUuid,
-        int $temperature,
-        int $humidity,
-        int $pressure,
-        ?int $carbonDioxide,
+        int|float $temperature,
+        int|float $humidity,
+        int|float $pressure,
+        int|float|null $carbonDioxide,
         DateTimeImmutable $measuredAt,
     ) {
         $this->nodeUuid = $nodeUuid;
-        $this->temperature = $temperature;
-        $this->humidity = $humidity;
-        $this->pressure = $pressure;
-        $this->carbonDioxide = $carbonDioxide;
+        $this->temperature = (int) round($temperature);
+        $this->humidity = (int) round($humidity);
+        $this->pressure = (int) round($pressure);
+        $this->carbonDioxide = $carbonDioxide ? (int) round($carbonDioxide) : null;
         $this->measuredAt = $measuredAt;
         $this->createdAt = new DateTimeImmutable();
     }
