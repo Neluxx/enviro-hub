@@ -22,7 +22,7 @@ final class Version20260124110742 extends AbstractMigration
               node_uuid VARCHAR(36) NOT NULL,
               temperature DECIMAL(4, 1) NOT NULL,
               humidity DECIMAL(4, 1) NOT NULL,
-              pressure DECIMAL(5, 1) NOT NULL,
+              pressure INT NOT NULL,
               carbon_dioxide INT DEFAULT NULL,
               measured_at DATETIME NOT NULL,
               created_at DATETIME NOT NULL,

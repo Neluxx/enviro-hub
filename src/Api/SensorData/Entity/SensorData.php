@@ -22,13 +22,13 @@ class SensorData
     private string $nodeUuid;
 
     #[ORM\Column(type: 'decimal')]
-    private float $temperature;
+    private string $temperature;
 
     #[ORM\Column(type: 'decimal')]
-    private float $humidity;
+    private string $humidity;
 
-    #[ORM\Column(type: 'decimal')]
-    private float $pressure;
+    #[ORM\Column(type: 'integer')]
+    private int $pressure;
 
     #[ORM\Column(type: 'integer', nullable: true)]
     private ?int $carbonDioxide;
@@ -41,17 +41,17 @@ class SensorData
 
     public function __construct(
         string $nodeUuid,
-        float $temperature,
-        float $humidity,
-        float $pressure,
-        ?int $carbonDioxide,
+        int|float $temperature,
+        int|float $humidity,
+        int|float $pressure,
+        int|float|null $carbonDioxide,
         DateTimeImmutable $measuredAt,
     ) {
         $this->nodeUuid = $nodeUuid;
-        $this->temperature = round($temperature, 1);
-        $this->humidity = round($humidity, 1);
-        $this->pressure = round($pressure, 1);
-        $this->carbonDioxide = $carbonDioxide;
+        $this->temperature = (string) $temperature;
+        $this->humidity = (string) $humidity;
+        $this->pressure = (int) $pressure;
+        $this->carbonDioxide = $carbonDioxide ? (int) $carbonDioxide : null;
         $this->measuredAt = $measuredAt;
         $this->createdAt = new DateTimeImmutable();
     }
@@ -66,17 +66,17 @@ class SensorData
         return $this->nodeUuid;
     }
 
-    public function getTemperature(): float
+    public function getTemperature(): string
     {
         return $this->temperature;
     }
 
-    public function getHumidity(): float
+    public function getHumidity(): string
     {
         return $this->humidity;
     }
 
-    public function getPressure(): float
+    public function getPressure(): int
     {
         return $this->pressure;
     }
