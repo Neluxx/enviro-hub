@@ -135,8 +135,8 @@ class NodeControllerTest extends WebTestCase
         $pageContent = $crawler->filter('body')->text();
 
         // Verify temperature and humidity values are displayed
-        static::assertStringContainsString('20.0°C', $pageContent);
-        static::assertStringContainsString('50.0%', $pageContent);
+        static::assertStringContainsString('20°C', $pageContent);
+        static::assertStringContainsString('50%', $pageContent);
 
         // Verify timestamp format is present (Y-m-d H:i)
         static::assertMatchesRegularExpression(

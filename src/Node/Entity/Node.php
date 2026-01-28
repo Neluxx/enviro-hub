@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Node\Entity;
 
+use App\Api\SensorData\Entity\SensorData;
 use App\Node\Repository\NodeRepository;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: NodeRepository::class)]
@@ -26,6 +29,9 @@ class Node
     #[ORM\Column(type: 'integer')]
     private int $homeId;
 
+    #[ORM\OneToMany(targetEntity: SensorData::class, mappedBy: 'node')]
+    private Collection $sensorData;
+
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $createdAt;
 
@@ -37,6 +43,7 @@ class Node
         $this->uuid = $uuid;
         $this->title = $title;
         $this->homeId = $homeId;
+        $this->sensorData = new ArrayCollection();
         $this->createdAt = new DateTimeImmutable();
         $this->modifiedAt = new DateTimeImmutable();
     }
@@ -59,6 +66,14 @@ class Node
     public function getHomeId(): int
     {
         return $this->homeId;
+    }
+
+    /**
+     * @return Collection<int, SensorData>
+     */
+    public function getSensorData(): Collection
+    {
+        return $this->sensorData;
     }
 
     public function getCreatedAt(): DateTimeImmutable

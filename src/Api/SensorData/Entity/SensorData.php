@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Api\SensorData\Entity;
 
 use App\Api\SensorData\Repository\SensorDataRepository;
+use App\Node\Entity\Node;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -17,6 +18,9 @@ class SensorData
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private int $id;
+
+    #[ORM\ManyToOne(targetEntity: Node::class, inversedBy: 'sensor_data')]
+    private Node $node;
 
     #[ORM\Column(type: 'string', length: 36)]
     private string $nodeUuid;
@@ -59,6 +63,18 @@ class SensorData
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getNode(): ?Node
+    {
+        return $this->node;
+    }
+
+    public function setNode(?Node $node): self
+    {
+        $this->node = $node;
+
+        return $this;
     }
 
     public function getNodeUuid(): string

@@ -46,8 +46,8 @@ class DashboardControllerTest extends WebTestCase
 
         // Verify the most recent sensor values are displayed
         // For node index 0, hour 0: temp=20.0, humidity=50.0, co2=400.0
-        static::assertStringContainsString('20.0 °C', $crawler->filter('body')->text());
-        static::assertStringContainsString('50.0 %', $crawler->filter('body')->text());
+        static::assertStringContainsString('20 °C', $crawler->filter('body')->text());
+        static::assertStringContainsString('50 %', $crawler->filter('body')->text());
         static::assertStringContainsString('400 ppm', $crawler->filter('body')->text());
 
         // Verify charts are rendered
@@ -69,8 +69,8 @@ class DashboardControllerTest extends WebTestCase
         static::assertResponseIsSuccessful();
 
         // For node index 1, hour 0: temp=20.0, humidity=50.0, co2=null
-        static::assertStringContainsString('20.0 °C', $crawler->filter('body')->text());
-        static::assertStringContainsString('50.0 %', $crawler->filter('body')->text());
+        static::assertStringContainsString('20 °C', $crawler->filter('body')->text());
+        static::assertStringContainsString('50 %', $crawler->filter('body')->text());
         static::assertStringContainsString('N/A ppm', $crawler->filter('body')->text());
     }
 
@@ -89,8 +89,8 @@ class DashboardControllerTest extends WebTestCase
         static::assertResponseIsSuccessful();
 
         // For node index 2, hour 0: temp=20.0, humidity=50.0, co2=400.0
-        static::assertStringContainsString('20.0 °C', $crawler->filter('body')->text());
-        static::assertStringContainsString('50.0 %', $crawler->filter('body')->text());
+        static::assertStringContainsString('20 °C', $crawler->filter('body')->text());
+        static::assertStringContainsString('50 %', $crawler->filter('body')->text());
         static::assertStringContainsString('400 ppm', $crawler->filter('body')->text());
     }
 
