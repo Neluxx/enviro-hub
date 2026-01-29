@@ -7,8 +7,6 @@ on:
 
 env:
   PHP_VERSION: '8.4'
-  DATABASE_PATH: 'var/data'
-  TEST_ENV: 'test'
   DATABASE_URL: 'sqlite:///%kernel.project_dir%/var/data/data_test.sqlite'
 
 jobs:
@@ -44,11 +42,13 @@ jobs:
       # Test Environment Setup
       - name: Initialize Database Directory
         run: |
-          mkdir -p ${{ env.DATABASE_PATH }}
+          mkdir -p var/data
           chmod -R 777 var/
 
       - name: Setup Test Database
-        run: php bin/console doctrine:schema:create --env=${{ env.TEST_ENV }}
+        run: |
+          php bin/console doctrine:database:create --if-not-exists --env=test
+          php bin/console doctrine:migrations:migrate --no-interaction --env=test
 
       # Testing
       - name: Execute Test Suite
