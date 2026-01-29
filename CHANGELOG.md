@@ -21,6 +21,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 
 ### Dependencies
+- phpstan/phpdoc-parser updated from 2.3.1 to 2.3.2 patch
+- twig/extra-bundle updated from 3.22.2 to 3.23.0 minor
+- twig/twig updated from 3.22.2 to 3.23.0 minor
+- friendsofphp/php-cs-fixer updated from 3.92.5 to 3.93.1 minor
+- phpstan/phpstan updated from 2.1.36 to 2.1.37 patch
+- phpstan/phpstan-doctrine updated from 2.0.13 to 2.0.14 patch
+- phpunit/phpunit updated from 12.5.6 to 12.5.8 patch
 
 ## [v2.0.3 Venus](https://github.com/Neluxx/enviro-hub/releases/tag/v2.0.3) - 2026-01-27
 
