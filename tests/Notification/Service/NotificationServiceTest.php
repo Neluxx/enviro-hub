@@ -136,7 +136,7 @@ class NotificationServiceTest extends TestCase
 
         $this->mailer->expects($this->once())
             ->method('send')
-            ->with($this->callback(function (Email $email) {
+            ->with($this->callback(static function (Email $email) {
                 $fromAddresses = $email->getFrom();
                 $toAddresses = $email->getTo();
 
@@ -180,7 +180,7 @@ class NotificationServiceTest extends TestCase
 
         $this->mailer->expects($this->once())
             ->method('send')
-            ->with($this->callback(function (Email $email) {
+            ->with($this->callback(static function (Email $email) {
                 $fromAddresses = $email->getFrom();
                 $toAddresses = $email->getTo();
 
@@ -282,7 +282,7 @@ class NotificationServiceTest extends TestCase
 
         $this->mailer->expects($this->once())
             ->method('send')
-            ->with($this->callback(function (Email $email) {
+            ->with($this->callback(static function (Email $email) {
                 static::assertEquals('High CO2 Alert!', $email->getSubject());
 
                 return true;
@@ -316,7 +316,7 @@ class NotificationServiceTest extends TestCase
 
         $this->mailer->expects($this->once())
             ->method('send')
-            ->with($this->callback(function (Email $email) {
+            ->with($this->callback(static function (Email $email) {
                 static::assertEquals('High CO2 Alert!', $email->getSubject());
 
                 return true;
@@ -350,7 +350,7 @@ class NotificationServiceTest extends TestCase
 
         $this->mailer->expects($this->once())
             ->method('send')
-            ->with($this->callback(function (Email $email) {
+            ->with($this->callback(static function (Email $email) {
                 static::assertEquals('Low CO2 Alert!', $email->getSubject());
 
                 return true;

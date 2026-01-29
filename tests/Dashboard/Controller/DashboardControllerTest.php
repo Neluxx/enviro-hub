@@ -37,7 +37,7 @@ class DashboardControllerTest extends WebTestCase
 
         // Verify the page contains temperature, humidity and CO2 card titles
         // Check that the combined text of all .card-title elements contains each metric
-        $cardTitlesText = $crawler->filter('.card-title')->each(fn ($node) => $node->text());
+        $cardTitlesText = $crawler->filter('.card-title')->each(static fn ($node) => $node->text());
         $allTitlesText = implode(' ', $cardTitlesText);
 
         static::assertStringContainsString('Temperature', $allTitlesText);
@@ -147,7 +147,7 @@ class DashboardControllerTest extends WebTestCase
         static::assertSelectorExists('.time-range-buttons');
 
         // Get all button texts
-        $buttonTexts = $crawler->filter('.time-range-buttons button')->each(function ($node) {
+        $buttonTexts = $crawler->filter('.time-range-buttons button')->each(static function ($node) {
             return $node->text();
         });
 

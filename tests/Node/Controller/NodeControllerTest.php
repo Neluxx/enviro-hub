@@ -34,7 +34,7 @@ class NodeControllerTest extends WebTestCase
         static::assertCount(3, $crawler->filter('.card'));
 
         // Extract all node titles from the page
-        $nodeTitles = $crawler->filter('.card-title')->each(function ($node) {
+        $nodeTitles = $crawler->filter('.card-title')->each(static function ($node) {
             return $node->text();
         });
 
@@ -66,7 +66,7 @@ class NodeControllerTest extends WebTestCase
         static::assertCount(2, $crawler->filter('.card'));
 
         // Extract all node titles from the page
-        $nodeTitles = $crawler->filter('.card-title')->each(function ($node) {
+        $nodeTitles = $crawler->filter('.card-title')->each(static function ($node) {
             return $node->text();
         });
 
@@ -96,7 +96,7 @@ class NodeControllerTest extends WebTestCase
         static::assertCount(1, $crawler->filter('.card'));
 
         // Extract all node titles from the page
-        $nodeTitles = $crawler->filter('.card-title')->each(function ($node) {
+        $nodeTitles = $crawler->filter('.card-title')->each(static function ($node) {
             return $node->text();
         });
 

@@ -42,7 +42,7 @@ class NodeController extends AbstractController
         $nodes = $this->nodeRepository->findByHomeId($home->getId());
 
         // Get last sensor data for all nodes
-        $nodeUuids = array_map(fn ($node) => $node->getUuid(), $nodes);
+        $nodeUuids = array_map(static fn ($node) => $node->getUuid(), $nodes);
         $sensorData = $this->sensorDataRepository->getLastEntriesByNodeUuids($nodeUuids);
 
         return $this->render('@Node/index.html.twig', [

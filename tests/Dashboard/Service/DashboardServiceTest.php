@@ -85,8 +85,8 @@ class DashboardServiceTest extends TestCase
             ->method('findByNodeUuidAndDateRange')
             ->with(
                 'test-node-uuid',
-                $this->callback(fn ($date) => $date instanceof DateTime),
-                $this->callback(fn ($date) => $date instanceof DateTime)
+                $this->callback(static fn ($date) => $date instanceof DateTime),
+                $this->callback(static fn ($date) => $date instanceof DateTime)
             )
             ->willReturn($data);
 
@@ -163,14 +163,14 @@ class DashboardServiceTest extends TestCase
             ->method('findByNodeUuidAndDateRange')
             ->with(
                 'test-node-uuid',
-                $this->callback(function ($date) {
+                $this->callback(static function ($date) {
                     // Should be approximately 7 days ago
                     $now = new DateTime();
                     $diff = $now->diff($date);
 
                     return $diff->days >= 6 && $diff->days <= 8;
                 }),
-                $this->callback(fn ($date) => $date instanceof DateTime)
+                $this->callback(static fn ($date) => $date instanceof DateTime)
             )
             ->willReturn($data);
 

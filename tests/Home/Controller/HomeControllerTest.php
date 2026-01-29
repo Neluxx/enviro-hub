@@ -33,7 +33,7 @@ class HomeControllerTest extends WebTestCase
         static::assertCount(3, $crawler->filter('.card'));
 
         // Extract all home titles from the page
-        $homeTitles = $crawler->filter('.card-title')->each(function ($node) {
+        $homeTitles = $crawler->filter('.card-title')->each(static function ($node) {
             return $node->text();
         });
 
