@@ -16,20 +16,20 @@ final class Version20260124102752 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $this->addSql(<<<'SQL'
-            CREATE TABLE homes (
-              id INT AUTO_INCREMENT NOT NULL,
-              title VARCHAR(255) NOT NULL,
-              identifier VARCHAR(255) NOT NULL,
-              created_at DATETIME NOT NULL,
-              modified_at DATETIME NOT NULL,
-              PRIMARY KEY(id)
-            ) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
-        SQL);
+        $table = $schema->createTable('homes');
+
+        $table->addColumn('id', 'integer', ['autoincrement' => true]);
+        $table->addColumn('title', 'string', ['length' => 255]);
+        $table->addColumn('identifier', 'string', ['length' => 255]);
+        $table->addColumn('created_at', 'datetime');
+        $table->addColumn('modified_at', 'datetime');
+
+        $table->setPrimaryKey(['id']);
+        $table->addUniqueIndex(['identifier'], 'uniq_homes_identifier');
     }
 
     public function down(Schema $schema): void
     {
-        $this->addSql('DROP TABLE homes');
+        $schema->dropTable('homes');
     }
 }

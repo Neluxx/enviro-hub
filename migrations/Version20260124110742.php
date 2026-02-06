@@ -16,23 +16,23 @@ final class Version20260124110742 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $this->addSql(<<<'SQL'
-            CREATE TABLE sensor_data (
-              id INT AUTO_INCREMENT NOT NULL,
-              node_uuid VARCHAR(36) NOT NULL,
-              temperature DECIMAL(4, 1) NOT NULL,
-              humidity DECIMAL(4, 1) NOT NULL,
-              pressure INT NOT NULL,
-              carbon_dioxide INT DEFAULT NULL,
-              measured_at DATETIME NOT NULL,
-              created_at DATETIME NOT NULL,
-              PRIMARY KEY(id)
-            ) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
-        SQL);
+        $table = $schema->createTable('sensor_data');
+
+        $table->addColumn('id', 'integer', ['autoincrement' => true]);
+        $table->addColumn('node_uuid', 'string', ['length' => 36, 'notnull' => false]);
+        $table->addColumn('temperature', 'decimal', ['precision' => 5, 'scale' => 2]);
+        $table->addColumn('humidity', 'decimal', ['precision' => 5, 'scale' => 2]);
+        $table->addColumn('pressure', 'integer');
+        $table->addColumn('carbon_dioxide', 'integer', ['notnull' => false]);
+        $table->addColumn('measured_at', 'datetime');
+        $table->addColumn('created_at', 'datetime');
+
+        $table->setPrimaryKey(['id']);
+        $table->addIndex(['node_uuid'], 'idx_sensor_data_node_uuid');
     }
 
     public function down(Schema $schema): void
     {
-        $this->addSql('DROP TABLE sensor_data');
+        $schema->dropTable('sensor_data');
     }
 }
