@@ -27,9 +27,9 @@ class StoreSensorDataRequest extends FormRequest
     {
         return [
             'node_uuid' => ['required', 'string', 'uuid'],
-            'temperature' => ['nullable', 'numeric', 'between:-100,100'],
-            'humidity' => ['nullable', 'numeric', 'between:0,100'],
-            'pressure' => ['nullable', 'integer', 'min:0'],
+            'temperature' => ['required', 'numeric', 'between:-100,100'],
+            'humidity' => ['required', 'numeric', 'between:0,100'],
+            'pressure' => ['required', 'integer', 'min:0'],
             'carbon_dioxide' => ['nullable', 'integer', 'min:0'],
             'measured_at' => ['required', 'date'],
         ];
