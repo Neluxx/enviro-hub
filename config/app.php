@@ -123,4 +123,18 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Application Version
+    |--------------------------------------------------------------------------
+    |
+    | This value is the version of your application, read from the VERSION
+    | file in the root of your project. It follows semantic versioning
+    | (major.minor.patch) and can be displayed in templates or notifications
+    | using config('app.version').
+    |
+    */
+
+    'version' => trim(file_get_contents(base_path('VERSION.txt'))),
+
 ];
