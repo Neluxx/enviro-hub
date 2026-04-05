@@ -1,11 +1,18 @@
-Review all uncommitted changes against the project's CLAUDE.md and Laravel best practices.
+Review a specific class or all uncommitted changes against the project's CLAUDE.md and Laravel best practices.
+
+## Input
+
+The argument `$ARGUMENTS` may be:
+- A class name or partial path (e.g. `UserController`, `app/Services/CreateUser.php`) — review that specific file
+- Empty — review every PHP file touched in `git diff HEAD`
 
 ## Steps
 
-1. Run `git diff HEAD` to get all uncommitted changes (staged and unstaged).
-2. Run `cat CLAUDE.md` to load the project's coding standards.
-3. For each changed file, read the full file context if needed to understand the surrounding code.
-4. Review the changes against the rules below.
+1. **Determine scope**
+   - If `$ARGUMENTS` is provided, locate the file using Glob or Grep and read it fully. Do not use `git diff` — review the entire current file.
+   - If `$ARGUMENTS` is empty, run `git diff HEAD` to get all uncommitted changes and read the full context of each changed PHP file.
+2. Read `CLAUDE.md` to load the project's coding standards.
+3. Review the code against the rules below.
 
 ## What to check
 
@@ -56,7 +63,8 @@ One of:
 
 ## Rules
 
-- Only review lines that are part of the diff — do not flag pre-existing code unless it directly interacts with the changed lines
+- When reviewing a specific class: review the whole file, not just a diff
+- When reviewing uncommitted changes: only flag lines that are part of the diff — do not flag pre-existing code unless it directly interacts with the changed lines
 - Be specific: reference file paths and line numbers where possible
 - Do not invent problems — if something is acceptable, say nothing about it
-- If there are no uncommitted changes, say so and stop
+- If no class is given and there are no uncommitted changes, say so and stop
