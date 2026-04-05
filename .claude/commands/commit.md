@@ -1,10 +1,10 @@
-Generate a Conventional Commit message for the staged changes.
+Generate a Conventional Commit message for all local changes.
 
 ## Steps
 
-1. Run `git diff --cached` to see all staged changes.
+1. Run `git diff HEAD` to see all local changes (staged and unstaged combined).
 2. Run `git branch --show-current` to get the current branch name.
-3. Analyse the staged changes and determine:
+3. Analyse the changes and determine:
    - **type**: one of `feat`, `fix`, `refactor`, `chore`, `docs`, `test`, `style`, `perf`, `ci`, `build`, `revert`
    - **scope**: only include if the change is clearly isolated to a single module, component, or layer (e.g. `auth`, `api`, `dashboard`) — leave empty otherwise
    - **subject**: short imperative summary, lowercase, no period, max 72 chars
@@ -60,4 +60,4 @@ Refs: #17
 - Never pad the body with obvious restatements of the diff
 - The subject must be imperative mood ("add", "fix", "remove" — not "added", "fixes", "removed")
 - Do not end the subject with a period
-- If there are no staged changes, say so and stop
+- If there are no local changes at all, say so and stop
