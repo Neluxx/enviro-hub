@@ -14,7 +14,7 @@ A web application for monitoring and visualizing environmental sensor data from 
 | Layer | Technology |
 |-------|-----------|
 | Framework | Laravel 12, PHP 8.2+ |
-| Frontend | Livewire 4, Alpine.js, Tailwind CSS 4, daisyUI 5 |
+| Frontend | Livewire 4, Alpine.js, Tailwind CSS 4 |
 | Charts | Chart.js 4 |
 | Build | Vite 7 |
 | Database | SQLite (default) |
