@@ -40,8 +40,8 @@ class Dashboard extends Component
         }
 
         return SensorData::where('node_id', $this->selectedNodeId)
+            ->where('measured_at', '>=', now()->subDay())
             ->orderBy('measured_at')
-            ->limit(100)
             ->get();
     }
 
