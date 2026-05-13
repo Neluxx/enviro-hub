@@ -11,22 +11,7 @@
 
     <div class="container mx-auto p-4 max-w-5xl">
         {{-- Selectors --}}
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-            <div class="form-control w-full">
-                <label class="label">
-                    <span class="label-text font-semibold">Home</span>
-                </label>
-                <select
-                    wire:model.live="selectedHomeId"
-                    class="select select-bordered w-full"
-                >
-                    <option value="" disabled>Select a home</option>
-                    @foreach ($this->homes as $home)
-                        <option value="{{ $home->id }}">{{ $home->title }}</option>
-                    @endforeach
-                </select>
-            </div>
-
+        <div class="mb-6">
             <div class="form-control w-full">
                 <label class="label">
                     <span class="label-text font-semibold">Node</span>

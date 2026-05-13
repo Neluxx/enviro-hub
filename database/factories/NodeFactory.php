@@ -21,7 +21,6 @@ class NodeFactory extends Factory
         return [
             'uuid' => Str::uuid()->toString(),
             'title' => fake()->word(),
-            'home_id' => null,
         ];
     }
 }

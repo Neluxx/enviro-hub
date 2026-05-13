@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->uuid()->unique();
             $table->string('title', 255);
-            $table->foreignId('home_id')->nullable()->constrained('homes')->onDelete('set null');
             $table->timestamps();
         });
     }

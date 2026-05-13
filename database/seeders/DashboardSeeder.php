@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Home;
 use App\Models\Node;
 use App\Models\SensorData;
 use Carbon\Carbon;
@@ -11,27 +10,20 @@ use Illuminate\Database\Seeder;
 class DashboardSeeder extends Seeder
 {
     /**
-     * Seed homes, nodes, and realistic sensor data for the dashboard.
+     * Seed nodes and realistic sensor data for the dashboard.
      */
     public function run(): void
     {
-        $homes = [
-            ['title' => 'Mountain Cabin', 'nodes' => ['Living Room', 'Bedroom', 'Kitchen']],
-            ['title' => 'City Apartment', 'nodes' => ['Office', 'Balcony Sensor']],
-            ['title' => 'Lake House', 'nodes' => ['Garage', 'Basement', 'Attic', 'Porch']],
+        $nodeTitles = [
+            'Living Room',
+            'Bedroom',
+            'Kitchen',
         ];
 
-        foreach ($homes as $homeData) {
-            $home = Home::factory()->create(['title' => $homeData['title']]);
+        foreach ($nodeTitles as $nodeTitle) {
+            $node = Node::factory()->create(['title' => $nodeTitle]);
 
-            foreach ($homeData['nodes'] as $nodeTitle) {
-                $node = Node::factory()->create([
-                    'title' => $nodeTitle,
-                    'home_id' => $home->id,
-                ]);
-
-                $this->seedSensorData($node);
-            }
+            $this->seedSensorData($node);
         }
     }
 

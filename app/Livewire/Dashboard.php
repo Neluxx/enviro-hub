@@ -2,7 +2,6 @@
 
 namespace App\Livewire;
 
-use App\Models\Home;
 use App\Models\Node;
 use App\Models\SensorData;
 use Livewire\Attributes\Computed;
@@ -10,32 +9,15 @@ use Livewire\Component;
 
 class Dashboard extends Component
 {
-    public ?int $selectedHomeId = null;
     public ?int $selectedNodeId = null;
 
     public function mount(): void
     {
-        $firstHome = Home::first();
+        $firstNode = Node::orderBy('title')->first();
 
-        if ($firstHome) {
-            $this->selectedHomeId = $firstHome->id;
-            $firstNode = $firstHome->nodes()->first();
-
-            if ($firstNode) {
-                $this->selectedNodeId = $firstNode->id;
-            }
+        if ($firstNode) {
+            $this->selectedNodeId = $firstNode->id;
         }
-    }
-
-    public function updatedSelectedHomeId($value): void
-    {
-        $this->selectedHomeId = $value ? (int) $value : null;
-        $firstNode = $this->selectedHomeId
-            ? Node::where('home_id', $this->selectedHomeId)->first()
-            : null;
-
-        $this->selectedNodeId = $firstNode?->id;
-        $this->dispatchChartData();
     }
 
     public function updatedSelectedNodeId($value): void
@@ -45,19 +27,9 @@ class Dashboard extends Component
     }
 
     #[Computed]
-    public function homes()
-    {
-        return Home::orderBy('title')->get();
-    }
-
-    #[Computed]
     public function nodes()
     {
-        if (! $this->selectedHomeId) {
-            return collect();
-        }
-
-        return Node::where('home_id', $this->selectedHomeId)->orderBy('title')->get();
+        return Node::orderBy('title')->get();
     }
 
     #[Computed]
