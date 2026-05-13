@@ -50,7 +50,7 @@ class Dashboard extends Component
     {
         $data = $this->sensorData;
 
-        $labels = $data->map(fn (SensorData $d) => $d->measured_at->format('H:i d/m'))->values()->toArray();
+        $labels = $data->map(fn (SensorData $d) => $d->measured_at->format('H:i'))->values()->toArray();
 
         return [
             'labels' => $labels,

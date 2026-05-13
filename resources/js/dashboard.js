@@ -1,116 +1,176 @@
 document.addEventListener('alpine:init', () => {
-    Alpine.data('chartDashboard', (initialData) => ({
-        charts: {},
-        hasData: false,
-        latestTemp: '',
-        latestHumidity: '',
-        latestCo2: '',
+    Alpine.data('chartDashboard', (initialData) => {
+        let chart = null;
+        let labels = [];
+        let series = { temperature: [], humidity: [], carbon_dioxide: [] };
 
-        init() {
-            this.applyData(initialData);
-            this.$wire.on('chart-updated', ({ chartData }) => this.applyData(chartData));
-        },
+        const metrics = [
+            {
+                key: 'temperature', label: 'Temperature', unit: '°C', digits: 1,
+                color: '#f87171', textClass: 'text-red-400', dotClass: 'bg-red-400',
+            },
+            {
+                key: 'humidity', label: 'Humidity', unit: '%', digits: 1,
+                color: '#60a5fa', textClass: 'text-blue-400', dotClass: 'bg-blue-400',
+            },
+            {
+                key: 'carbon_dioxide', label: 'CO₂', unit: 'ppm', digits: 0,
+                color: '#4ade80', textClass: 'text-green-400', dotClass: 'bg-green-400',
+            },
+        ];
 
-        applyData(data) {
-            this.hasData = data && data.labels && data.labels.length > 0;
+        const format = (value, digits) => {
+            if (value === null || value === undefined) return '–';
+            return Number(value).toFixed(digits);
+        };
 
-            if (!this.hasData) {
-                this.destroyCharts();
-                return;
-            }
+        const buildGradient = (canvas, color) => {
+            const ctx = canvas.getContext('2d');
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.clientHeight);
+            gradient.addColorStop(0, color + '40');
+            gradient.addColorStop(1, color + '00');
+            return gradient;
+        };
 
-            this.latestTemp = data.temperature[data.temperature.length - 1];
-            this.latestHumidity = data.humidity[data.humidity.length - 1];
-            this.latestCo2 = data.carbon_dioxide[data.carbon_dioxide.length - 1];
+        return {
+            hasData: false,
+            selectedMetric: 'temperature',
+            latest: { temperature: '–', humidity: '–', carbon_dioxide: '–' },
+            metrics,
 
-            // Give Alpine a tick to show the containers before Chart.js measures them
-            this.$nextTick(() => this.createCharts(data));
-        },
+            get currentMetric() {
+                return metrics.find((m) => m.key === this.selectedMetric);
+            },
 
-        createCharts(data) {
-            this.destroyCharts();
+            init() {
+                this.applyData(initialData);
+                this.$wire.on('chart-updated', ({ chartData }) => this.applyData(chartData));
+            },
 
-            const gridColor = 'rgba(255, 255, 255, 0.08)';
-            const tickColor = 'rgba(255, 255, 255, 0.5)';
+            applyData(data) {
+                this.hasData = data && data.labels && data.labels.length > 0;
 
-            const sharedOptions = {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        ticks: { maxTicksLimit: 10, maxRotation: 45, color: tickColor },
-                        grid: { color: gridColor },
+                if (!this.hasData) {
+                    this.destroyChart();
+                    this.latest = { temperature: '–', humidity: '–', carbon_dioxide: '–' };
+                    return;
+                }
+
+                labels = data.labels;
+                series = {
+                    temperature: data.temperature,
+                    humidity: data.humidity,
+                    carbon_dioxide: data.carbon_dioxide,
+                };
+
+                this.latest = {
+                    temperature: format(data.temperature.at(-1), 1),
+                    humidity: format(data.humidity.at(-1), 1),
+                    carbon_dioxide: format(data.carbon_dioxide.at(-1), 0),
+                };
+
+                this.$nextTick(() => this.syncChart());
+            },
+
+            select(key) {
+                if (this.selectedMetric === key) return;
+                this.selectedMetric = key;
+                this.syncChart();
+            },
+
+            syncChart() {
+                const metric = metrics.find((m) => m.key === this.selectedMetric);
+                const dataset = series[metric.key] ?? [];
+
+                if (!chart) {
+                    this.createChart(metric, dataset);
+                    return;
+                }
+
+                const ds = chart.data.datasets[0];
+                chart.data.labels = labels;
+                ds.label = metric.label;
+                ds.data = dataset;
+                ds.borderColor = metric.color;
+                ds.backgroundColor = buildGradient(this.$refs.chart, metric.color);
+                ds.pointHoverBackgroundColor = metric.color;
+                chart.update();
+            },
+
+            createChart(metric, dataset) {
+                const getMetric = () => metrics.find((m) => m.key === this.selectedMetric);
+
+                chart = new Chart(this.$refs.chart, {
+                    type: 'line',
+                    data: {
+                        labels,
+                        datasets: [{
+                            label: metric.label,
+                            data: dataset,
+                            borderColor: metric.color,
+                            backgroundColor: buildGradient(this.$refs.chart, metric.color),
+                            borderWidth: 1.5,
+                            pointRadius: 0,
+                            pointHoverRadius: 4,
+                            pointHoverBackgroundColor: metric.color,
+                            pointHoverBorderColor: '#09090b',
+                            pointHoverBorderWidth: 2,
+                            tension: 0.25,
+                            fill: true,
+                        }],
                     },
-                    y: {
-                        beginAtZero: false,
-                        ticks: { color: tickColor },
-                        grid: { color: gridColor },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                border: { display: false },
+                                ticks: {
+                                    maxTicksLimit: 8,
+                                    color: 'rgba(244, 244, 245, 0.4)',
+                                    font: { size: 11 },
+                                },
+                                grid: { color: 'rgba(244, 244, 245, 0.04)' },
+                            },
+                            y: {
+                                border: { display: false },
+                                ticks: {
+                                    color: 'rgba(244, 244, 245, 0.4)',
+                                    font: { size: 11 },
+                                    maxTicksLimit: 6,
+                                },
+                                grid: { color: 'rgba(244, 244, 245, 0.06)' },
+                            },
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: '#09090b',
+                                borderColor: '#27272a',
+                                borderWidth: 1,
+                                titleColor: '#a1a1aa',
+                                bodyColor: '#fafafa',
+                                padding: 10,
+                                displayColors: false,
+                                callbacks: {
+                                    label: (ctx) => {
+                                        const m = getMetric();
+                                        return `${format(ctx.parsed.y, m.digits)} ${m.unit}`;
+                                    },
+                                },
+                            },
+                        },
+                        interaction: { intersect: false, mode: 'index' },
                     },
-                },
-                plugins: {
-                    legend: { display: false },
-                },
-                interaction: {
-                    intersect: false,
-                    mode: 'index',
-                },
-            };
+                });
+            },
 
-            this.charts.temperature = new Chart(this.$refs.temperatureChart, {
-                type: 'line',
-                data: {
-                    labels: data.labels,
-                    datasets: [{
-                        label: 'Temperature (°C)',
-                        data: data.temperature,
-                        borderColor: '#38bdf8',
-                        backgroundColor: 'rgba(56, 189, 248, 0.1)',
-                        fill: true,
-                        tension: 0.3,
-                        pointRadius: 2,
-                    }],
-                },
-                options: sharedOptions,
-            });
-
-            this.charts.humidity = new Chart(this.$refs.humidityChart, {
-                type: 'line',
-                data: {
-                    labels: data.labels,
-                    datasets: [{
-                        label: 'Humidity (%)',
-                        data: data.humidity,
-                        borderColor: '#a78bfa',
-                        backgroundColor: 'rgba(167, 139, 250, 0.1)',
-                        fill: true,
-                        tension: 0.3,
-                        pointRadius: 2,
-                    }],
-                },
-                options: sharedOptions,
-            });
-
-            this.charts.co2 = new Chart(this.$refs.co2Chart, {
-                type: 'line',
-                data: {
-                    labels: data.labels,
-                    datasets: [{
-                        label: 'CO₂ (ppm)',
-                        data: data.carbon_dioxide,
-                        borderColor: '#34d399',
-                        backgroundColor: 'rgba(52, 211, 153, 0.1)',
-                        fill: true,
-                        tension: 0.3,
-                        pointRadius: 2,
-                    }],
-                },
-                options: sharedOptions,
-            });
-        },
-
-        destroyCharts() {
-            Object.values(this.charts).forEach(chart => chart.destroy());
-            this.charts = {};
-        },
-    }));
+            destroyChart() {
+                if (chart) {
+                    chart.destroy();
+                    chart = null;
+                }
+            },
+        };
+    });
 });
