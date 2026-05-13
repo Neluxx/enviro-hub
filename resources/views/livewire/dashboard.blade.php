@@ -1,100 +1,73 @@
-<div>
-    {{-- Navbar --}}
-    <div class="navbar bg-base-100 shadow-sm">
-        <div class="flex-1">
-            <a class="btn btn-ghost text-xl">EnviroHub</a>
-        </div>
-        <div>
-            {{ config('app.version') }}
-        </div>
-    </div>
+<div class="h-screen flex flex-col overflow-hidden">
+    <header class="flex-none border-b border-zinc-800/80">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between gap-6">
+            <div class="flex items-baseline gap-3">
+                <span class="text-green-400 font-mono text-base tracking-tight">EnviroHub</span>
+                <span class="text-xs text-zinc-500 font-mono">{{ config('app.version') }}</span>
+            </div>
 
-    <div class="container mx-auto p-4 max-w-5xl">
-        {{-- Selectors --}}
-        <div class="mb-6">
-            <div class="form-control w-full">
-                <label class="label">
-                    <span class="label-text font-semibold">Node</span>
-                </label>
+            <div class="flex items-center gap-3">
+                <label class="text-[10px] uppercase tracking-[0.18em] text-zinc-500" for="node-select">Node</label>
                 <select
+                    id="node-select"
                     wire:model.live="selectedNodeId"
-                    class="select select-bordered w-full"
+                    class="bg-zinc-900 border border-zinc-800 rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-green-500/60 disabled:opacity-50"
                     @if($this->nodes->isEmpty()) disabled @endif
                 >
-                    <option value="" disabled>Select a node</option>
+                    <option value="" disabled>Select node</option>
                     @foreach ($this->nodes as $node)
                         <option value="{{ $node->id }}">{{ $node->title }}</option>
                     @endforeach
                 </select>
             </div>
         </div>
+    </header>
 
-        {{-- Everything below is managed by Alpine --}}
+    <main class="flex-1 min-h-0 max-w-6xl w-full mx-auto px-6 py-6">
         <div
             wire:ignore
             x-data="chartDashboard(@js($chartData))"
+            class="h-full flex flex-col gap-4"
         >
-            {{-- Empty state --}}
-            <div x-show="!hasData" class="alert alert-info">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                     class="stroke-current shrink-0 w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                <span>No sensor data available for the selected node.</span>
+            <div x-show="!hasData" class="flex-1 border border-zinc-800 rounded-lg flex items-center justify-center">
+                <p class="text-zinc-500 text-sm">No sensor data available for the selected node.</p>
             </div>
 
-            {{-- Stat cards --}}
-            <div x-show="hasData" class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-                <div class="stat bg-base-100 rounded-box shadow-sm">
-                    <div class="stat-title">Latest Temperature</div>
-                    <div class="stat-value text-primary text-2xl">
-                        <span x-text="latestTemp"></span> °C
-                    </div>
-                </div>
-                <div class="stat bg-base-100 rounded-box shadow-sm">
-                    <div class="stat-title">Latest Humidity</div>
-                    <div class="stat-value text-secondary text-2xl">
-                        <span x-text="latestHumidity"></span> %
-                    </div>
-                </div>
-                <div class="stat bg-base-100 rounded-box shadow-sm">
-                    <div class="stat-title">Latest CO₂</div>
-                    <div class="stat-value text-accent text-2xl">
-                        <span x-text="latestCo2"></span> ppm
-                    </div>
-                </div>
+            <div x-show="hasData" class="flex-none grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <template x-for="metric in metrics" :key="metric.key">
+                    <button
+                        type="button"
+                        @click="select(metric.key)"
+                        :class="metric.key === selectedMetric
+                            ? 'border-zinc-700 bg-zinc-900'
+                            : 'border-zinc-900 bg-zinc-950 hover:border-zinc-800 hover:bg-zinc-900/60'"
+                        class="text-left border rounded-lg p-5 transition cursor-pointer"
+                    >
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-[10px] uppercase tracking-[0.18em] text-zinc-500"
+                                  x-text="metric.label"></span>
+                            <span class="w-1.5 h-1.5 rounded-full"
+                                  :class="metric.key === selectedMetric ? metric.dotClass : 'bg-zinc-700'"></span>
+                        </div>
+                        <div class="flex items-baseline gap-1.5">
+                            <span class="font-mono text-3xl tabular-nums tracking-tight"
+                                  :class="metric.key === selectedMetric ? metric.textClass : 'text-zinc-100'"
+                                  x-text="latest[metric.key]"></span>
+                            <span class="text-xs text-zinc-500" x-text="metric.unit"></span>
+                        </div>
+                    </button>
+                </template>
             </div>
 
-            {{-- Charts --}}
-            <div x-show="hasData" class="grid grid-cols-1 gap-6">
-                <div class="card bg-base-100 shadow-sm">
-                    <div class="card-body">
-                        <h2 class="card-title text-base">Temperature (°C)</h2>
-                        <div style="height: 300px;">
-                            <canvas x-ref="temperatureChart"></canvas>
-                        </div>
-                    </div>
+            <div x-show="hasData" class="flex-1 min-h-0 border border-zinc-800 rounded-lg flex flex-col">
+                <div class="flex-none flex items-center justify-between px-5 py-3 border-b border-zinc-800">
+                    <h2 class="text-sm text-zinc-300" x-text="currentMetric.label + ' — last 24 hours'"></h2>
+                    <span class="font-mono text-xs text-zinc-500" x-text="currentMetric.unit"></span>
                 </div>
-
-                <div class="card bg-base-100 shadow-sm">
-                    <div class="card-body">
-                        <h2 class="card-title text-base">Humidity (%)</h2>
-                        <div style="height: 300px;">
-                            <canvas x-ref="humidityChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card bg-base-100 shadow-sm">
-                    <div class="card-body">
-                        <h2 class="card-title text-base">CO₂ (ppm)</h2>
-                        <div style="height: 300px;">
-                            <canvas x-ref="co2Chart"></canvas>
-                        </div>
-                    </div>
+                <div class="flex-1 min-h-0 p-4 relative">
+                    <canvas x-ref="chart"></canvas>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 </div>
