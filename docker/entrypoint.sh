@@ -5,15 +5,15 @@ cd /var/www/html
 
 # Sync public/ contents into the shared volume (volume persists across rebuilds,
 # so we refresh it from the image on every start to pick up new builds/assets).
+# Clear public/build first so stale hashed Vite assets don't accumulate.
 if [ -d /var/www/html/public-src ]; then
+    rm -rf /var/www/html/public/build
     cp -a /var/www/html/public-src/. /var/www/html/public/
 fi
 
-# Ensure storage and bootstrap/cache are writable (volume may be fresh)
+# Ensure storage and bootstrap/cache dirs exist (volume may be fresh)
 mkdir -p storage/framework/cache storage/framework/sessions \
          storage/framework/views storage/logs bootstrap/cache
-chown -R www-data:www-data storage bootstrap/cache
-chmod -R ug+rwX storage bootstrap/cache
 
 # APP_KEY must be provided via env (e.g. in .env loaded by compose `env_file`).
 # Fail fast if missing rather than silently running insecure.
@@ -31,8 +31,11 @@ php artisan event:cache
 # Run database migrations
 php artisan migrate --force --no-interaction
 
-# Create storage symlink (no-op if it already exists)
-php artisan storage:link || true
+# Fix ownership/perms after the artisan commands above (entrypoint runs as
+# root, so files written by artisan are root-owned; php-fpm workers run as
+# www-data and need write access for sessions, cache, logs, etc.)
+chown -R www-data:www-data storage bootstrap/cache
+chmod -R ug+rwX storage bootstrap/cache
 
 # Hand off to the main process (php-fpm by default)
 exec "$@"
