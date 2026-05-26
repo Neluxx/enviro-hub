@@ -1,0 +1,69 @@
+# Version control
+.git
+.gitignore
+.gitattributes
+
+# Environment files (must be provided at runtime via env_file)
+.env
+.env.*
+!.env.example
+
+# Dependencies (installed in build stages)
+/node_modules
+/vendor
+
+# Build artifacts (rebuilt in image)
+/public/build
+/public/hot
+/public/storage
+
+# Laravel runtime
+/storage/*.key
+/storage/app/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/testing/*
+/storage/framework/views/*
+/storage/logs/*
+/bootstrap/cache/*.php
+
+# IDE / editor
+.idea
+.vscode
+.fleet
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Tests & CI
+/tests
+/.github
+/.gitlab-ci.yml
+phpunit.xml
+phpunit.result.cache
+.phpunit.cache
+
+# Tooling configs not needed at runtime
+.editorconfig
+.styleci.yml
+.php-cs-fixer.cache
+.phpstan.cache
+.phpactor.json
+.eslintcache
+README.md
+CHANGELOG.md
+LICENSE*
+
+# Docker (avoid recursive inclusion of compose state)
+Dockerfile
+.dockerignore
+compose.yaml
+compose.*.yaml
+docker-compose.yml
+docker-compose.*.yml
+
+# Local Laravel utilities
+auth.json
+npm-debug.log
+yarn-error.log
