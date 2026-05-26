@@ -26,11 +26,11 @@ FROM php:8.3-fpm-alpine AS app
 
 # Install runtime libs + build deps for PHP extensions, then drop build deps
 RUN apk add --no-cache \
-        tini icu-libs libzip libpng \
+        tini icu-libs libzip \
     && apk add --no-cache --virtual .build-deps \
-        icu-dev libzip-dev libpng-dev \
+        icu-dev libzip-dev \
     && docker-php-ext-install -j$(nproc) \
-        pdo_mysql bcmath intl zip gd opcache pcntl \
+        pdo_mysql intl zip opcache \
     && apk del .build-deps
 
 # Production PHP config + opcache
