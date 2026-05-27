@@ -58,7 +58,7 @@ COPY --from=vendor --chown=www-data:www-data /app/vendor ./vendor
 
 # Optimize autoloader (now with full app source), prepare writable dirs,
 # stash pristine public/ for entrypoint to refresh into the shared volume
-RUN composer dump-autoload --optimize --classmap-authoritative --no-dev \
+RUN composer dump-autoload --optimize --no-dev \
     && mkdir -p storage/framework/cache storage/framework/sessions \
                 storage/framework/views storage/logs bootstrap/cache \
     && chown -R www-data:www-data storage bootstrap/cache \
