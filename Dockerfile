@@ -30,7 +30,7 @@ RUN apk add --no-cache \
     && apk add --no-cache --virtual .build-deps \
         icu-dev libzip-dev \
     && docker-php-ext-install -j$(nproc) \
-        pdo_mysql intl zip opcache \
+        pdo_mysql intl zip opcache pcntl \
     && apk del .build-deps
 
 # Production PHP config + opcache
