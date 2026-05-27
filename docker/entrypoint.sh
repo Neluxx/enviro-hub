@@ -22,6 +22,12 @@ if [ -z "${APP_KEY:-}" ]; then
     exit 1
 fi
 
+# Refuse to run with APP_DEBUG=true in production (leaks stack traces + env).
+if [ "${APP_ENV:-}" = "production" ] && [ "${APP_DEBUG:-false}" = "true" ]; then
+    echo "ERROR: APP_DEBUG must be false when APP_ENV=production" >&2
+    exit 1
+fi
+
 # Cache config / routes / views / events for production
 php artisan config:cache
 php artisan route:cache
