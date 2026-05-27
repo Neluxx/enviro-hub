@@ -18,6 +18,9 @@
 /public/storage
 
 # Laravel runtime
+/database/*.sqlite
+/database/*.sqlite-journal
+/database/data
 /storage/*.key
 /storage/app/*
 /storage/framework/cache/*
