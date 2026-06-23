@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
-  "schedule": ["before 5:00am"],
+  "schedule": ["* 0-3 * * 1"],
   "timezone": "Europe/Zurich",
   "labels": ["dependencies"],
   "assignees": ["neluxx"],
@@ -12,8 +12,27 @@
     },
     {
       "matchUpdateTypes": ["major"],
-      "automerge": false,
-      "labels": ["dependencies", "major-update"]
+      "enabled": false
+    },
+    {
+      "matchManagers": ["composer"],
+      "matchDepTypes": ["require"],
+      "groupName": "composer production dependencies"
+    },
+    {
+      "matchManagers": ["composer"],
+      "matchDepTypes": ["require-dev"],
+      "groupName": "composer dev dependencies"
+    },
+    {
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["dependencies"],
+      "groupName": "npm production dependencies"
+    },
+    {
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["devDependencies"],
+      "groupName": "npm dev dependencies"
     }
   ],
   "vulnerabilityAlerts": {
