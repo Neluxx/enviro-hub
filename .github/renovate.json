@@ -1,43 +1,4 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
-  "schedule": ["* 0-3 * * 1"],
-  "timezone": "Europe/Zurich",
-  "labels": ["dependencies"],
-  "assignees": ["neluxx"],
-  "packageRules": [
-    {
-      "matchUpdateTypes": ["patch", "minor"],
-      "automerge": true
-    },
-    {
-      "matchUpdateTypes": ["major"],
-      "enabled": false
-    },
-    {
-      "matchManagers": ["composer"],
-      "matchDepTypes": ["require"],
-      "groupName": "composer production dependencies"
-    },
-    {
-      "matchManagers": ["composer"],
-      "matchDepTypes": ["require-dev"],
-      "groupName": "composer dev dependencies"
-    },
-    {
-      "matchManagers": ["npm"],
-      "matchDepTypes": ["dependencies"],
-      "groupName": "npm production dependencies"
-    },
-    {
-      "matchManagers": ["npm"],
-      "matchDepTypes": ["devDependencies"],
-      "groupName": "npm dev dependencies"
-    }
-  ],
-  "vulnerabilityAlerts": {
-    "enabled": true,
-    "automerge": false,
-    "labels": ["security"]
-  }
+  "extends": ["github>Neluxx/.github:laravel"]
 }
