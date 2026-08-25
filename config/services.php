@@ -18,6 +18,14 @@ return [
         'token' => env('API_BEARER_TOKEN'),
     ],
 
+    'openweather' => [
+        'key' => env('OPENWEATHER_API_KEY'),
+        'latitude' => env('OPENWEATHER_LAT'),
+        'longitude' => env('OPENWEATHER_LON'),
+        'location' => env('OPENWEATHER_LOCATION'),
+        'units' => env('OPENWEATHER_UNITS', 'metric'),
+    ],
+
     'postmark' => [
         'key' => env('POSTMARK_API_KEY'),
     ],
