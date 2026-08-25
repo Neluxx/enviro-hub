@@ -43,8 +43,8 @@ class OpenWeatherService
             'feels_like' => $data['main']['feels_like'],
             'humidity' => $data['main']['humidity'],
             'pressure' => $data['main']['pressure'],
-            'wind_speed' => $data['wind']['speed'],
-            'description' => $data['data']['weather'][0]['description'],
+            'wind_speed' => $data['wind']['speed'] ?? 0,
+            'description' => $data['weather'][0]['description'] ?? '',
             'measured_at' => Carbon::createFromTimestamp($data['dt']),
         ];
     }
