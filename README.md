@@ -8,6 +8,7 @@ A web application for monitoring and visualizing environmental sensor data from 
 - **Multi-location support** — manage multiple homes, each with multiple sensor nodes
 - **REST API** — ingest sensor data from IoT devices using bearer token authentication
 - **Auto node provisioning** — nodes are created automatically on first data submission
+- **OpenWeather integration** — fetches outdoor weather for a configured location every 10 minutes
 
 ## Tech Stack
 
@@ -71,6 +72,29 @@ API_BEARER_TOKEN=your-secret-token-here
 
 # Database (defaults to SQLite)
 DB_CONNECTION=sqlite
+
+# OpenWeather — current weather is fetched for this location every 10 minutes
+OPENWEATHER_API_KEY=your-openweather-api-key
+OPENWEATHER_LAT=52.52
+OPENWEATHER_LON=13.40
+OPENWEATHER_LOCATION=Berlin
+OPENWEATHER_UNITS=metric
+```
+
+## Weather Collection
+
+The `weather:fetch` command pulls the current weather from the [OpenWeather Current Weather Data API](https://openweathermap.org/current) for the configured location and stores it in the `weather_data` table. It is scheduled to run every 10 minutes.
+
+For the schedule to run, Laravel's scheduler must be triggered every minute. Add this cron entry on the host:
+
+```cron
+* * * * * cd /path-to-project && php artisan schedule:run >> /dev/null 2>&1
+```
+
+You can also run a single fetch manually:
+
+```bash
+php artisan weather:fetch
 ```
 
 ## API
