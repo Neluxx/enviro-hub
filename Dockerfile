@@ -22,7 +22,7 @@ RUN composer install \
     --no-progress
 
 # Stage 3: Final production image (PHP-FPM)
-FROM php:8.4-fpm-alpine AS app
+FROM php:8.5-fpm-alpine AS app
 
 # Install runtime libs + build deps for PHP extensions, then drop build deps
 RUN apk add --no-cache \
