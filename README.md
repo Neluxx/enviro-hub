@@ -2,6 +2,11 @@
 
 A web application for monitoring and visualizing environmental sensor data from IoT devices. EnviroHub ingests readings from distributed sensor nodes and displays temperature, humidity, pressure, and CO2 levels on an interactive dashboard.
 
+> [!IMPORTANT]
+> **This project has been archived.**  
+> It is no longer needed, as environmental sensor data is now handled by **Home Assistant** with an **MQTT broker**.  
+> The repository remains available for reference but will not receive any further updates.
+
 ## Features
 
 - **Live dashboard** — visualize sensor readings per home and node with Chart.js charts
